@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import Loader from "@/components/common/Loader";
 
 import { ClusterProvider } from '@/components/cluster/cluster-data-access';
-import { SolanaProvider } from '@/components/Solana/solana-provider';
+import { SolanaProvider } from '@/components/solana/solana-provider';
 import { ReactQueryProvider } from './react-query-provider';
 
 export default function RootLayout({
