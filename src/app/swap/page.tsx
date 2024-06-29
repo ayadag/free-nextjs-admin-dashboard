@@ -173,12 +173,18 @@ const Swap = () => {
           // setTokenOnePriceR(tOnePrice.data);
           // setTokenOnePriceR(tTwoPrice); 
 
+          //token price
           const {[tokenOne.address]: tokenOneD} = tOnePrice.data;
+          const {[tokenTwo.address]: tokenTwoD} = tTwoPrice.data;
+
+          setTokenOnePrice(tokenOneD.price);
+          setTokenOnePrice(tokenTwoD.price); 
+
           console.log('tokenOneD: ',tokenOneD);
           console.log('tokenOneD.price: ',tokenOneD.price);
 
-          console.log('tOnePrice.data: ',tOnePrice.data);
-          console.log('tTwoPrice: ',tTwoPrice);
+          // console.log('tOnePrice.data: ',tOnePrice.data);
+          // console.log('tTwoPrice: ',tTwoPrice);
 
           // console.log('tokenOnePriceR: ',tokenOnePriceR);
           // console.log('tokenTwoPriceR: ',tokenTwoPriceR);
