@@ -56,17 +56,17 @@ const Swap = () => {
       // const [tokenOnePriceR, setTokenOnePriceR] = useState<Price | null>(null);
       // const [tokenTwoPriceR, setTokenTwoPriceR] = useState<Price | null>(null);
 
-      type Price = {
-        [tokenOne.address]:{
-          id: string;
-          mintSymbol: string;
-          vsToken: string;
-          vsTokenSymbol: string;
-          price: string;
-        }
-      }
-      const [tokenOnePriceR, setTokenOnePriceR] = useState<Price | null>(null);
-      const [tokenTwoPriceR, setTokenTwoPriceR] = useState<Price | null>(null);
+      // type Price = {
+      //   [tokenOne.address]:{
+      //     id: string;
+      //     mintSymbol: string;
+      //     vsToken: string;
+      //     vsTokenSymbol: string;
+      //     price: string;
+      //   }
+      // }
+      // const [tokenOnePriceR, setTokenOnePriceR] = useState<Price | null>(null);
+      // const [tokenTwoPriceR, setTokenTwoPriceR] = useState<Price | null>(null);
   
       function handleSlippageChange(e: any) {
           setSlippage(e.target.value);
@@ -170,21 +170,23 @@ const Swap = () => {
 
         if (tOnePrice && tTwoPrice) {
           // const tOneAddress = tokenOne.address;
-          setTokenOnePriceR(tOnePrice.data);
-          setTokenOnePriceR(tTwoPrice); 
+          // setTokenOnePriceR(tOnePrice.data);
+          // setTokenOnePriceR(tTwoPrice); 
 
-          // const { tokenOneDetails: tokenOne} = tOnePrice.data;
+          const {[tokenOne.address]: tokenOneD} = tOnePrice.data;
+          console.log('tokenOneD: ',tokenOneD);
+          console.log('tokenOneD.price: ',tokenOneD.price);
 
           console.log('tOnePrice.data: ',tOnePrice.data);
           console.log('tTwoPrice: ',tTwoPrice);
 
-          console.log('tokenOnePriceR: ',tokenOnePriceR);
-          console.log('tokenTwoPriceR: ',tokenTwoPriceR);
+          // console.log('tokenOnePriceR: ',tokenOnePriceR);
+          // console.log('tokenTwoPriceR: ',tokenTwoPriceR);
 
-          if(tokenOnePriceR && tokenTwoPriceR) {
-            console.log('tokenOnePriceR.price): ',tokenOnePriceR.price);
-            console.log('tokenTwoPriceR: ',tokenTwoPriceR);
-          }
+          // if(tokenOnePriceR && tokenTwoPriceR) {
+          //   console.log('tokenOnePriceR.price): ',tokenOnePriceR.price);
+          //   console.log('tokenTwoPriceR: ',tokenTwoPriceR);
+          // }
 
           // setTokenOnePrice(tOnePrice.data.price)
           // setTokenTwoPrice(tTwoPrice.price)
