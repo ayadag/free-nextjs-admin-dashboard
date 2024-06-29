@@ -168,9 +168,10 @@ const Swap = () => {
           setTokenOnePriceR(tTwoPrice);
           // console.log('tOnePrice: ',tOnePrice.data);
           // console.log('tTwoPrice: ',tTwoPrice.data);
-          
-          console.log('tOnePrice: ',tokenOnePriceR.price);
-          console.log('tTwoPrice: ',tokenTwoPriceR);
+          if(tokenOnePriceR && tokenTwoPriceR) {
+            console.log('tOnePrice: ',tokenOnePriceR.price);
+            console.log('tTwoPrice: ',tokenTwoPriceR);
+          }
 
           // setTokenOnePrice(tOnePrice.data.price)
           // setTokenTwoPrice(tTwoPrice.price)
