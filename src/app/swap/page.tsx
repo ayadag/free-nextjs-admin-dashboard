@@ -28,13 +28,7 @@ import {
 import styles from './swap.module.css';
 import tokenList from './tokenList.json';
 
-type Price = {
-  id: string;
-  mintSymbol: string;
-  vsToken: string;
-  vsTokenSymbol: string;
-  price: string;
-}
+
 
 const Swap = () => {
       const wallet = useWallet();
@@ -59,6 +53,18 @@ const Swap = () => {
       const [tokenTwoN, setTokenTwoN] = useState(1);
       const [tokenOnePrice, setTokenOnePrice] = useState(0);
       const [tokenTwoPrice, setTokenTwoPrice] = useState(0);
+      // const [tokenOnePriceR, setTokenOnePriceR] = useState<Price | null>(null);
+      // const [tokenTwoPriceR, setTokenTwoPriceR] = useState<Price | null>(null);
+
+      type Price = {
+        [tokenOne.address]:{
+          id: string;
+          mintSymbol: string;
+          vsToken: string;
+          vsTokenSymbol: string;
+          price: string;
+        }
+      }
       const [tokenOnePriceR, setTokenOnePriceR] = useState<Price | null>(null);
       const [tokenTwoPriceR, setTokenTwoPriceR] = useState<Price | null>(null);
   
@@ -164,11 +170,16 @@ const Swap = () => {
 
         if (tOnePrice && tTwoPrice) {
           // const tOneAddress = tokenOne.address;
-          setTokenOnePriceR(tOnePrice);
-          setTokenOnePriceR(tTwoPrice);
-          
+          setTokenOnePriceR(tOnePrice.data);
+          setTokenOnePriceR(tTwoPrice); 
+
+          // const { tokenOneDetails: tokenOne} = tOnePrice.data;
+
           console.log('tOnePrice.data: ',tOnePrice.data);
           console.log('tTwoPrice: ',tTwoPrice);
+
+          console.log('tokenOnePriceR: ',tokenOnePriceR);
+          console.log('tokenTwoPriceR: ',tokenTwoPriceR);
 
           if(tokenOnePriceR && tokenTwoPriceR) {
             console.log('tokenOnePriceR.price): ',tokenOnePriceR.price);
