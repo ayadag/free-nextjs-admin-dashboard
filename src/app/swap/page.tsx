@@ -166,11 +166,13 @@ const Swap = () => {
           // const tOneAddress = tokenOne.address;
           setTokenOnePriceR(tOnePrice);
           setTokenOnePriceR(tTwoPrice);
-          // console.log('tOnePrice: ',tOnePrice.data);
-          // console.log('tTwoPrice: ',tTwoPrice.data);
+          
+          console.log('tOnePrice.data: ',tOnePrice.data);
+          console.log('tTwoPrice: ',tTwoPrice);
+
           if(tokenOnePriceR && tokenTwoPriceR) {
-            console.log('tOnePrice: ',tokenOnePriceR.price);
-            console.log('tTwoPrice: ',tokenTwoPriceR);
+            console.log('tokenOnePriceR.price): ',tokenOnePriceR.price);
+            console.log('tokenTwoPriceR: ',tokenTwoPriceR);
           }
 
           // setTokenOnePrice(tOnePrice.data.price)
