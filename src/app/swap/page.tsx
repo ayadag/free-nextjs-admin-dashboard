@@ -28,7 +28,7 @@ import {
 import styles from './swap.module.css';
 import tokenList from './tokenList.json';
 
-
+let tokenListSearch: any[];
 
 const Swap = () => {
       const wallet = useWallet();
@@ -53,6 +53,10 @@ const Swap = () => {
       const [tokenTwoN, setTokenTwoN] = useState(1);
       const [tokenOnePrice, setTokenOnePrice] = useState(0);
       const [tokenTwoPrice, setTokenTwoPrice] = useState(0);
+
+      //Token list that contain the search resalut
+      // let tokenListSearch = [undefined];
+
       // const [tokenOnePriceR, setTokenOnePriceR] = useState<Price | null>(null);
       // const [tokenTwoPriceR, setTokenTwoPriceR] = useState<Price | null>(null);
 
@@ -67,6 +71,34 @@ const Swap = () => {
       // }
       // const [tokenOnePriceR, setTokenOnePriceR] = useState<Price | null>(null);
       // const [tokenTwoPriceR, setTokenTwoPriceR] = useState<Price | null>(null);
+
+      //The function that handle token search input value
+
+      function handleTokenListSearch(e: any) {
+        tokenList?.map((t: any) => {
+          if (e.target.value == t.ticker){
+            tokenListSearch.push(t)
+            setIsOpen(false)
+            setIsOpen(true)
+            console.log('tokenList: ',tokenList)
+          }
+          else if (e.target.value == t.address){
+            tokenListSearch.push(t)
+            setIsOpen(false)
+            setIsOpen(true)
+          }
+          else if (e.target.value == '') {
+            tokenListSearch = []
+            setIsOpen(false)
+            setIsOpen(true)
+            console.log('nothing to search')
+          }
+          // else {
+          //   tokenListSearch = []
+          // }
+          console.log('tokenListSearch: ',tokenListSearch)
+        })
+      }
   
       function handleSlippageChange(e: any) {
           setSlippage(e.target.value);
@@ -341,10 +373,51 @@ const Swap = () => {
                       open={isOpen}
                       footer={null}
                       onCancel={() => setIsOpen(false)}
-                      title="Select a token"
+                      // title="Select a token"
                   >
                       <div className={styles.modalContent}>
-                      {tokenList?.map((e: any, i: any) => {
+
+                      <div className={styles.modalSearch}>
+                      <input 
+                      placeholder='search'
+                      className={styles.modalSearchInput}
+                      onChange={handleTokenListSearch}
+                      />
+                      </div>
+                      
+                      {/* {tokenList?.map((e: any, i: any) => {
+                          return (
+                          <div
+                              className={styles.tokenChoice}
+                              key={i}
+                              onClick={() => modifyToken(i)}
+                          >
+                              <img src={e.img} alt={e.ticker} className={styles.tokenLogo} />
+                              <div className={styles.tokenChoiceNames}>
+                                  <div className={styles.tokenName}>{e.name}</div>
+                                  <div className={styles.tokenTicker}>{e.ticker}</div>
+                              </div>
+                          </div>
+                          );
+                      })} */}
+
+                      {tokenListSearch?tokenListSearch?.map((e: any, i: any) => {
+                          return (
+                          <div
+                              className={styles.tokenChoice}
+                              key={i}
+                              onClick={() => modifyToken(i)}
+                          >
+                              <img src={e.img} alt={e.ticker} className={styles.tokenLogo} />
+                              <div className={styles.tokenChoiceNames}>
+                                  <div className={styles.tokenName}>{e.name}</div>
+                                  <div className={styles.tokenTicker}>{e.ticker}</div>
+                              </div>
+                          </div>
+                          );
+                      })
+
+                      :tokenList?.map((e: any, i: any) => {
                           return (
                           <div
                               className={styles.tokenChoice}
@@ -359,6 +432,7 @@ const Swap = () => {
                           </div>
                           );
                       })}
+
                       </div>
                   </Modal>
                   <div className={styles.tradeBox}>
@@ -400,7 +474,7 @@ const Swap = () => {
                               <DownOutlined />
                           </div>
                           <div className={styles.assetTwo} onClick={() => openModal(2)}>
-                              <img src={tokenTwo.img} alt="assetOneLogo" className={styles.assetLogo} />
+                              <img src={tokenTwo.img} alt="assetTwoLogo" className={styles.assetLogo} />
                               {tokenTwo.ticker}
                               <DownOutlined />
                           </div>
