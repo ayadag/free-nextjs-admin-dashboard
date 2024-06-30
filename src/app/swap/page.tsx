@@ -53,6 +53,7 @@ const Swap = () => {
       const [tokenTwoN, setTokenTwoN] = useState(1);
       const [tokenOnePrice, setTokenOnePrice] = useState(0);
       const [tokenTwoPrice, setTokenTwoPrice] = useState(0);
+      let [query, setQuery] = useState<string>('');
 
       //Token list that contain the search resalut
       // let tokenListSearch = [undefined];
@@ -75,6 +76,9 @@ const Swap = () => {
       //The function that handle token search input value
 
       function handleTokenListSearch(e: any) {
+
+        setQuery(e.target.value);
+
         tokenList?.map((t: any) => {
           if (e.target.value == t.ticker){
             tokenListSearch = [];
@@ -422,7 +426,9 @@ const Swap = () => {
                           );
                       })
 
-                      :tokenList?.map((e: any, i: any) => {
+                      :tokenList?.filter((token) => 
+                      token.name.toLowerCase().includes(query)
+                    ).map((e: any, i: any) => {
                           return (
                           <div
                               className={styles.tokenChoice}
