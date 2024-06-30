@@ -58,8 +58,9 @@ import styles from './swap.module.css';
       const [tokenTwoN, setTokenTwoN] = useState(1);
       const [tokenOnePrice, setTokenOnePrice] = useState(0);
       const [tokenTwoPrice, setTokenTwoPrice] = useState(0);
-      let [query, setQuery] = useState<string>('');
-      let [tokenList, setTokenList] = useState<any>();
+      let [query, setQuery] = useState<string>(''); //search query
+      let [tokenList, setTokenList] = useState<any>(); //10 token list
+      // let [tTokenList, setTTokenList] = useState<any>(); //Total token list
 
       useEffect(() => {
         async function getTokenList() {
@@ -69,8 +70,10 @@ import styles from './swap.module.css';
                 // `https://token.jup.ag/all` //all
               )
             ).json();
-            setTokenList(tList.splice(0,10));  //splice(0,10) to take gest the first ten idems.
-            console.log('tokenList: ',tokenList)
+            // setTTokenList(tList);
+            setTokenList(tList); 
+            // setTokenList(tList.splice(0,10));  //splice(0,10) to take gest the first ten idems.
+            console.log('tokenList: ',tokenList);
           } catch(e) {console.log('can not get price', e)}
         }
         getTokenList(); //get token list
@@ -329,7 +332,7 @@ import styles from './swap.module.css';
           //  fetchPrices(tokenOne.address, tokenList[i].address)
           }
           setIsOpen(false);
-      }
+        }
   
       async function signAndSendTransaction() {
           if (!wallet.connected || !wallet.signTransaction) {
@@ -453,44 +456,67 @@ import styles from './swap.module.css';
                           );
                       })} */}
 
-                      {
-                      // tokenListSearch?tokenListSearch?.map((e: any, i: any) => {
-                      //     return (
-                      //     <div
-                      //         className={styles.tokenChoice}
-                      //         key={i}
-                      //         onClick={() => modifyToken(i)}
-                      //     >
-                      //         <img src={e.img} alt={e.ticker} className={styles.tokenLogo} />
-                      //         <div className={styles.tokenChoiceNames}>
-                      //             <div className={styles.tokenName}>{e.name}</div>
-                      //             <div className={styles.tokenTicker}>{e.ticker}</div>
-                      //         </div>
-                      //     </div>
-                      //     );
-                      // })
-
-                      // :
-                      tokenList?.filter((token: any) => 
-
-                      token.name.toLowerCase().includes(query) || //cheack token name
-                      token.symbol.toLowerCase().includes(query) || //cheack token simbol
-                      token.address.toLowerCase().includes(query)  //cheack token address
-                      ).map((e: any, i: any) => {
+                      {/* {
+                      query==''?tokenList?.map((e: any, i: any) => {
                           return (
                           <div
                               className={styles.tokenChoice}
                               key={i}
                               onClick={() => modifyToken(i)}
                           >
-                              <img src={e.logoURI} alt={e.ticker} className={styles.tokenLogo} />
+                              <img src={e.logoURI} alt={e.symbol} className={styles.tokenLogo} />
                               <div className={styles.tokenChoiceNames}>
                                   <div className={styles.tokenName}>{e.name}</div>
                                   <div className={styles.tokenTicker}>{e.symbol}</div>
                               </div>
                           </div>
                           );
-                      })}
+                      })
+                      :
+                      tTokenList?.filter((token: any) => 
+                      token.name.toLowerCase().includes(query) || //cheack token name
+                      token.symbol.toLowerCase().includes(query) || //cheack token simbol
+                      token.address.toLowerCase().includes(query)  //cheack token address
+                      ).map((e: any, i: any) => {
+                      // ).map((e: any, i:number , t =[tTokenList[0].address, tTokenList[1].address]) => {
+                          return (
+                          <div
+                              className={styles.tokenChoice}
+                              key={i}
+                              // key={tTokenList.address}
+                              onClick={() => modifyToken(i)}
+                          >
+                              <img src={e.logoURI} alt={e.symbol} className={styles.tokenLogo} />
+                              <div className={styles.tokenChoiceNames}>
+                                  <div className={styles.tokenName}>{e.name}</div>
+                                  <div className={styles.tokenTicker}>{e.symbol}</div>
+                              </div>
+                          </div>
+                          );
+                      })
+                      } */}
+
+                      {
+                        tokenList?.filter((token: any) => 
+                          token.name.toLowerCase().includes(query) || //cheack token name
+                          token.symbol.toLowerCase().includes(query) || //cheack token simbol
+                          token.address.toLowerCase().includes(query)  //cheack token address
+                          ).map((e: any, i: any) => {
+                          return (
+                          <div
+                              className={styles.tokenChoice}
+                              key={i}
+                              onClick={() => modifyToken(i)}
+                          >
+                              <img src={e.logoURI} alt={e.symbol} className={styles.tokenLogo} />
+                              <div className={styles.tokenChoiceNames}>
+                                  <div className={styles.tokenName}>{e.name}</div>
+                                  <div className={styles.tokenTicker}>{e.symbol}</div>
+                              </div>
+                          </div>
+                          );
+                      })
+                      }
 
                       </div>
                   </Modal>
