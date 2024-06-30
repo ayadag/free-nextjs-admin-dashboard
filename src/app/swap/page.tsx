@@ -79,19 +79,21 @@ const Swap = () => {
           if (e.target.value == t.ticker){
             tokenListSearch = [];
             tokenListSearch.push(t)
-            setIsOpen(false)
-            setIsOpen(true)
+            // setIsOpen(false)
+            // setIsOpen(true)
+            let querySelector = document.querySelector('#swap_tokenChoice__eJ9R9')
+            console.log('querySelector: ',querySelector)
           }
           else if (e.target.value == t.address){
             tokenListSearch = [];
             tokenListSearch.push(t)
-            setIsOpen(false)
-            setIsOpen(true)
+            // setIsOpen(false)
+            // setIsOpen(true)
           }
           else if (e.target.value == '') {
             tokenListSearch = undefined
-            setIsOpen(false)
-            setIsOpen(true)
+            // setIsOpen(false)
+            // setIsOpen(true)
             console.log('nothing to search')
           }
           // else {
