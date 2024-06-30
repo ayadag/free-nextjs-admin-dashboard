@@ -28,7 +28,7 @@ import {
 import styles from './swap.module.css';
 import tokenList from './tokenList.json';
 
-let tokenListSearch: any[] | undefined;
+// let tokenListSearch: any[] | undefined;
 
 const Swap = () => {
       const wallet = useWallet();
@@ -76,37 +76,39 @@ const Swap = () => {
       //The function that handle token search input value
 
       function handleTokenListSearch(e: any) {
+        if(e.target.value != ''){
+        setQuery(e.target.value.toLowerCase());
+        } else {
+          setQuery(e.target.value);
+        }
+        // tokenList?.map((t: any) => {
+        //   if (e.target.value == t.ticker){
+        //     tokenListSearch = [];
+        //     tokenListSearch.push(t)
+        //     // setIsOpen(false)
+        //     // setIsOpen(true)
+        //     let querySelector = document.querySelector('#swap_tokenChoice__eJ9R9')
+        //     console.log('querySelector: ',querySelector)
+        //   }
+        //   else if (e.target.value == t.address){
+        //     tokenListSearch = [];
+        //     tokenListSearch.push(t)
+        //     // setIsOpen(false)
+        //     // setIsOpen(true)
+        //   }
+        //   else if (e.target.value == '') {
+        //     tokenListSearch = undefined
+        //     // setIsOpen(false)
+        //     // setIsOpen(true)
+        //     console.log('nothing to search')
+        //   }
+        //   // else {
+        //   //   tokenListSearch = []
+        //   // }
+        //   console.log('tokenListSearch: ',tokenListSearch)
 
-        setQuery(e.target.value.toLowerCase);
-
-        tokenList?.map((t: any) => {
-          if (e.target.value == t.ticker){
-            tokenListSearch = [];
-            tokenListSearch.push(t)
-            // setIsOpen(false)
-            // setIsOpen(true)
-            let querySelector = document.querySelector('#swap_tokenChoice__eJ9R9')
-            console.log('querySelector: ',querySelector)
-          }
-          else if (e.target.value == t.address){
-            tokenListSearch = [];
-            tokenListSearch.push(t)
-            // setIsOpen(false)
-            // setIsOpen(true)
-          }
-          else if (e.target.value == '') {
-            tokenListSearch = undefined
-            // setIsOpen(false)
-            // setIsOpen(true)
-            console.log('nothing to search')
-          }
-          // else {
-          //   tokenListSearch = []
-          // }
-          console.log('tokenListSearch: ',tokenListSearch)
-
-          console.log('tokenList: ',tokenList)
-        })
+        //   console.log('tokenList: ',tokenList)
+        // })
       }
   
       function handleSlippageChange(e: any) {
@@ -410,25 +412,30 @@ const Swap = () => {
                           );
                       })} */}
 
-                      {tokenListSearch?tokenListSearch?.map((e: any, i: any) => {
-                          return (
-                          <div
-                              className={styles.tokenChoice}
-                              key={i}
-                              onClick={() => modifyToken(i)}
-                          >
-                              <img src={e.img} alt={e.ticker} className={styles.tokenLogo} />
-                              <div className={styles.tokenChoiceNames}>
-                                  <div className={styles.tokenName}>{e.name}</div>
-                                  <div className={styles.tokenTicker}>{e.ticker}</div>
-                              </div>
-                          </div>
-                          );
-                      })
+                      {
+                      // tokenListSearch?tokenListSearch?.map((e: any, i: any) => {
+                      //     return (
+                      //     <div
+                      //         className={styles.tokenChoice}
+                      //         key={i}
+                      //         onClick={() => modifyToken(i)}
+                      //     >
+                      //         <img src={e.img} alt={e.ticker} className={styles.tokenLogo} />
+                      //         <div className={styles.tokenChoiceNames}>
+                      //             <div className={styles.tokenName}>{e.name}</div>
+                      //             <div className={styles.tokenTicker}>{e.ticker}</div>
+                      //         </div>
+                      //     </div>
+                      //     );
+                      // })
 
-                      :tokenList?.filter((token) => 
-                      token.name.toLowerCase().includes(query)
-                    ).map((e: any, i: any) => {
+                      // :
+                      tokenList?.filter((token) => 
+
+                      token.name.toLowerCase().includes(query) || //cheack token name
+                      token.ticker.toLowerCase().includes(query) || //cheack token simbol
+                      token.address.toLowerCase().includes(query)  //cheack token address
+                      ).map((e: any, i: any) => {
                           return (
                           <div
                               className={styles.tokenChoice}
