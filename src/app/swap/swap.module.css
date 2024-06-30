@@ -253,6 +253,7 @@
   .assetLogo {
     height: 22px;
     margin-left: 5px;
+    border-radius: 100%;
   }
   
   .swapButton {
@@ -290,6 +291,7 @@
   .tokenLogo {
     height: 40px;
     width: 40px;
+    border-radius: 100%;
   }
   
   .modalSearch {
@@ -325,8 +327,8 @@
 
   .modalSearchInput:hover {
     /* cursor: pointer; */
-    /* background-color: #1f2639; */
-    border: 1px solid #363e54;
+    background-color: #363e54;
+    /* border: 1px solid #363e54; */
   }
   
   .modalContent {

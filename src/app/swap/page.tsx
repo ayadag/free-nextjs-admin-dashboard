@@ -26,11 +26,14 @@ import {
 } from '@solana/web3.js';
 
 import styles from './swap.module.css';
-import tokenList from './tokenList.json';
+
+// import tokenList from './tokenList.json';
+// import tokenList from './tokenList2.json';
 
 // let tokenListSearch: any[] | undefined;
 
-const Swap = () => {
+// const Swap = ({tokenList}:{tokenList:[]}) => {
+  const Swap = () => {
       const wallet = useWallet();
       // const connection = useConnection();
       // const connection = new Connection('https://mainnet.helius-rpc.com/?api-key=YOUR_API_KEY_HERE');
@@ -42,8 +45,10 @@ const Swap = () => {
       // const [tokenTwoAmount, setTokenTwoAmount] = useState(null);
       const [tokenOneAmount, setTokenOneAmount] = useState(0);
       const [tokenTwoAmount, setTokenTwoAmount] = useState(0);
-      const [tokenOne, setTokenOne] = useState(tokenList[0]);
-      const [tokenTwo, setTokenTwo] = useState(tokenList[1]);
+
+      // let [tokenList, setTokenList] = useState<any>();
+      // const [tokenOne, setTokenOne] = useState(tokenList[0]);
+      // const [tokenTwo, setTokenTwo] = useState(tokenList[1]);
       const [isOpen, setIsOpen] = useState(false);
       const [changeToken, setChangeToken] = useState(1);
       const [quoteResponse, setQuoteResponse] = useState(null);
@@ -54,6 +59,41 @@ const Swap = () => {
       const [tokenOnePrice, setTokenOnePrice] = useState(0);
       const [tokenTwoPrice, setTokenTwoPrice] = useState(0);
       let [query, setQuery] = useState<string>('');
+      let [tokenList, setTokenList] = useState<any>();
+
+      useEffect(() => {
+        async function getTokenList() {
+          try{
+            const tList: [] = await ( await fetch (
+                `https://token.jup.ag/strict` //strict
+                // `https://token.jup.ag/all` //all
+              )
+            ).json();
+            setTokenList(tList.splice(0,10));  //splice(0,10) to take gest the first ten idems.
+            console.log('tokenList: ',tokenList)
+          } catch(e) {console.log('can not get price', e)}
+        }
+        getTokenList(); //get token list
+      },[]);
+
+      const [tokenOne, setTokenOne] = useState(
+        {
+          "symbol": "SOL",
+          "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
+          "name": "Wrapped SOL",
+          "address": "So11111111111111111111111111111111111111112",
+          "decimals": 9
+      }
+      );
+      const [tokenTwo, setTokenTwo] = useState(
+        {
+          "symbol": "USDC",
+          "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
+          "name": "USD Coin /sol",
+          "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          "decimals": 6
+      }
+      );
 
       //Token list that contain the search resalut
       // let tokenListSearch = [undefined];
@@ -243,6 +283,7 @@ const Swap = () => {
           setTokenTwoPrice(0)
         }
       }
+
   
       function switchTokens() {
           // setPrices(null);
@@ -430,10 +471,10 @@ const Swap = () => {
                       // })
 
                       // :
-                      tokenList?.filter((token) => 
+                      tokenList?.filter((token: any) => 
 
                       token.name.toLowerCase().includes(query) || //cheack token name
-                      token.ticker.toLowerCase().includes(query) || //cheack token simbol
+                      token.symbol.toLowerCase().includes(query) || //cheack token simbol
                       token.address.toLowerCase().includes(query)  //cheack token address
                       ).map((e: any, i: any) => {
                           return (
@@ -442,10 +483,10 @@ const Swap = () => {
                               key={i}
                               onClick={() => modifyToken(i)}
                           >
-                              <img src={e.img} alt={e.ticker} className={styles.tokenLogo} />
+                              <img src={e.logoURI} alt={e.ticker} className={styles.tokenLogo} />
                               <div className={styles.tokenChoiceNames}>
                                   <div className={styles.tokenName}>{e.name}</div>
-                                  <div className={styles.tokenTicker}>{e.ticker}</div>
+                                  <div className={styles.tokenTicker}>{e.symbol}</div>
                               </div>
                           </div>
                           );
@@ -486,21 +527,21 @@ const Swap = () => {
                           </div> */}
                           {/* <div className={styles.assetOne} onClick={() => openModal(1)}> */}
                           <div className={styles.assetOne} onClick={() => openModal(1)}>
-                              <img src={tokenOne.img} alt="assetOneLogo" className={styles.assetLogo} />
+                              <img src={tokenOne.logoURI} alt="assetOneLogo" className={styles.assetLogo} />
                               {/* <Image src={tokenOne.img} alt="assetOneLogo" width="22px" height="22px" className={styles.assetLogo} /> */}
-                              {tokenOne.ticker}
+                              {tokenOne.symbol}
                               <DownOutlined />
                           </div>
                           <div className={styles.assetTwo} onClick={() => openModal(2)}>
-                              <img src={tokenTwo.img} alt="assetTwoLogo" className={styles.assetLogo} />
-                              {tokenTwo.ticker}
+                              <img src={tokenTwo.logoURI} alt="assetTwoLogo" className={styles.assetLogo} />
+                              {tokenTwo.symbol}
                               <DownOutlined />
                           </div>
                           <div className={styles.assetOnePrice}>
-                            <h3>~ {tokenOnePrice} $</h3>
+                            <h3>{tokenOnePrice} $</h3>
                           </div>
                           <div className={styles.assetTwoPrice}>
-                            <h3>~ {tokenTwoPrice} $</h3>
+                            <h3>{tokenTwoPrice} $</h3>
                           </div>
                       </div>
                       {/* <div className={styles.swapButton} disabled={!tokenOneAmount || !isConnected} onClick={fetchDexSwap}>Swap</div> */}
@@ -511,4 +552,15 @@ const Swap = () => {
         </DefaultLayout>
       )
   }
+
+  //server side function
+  // export const getServerSideProps = async () => {
+  //   const query = await fetch('https://token.jup.ag/strict');
+  //   const response:[] = await query.json();
+  //   return {
+  //     props:{
+  //       tokenList: response.slice(0, 10) //take the first ten items
+  //     }
+  //   }
+  // }
   export default Swap;
