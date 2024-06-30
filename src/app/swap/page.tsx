@@ -28,7 +28,7 @@ import {
 import styles from './swap.module.css';
 import tokenList from './tokenList.json';
 
-let tokenListSearch: any[];
+let tokenListSearch: any[] | undefined;
 
 const Swap = () => {
       const wallet = useWallet();
@@ -77,18 +77,19 @@ const Swap = () => {
       function handleTokenListSearch(e: any) {
         tokenList?.map((t: any) => {
           if (e.target.value == t.ticker){
+            tokenListSearch = [];
             tokenListSearch.push(t)
             setIsOpen(false)
             setIsOpen(true)
-            console.log('tokenList: ',tokenList)
           }
           else if (e.target.value == t.address){
+            tokenListSearch = [];
             tokenListSearch.push(t)
             setIsOpen(false)
             setIsOpen(true)
           }
           else if (e.target.value == '') {
-            tokenListSearch = []
+            tokenListSearch = undefined
             setIsOpen(false)
             setIsOpen(true)
             console.log('nothing to search')
@@ -97,6 +98,8 @@ const Swap = () => {
           //   tokenListSearch = []
           // }
           console.log('tokenListSearch: ',tokenListSearch)
+
+          console.log('tokenList: ',tokenList)
         })
       }
   
