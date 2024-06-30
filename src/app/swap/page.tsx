@@ -77,7 +77,7 @@ const Swap = () => {
 
       function handleTokenListSearch(e: any) {
 
-        setQuery(e.target.value);
+        setQuery(e.target.value.toLowerCase);
 
         tokenList?.map((t: any) => {
           if (e.target.value == t.ticker){
