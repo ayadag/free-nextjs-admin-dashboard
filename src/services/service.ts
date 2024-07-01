@@ -208,7 +208,9 @@ export const init_pda = async (authority: PublicKey, wallet: WalletContextState)
     // }
 
     await sendTransaction(transactionInstruction, connection, wallet);
-    return pdaAddress[0];
+    // if(!pdaAddress)   //ayad
+    // return pdaAddress[0];
+    return pdaAddress;
 };
 const transfer_tokens = async (source_ata: PublicKey,
                                destination_ata: PublicKey,
