@@ -4,7 +4,10 @@ import DefaultLayout from '@/components/Layouts/DefaultLayout';
 
 import { CreateToken } from '../../components/tokenv1/CreateToken';
 
-// import { CreateToken2 } from '../../components/token/CreateToken2';
+// import {
+//   CreateToken2 as CreateToken,
+// } from '../../components/tokenv1/CreateToken2';
+
 //zzll
 // export const metadata: Metadata = {
 //   title:
