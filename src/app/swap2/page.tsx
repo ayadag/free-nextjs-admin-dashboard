@@ -12,7 +12,10 @@ import {
   Popover,
   Radio,
 } from 'antd';
-import { useSearchParams } from 'next/navigation';
+import {
+  useRouter,
+  useSearchParams,
+} from 'next/navigation';
 
 // import { useRouter } from 'next/router';
 import DefaultLayout from '@/components/Layouts/DefaultLayout';
@@ -123,6 +126,7 @@ import tList from './tokenList2.json';
       // }
 
       const searchParm = useSearchParams();
+      const router = useRouter();
 
       // if(searchParm.get('from')){
       //   console.log( `searchParm.get('from'): `,searchParm.get('from'))
@@ -295,19 +299,21 @@ import tList from './tokenList2.json';
       const debouncePriceCall = useCallback(debounce(getPrice, 500), [tokenOne, tokenTwo]);
   
       useEffect(() => {
-        if(searchParm.get('from')){
-          console.log(`searchParm.get('from'): `,searchParm.get('from'))
+        let from = searchParm.get('from');
+        if(from){
+          console.log(`searchParm.get('from'): `,from)
           for (let index = 0; index < tokenList.length; index++) {
-            if(tokenList[index].address == searchParm.get('from')){
+            if(tokenList[index].address == from){
               setTokenOne(tokenList[index]);
               console.log('tokenOne: ',tokenOne)
             }
           }
         }
-        if(searchParm.get('to')){
-          console.log(`searchParm.get('to'): `,searchParm.get('to'))
+        let to = searchParm.get('to');
+        if(to){
+          console.log(`searchParm.get('to'): `,to)
           for (let index = 0; index < tokenList.length; index++) {
-            if(tokenList[index].address == searchParm.get('to')){
+            if(tokenList[index].address == to){
               setTokenTwo(tokenList[index]);
               console.log('tokenTwo: ',tokenTwo)
             }
@@ -316,7 +322,35 @@ import tList from './tokenList2.json';
         
         debouncePriceCall();
         // getPrice(); //ayad
-      }, [tokenOne, tokenTwo, debouncePriceCall]);
+        console.log('getttttttttttttttttttttttttttt');
+      }, [tokenOne, tokenTwo, debouncePriceCall, searchParm]);
+
+      //This will called twice
+      useEffect(() => {
+        let from = searchParm.get('from');
+        if(from){
+          console.log(`searchParm.get('from'): `,from)
+          for (let index = 0; index < tokenList.length; index++) {
+            if(tokenList[index].address == from){
+              setTokenOne(tokenList[index]);
+              console.log('tokenOne: ',tokenOne)
+            }
+          }
+        }
+        let to = searchParm.get('to');
+        if(to){
+          console.log(`searchParm.get('to'): `,to)
+          for (let index = 0; index < tokenList.length; index++) {
+            if(tokenList[index].address == to){
+              setTokenTwo(tokenList[index]);
+              console.log('tokenTwo: ',tokenTwo)
+            }
+          }
+        }
+        debouncePriceCall();
+        // getPrice(); //ayad
+        console.log('getttttttttttt111111111111');
+      });
 
       async function getPrice() {
         //https://price.jup.ag/v6/price?ids=So11111111111111111111111111111111111111112
@@ -379,6 +413,16 @@ import tList from './tokenList2.json';
           setTokenTwo(one);
           // fetchPrices(two.address, one.address);
       }
+
+      function switchParams() {
+        setTokenOneAmount(0);
+        setTokenTwoAmount(0);
+
+        const from = searchParm.get('from');
+        const to = searchParm.get('to');
+
+        router.push(`/swap2?from=${to}&to=${from}`)
+    }
   
       function openModal(asset: any) {
           setChangeToken(asset);
@@ -413,7 +457,24 @@ import tList from './tokenList2.json';
           //  fetchPrices(tokenOne.address, tokenList[i].address)
           }
           setIsOpen(false);
+      }
+
+      function modifyUrlParam(i: any) {
+        let from = searchParm.get('from');
+        let to = searchParm.get('to');
+
+        setTokenOneAmount(0);
+        setTokenTwoAmount(0);
+
+        if (changeToken === 1) {
+          router.push(`/swap2?from=${i.address}&to=${to}`)
         }
+        else{
+          router.push(`/swap2?from=${from}&to=${i.address}`)
+        }
+
+        setIsOpen(false);
+      }
   
       async function signAndSendTransaction() {
           if (!wallet.connected || !wallet.signTransaction) {
@@ -587,7 +648,8 @@ import tList from './tokenList2.json';
                           <div
                               className={styles.tokenChoice}
                               key={i}
-                              onClick={() => modifyToken(i)}
+                              // onClick={() => modifyToken(i)}
+                              onClick={() => modifyUrlParam(e)}
                           >
                               <img src={e.logoURI} alt={e.symbol} className={styles.tokenLogo} />
                               <div className={styles.tokenChoiceNames}>
@@ -623,7 +685,8 @@ import tList from './tokenList2.json';
                           />
                           {/* //ayad/////// */}
                           <div className={styles.switchButton2}>
-                              <ArrowDownOutlined className={styles.switchArrow2} onClick={switchTokens}/>
+                              {/* <ArrowDownOutlined className={styles.switchArrow2} onClick={switchTokens}/> */}
+                              <ArrowDownOutlined className={styles.switchArrow2} onClick={switchParams}/>
                           </div>
                           <Input placeholder="0" 
                           value={tokenOneAmount==0 ? 0 : tokenTwoAmount} 
