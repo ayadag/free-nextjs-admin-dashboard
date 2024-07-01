@@ -418,10 +418,10 @@ import tList from './tokenList2.json';
         setTokenOneAmount(0);
         setTokenTwoAmount(0);
 
-        const from = searchParm.get('from');
-        const to = searchParm.get('to');
+        // const from = searchParm.get('from');
+        // const to = searchParm.get('to');
 
-        router.push(`/swap2?from=${to}&to=${from}`)
+        router.push(`/swap2?from=${tokenTwo.address}&to=${tokenOne.address}`)
     }
   
       function openModal(asset: any) {
