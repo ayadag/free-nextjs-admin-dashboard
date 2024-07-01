@@ -403,16 +403,16 @@ import tList from './tokenList2.json';
       }
 
   
-      function switchTokens() {
-          // setPrices(null);
-          setTokenOneAmount(0);
-          setTokenTwoAmount(0);
-          const one = tokenOne;
-          const two = tokenTwo;
-          setTokenOne(two);
-          setTokenTwo(one);
-          // fetchPrices(two.address, one.address);
-      }
+      // function switchTokens() {
+      //     // setPrices(null);
+      //     setTokenOneAmount(0);
+      //     setTokenTwoAmount(0);
+      //     const one = tokenOne;
+      //     const two = tokenTwo;
+      //     setTokenOne(two);
+      //     setTokenTwo(one);
+      //     // fetchPrices(two.address, one.address);
+      // }
 
       function switchParams() {
         setTokenOneAmount(0);
@@ -429,48 +429,48 @@ import tList from './tokenList2.json';
           setIsOpen(true);
       }
   
-      function modifyToken(i: any){
-          // setPrices(null);
-          setTokenOneAmount(0);
-          setTokenTwoAmount(0);
-          if (changeToken === 1) {
-              /////ayad/////
-              if(tokenTwoN == i){
-                  setTokenTwo(tokenOne);
-                  // tokenTwoN = tokenOneN;
-                  setTokenTwoN(tokenOneN);
-              }
+      // function modifyToken(i: any){
+      //     // setPrices(null);
+      //     setTokenOneAmount(0);
+      //     setTokenTwoAmount(0);
+      //     if (changeToken === 1) {
+      //         /////ayad/////
+      //         if(tokenTwoN == i){
+      //             setTokenTwo(tokenOne);
+      //             // tokenTwoN = tokenOneN;
+      //             setTokenTwoN(tokenOneN);
+      //         }
               
-              setTokenOne(tokenList[i]);
-              setTokenOneN(i);
-          //   fetchPrices(tokenList[i].address, tokenTwo.address)
-          } else {
-              ////ayad//////
-              if(tokenOneN == i) {
-                  setTokenOne(tokenTwo);
-                  //tokenOneN = tokenTwoN;
-                  setTokenOneN(tokenTwoN);
-              }
+      //         setTokenOne(tokenList[i]);
+      //         setTokenOneN(i);
+      //     //   fetchPrices(tokenList[i].address, tokenTwo.address)
+      //     } else {
+      //         ////ayad//////
+      //         if(tokenOneN == i) {
+      //             setTokenOne(tokenTwo);
+      //             //tokenOneN = tokenTwoN;
+      //             setTokenOneN(tokenTwoN);
+      //         }
               
-              setTokenTwo(tokenList[i]);
-              setTokenTwoN(i);
-          //  fetchPrices(tokenOne.address, tokenList[i].address)
-          }
-          setIsOpen(false);
-      }
+      //         setTokenTwo(tokenList[i]);
+      //         setTokenTwoN(i);
+      //     //  fetchPrices(tokenOne.address, tokenList[i].address)
+      //     }
+      //     setIsOpen(false);
+      // }
 
       function modifyUrlParam(i: any) {
-        let from = searchParm.get('from');
-        let to = searchParm.get('to');
+        // let from = searchParm.get('from');
+        // let to = searchParm.get('to');
 
         setTokenOneAmount(0);
         setTokenTwoAmount(0);
 
         if (changeToken === 1) {
-          router.push(`/swap2?from=${i.address}&to=${to}`)
+          router.push(`/swap2?from=${i.address}&to=${tokenTwo.address}`)
         }
         else{
-          router.push(`/swap2?from=${from}&to=${i.address}`)
+          router.push(`/swap2?from=${tokenOne.address}&to=${i.address}`)
         }
 
         setIsOpen(false);
