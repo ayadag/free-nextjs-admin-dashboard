@@ -26,9 +26,9 @@ import {
 } from '@solana/web3.js';
 
 import styles from './swap.module.css';
-
 // import tokenList from './tokenList.json';
 // import tokenList from './tokenList2.json';
+import tList from './tokenList2.json';
 
 // let tokenListSearch: any[] | undefined;
 
@@ -59,7 +59,8 @@ import styles from './swap.module.css';
       const [tokenOnePrice, setTokenOnePrice] = useState(0);
       const [tokenTwoPrice, setTokenTwoPrice] = useState(0);
       let [query, setQuery] = useState<string>(''); //search query
-      let [tokenList, setTokenList] = useState<any>(); //10 token list
+      // let [tokenList, setTokenList] = useState<any>(); //10 token list
+      let [tokenList, setTokenList] = useState<any>(tList); //token list
       // let [tTokenList, setTTokenList] = useState<any>(); //Total token list
 
       useEffect(() => {
