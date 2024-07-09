@@ -2,7 +2,9 @@
 // import { Metadata } from "next";
 import DefaultLayout from '@/components/Layouts/DefaultLayout';
 
-import { CreateToken } from '../../../components/tokenv1/CreateToken';
+import { Create as CreateToken } from '../../../components/tokenv1/create';
+
+// import { CreateToken } from '../../../components/tokenv1/CreateToken';
 
 // import {
 //   CreateToken2 as CreateToken,
