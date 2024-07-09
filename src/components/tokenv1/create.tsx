@@ -68,8 +68,8 @@ export const Create: FC = () => {
   const [successful, setSuccessful] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('Token create successfully');
   const [txid, setTxid] = useState<string>('3AnaX234ysBdwBxD8YMqgV2afbjkJswKVp7YPnkLM7jjgBx5VxV4odNEXaxxtqjE5js5G14e9YeLrusZ7CtGAZ7v');
-  const [error, setError] = useState<boolean>(true);
-
+  const [error, setError] = useState<boolean>(false);
+  const [details, setDetails] = useState<string>(''); //Error message details
 
   // if(!connection || !publicKey){return console.log('!connection || !publicKey')}
 
@@ -80,9 +80,16 @@ export const Create: FC = () => {
   const showSuccessfulMessage= () => {
     setSuccessful(true) //show successful message
     setTimeout(() => {
-      setSuccessful(false); //hide successful message after 10s
+      setSuccessful(false); //hide successful message after 15s
+    }, 15000);
+  };
+
+  const showErrorMessage= () => {
+    setError(true) //show Error message
+    setTimeout(() => {
+      setError(false); //hide Error message after 10s
     }, 10000);
-};
+  };
 
   //CREATE TOKEN FUNCION
   const createToken = useCallback(
@@ -192,7 +199,9 @@ export const Create: FC = () => {
         console.log('Token create successfully txid: ', signature); //ayad
       } catch (error: any) {
           // notify({ type: "error", message: "Token Creation failed, try later" });
-        console.error('Token Creation failed, try later') //ayad
+          setMessage('Token Creation failed, try later')
+          showErrorMessage()
+          console.error('Token Creation failed, try later') //ayad
       }
       setIsLoading(false);
     },
@@ -239,6 +248,8 @@ export const Create: FC = () => {
         return ImgHash;
       } catch (error: any) {
         //   notify({ type: "error", message: "Upload image failed" });
+        setMessage('Upload image failed')
+        showErrorMessage()
         console.error('Upload image failed')
       }
       setIsLoading(false);
@@ -251,6 +262,8 @@ export const Create: FC = () => {
     const { name, symbol, description, image } = token;
     if (!name || !symbol || !description || !image) {
       //   return notify({ type: "error", message: "Data Is Missing" });
+      setMessage('Data Is Missing')
+      showErrorMessage()
       return console.error('Data Is Missing: !name || !symbol || !description || !image',
         token.name,
         token.symbol,
@@ -282,6 +295,8 @@ export const Create: FC = () => {
       return url;
     } catch (error: any) {
       //   notify({ type: "error", message: "Upload to Pinnata Json failed" });
+      setMessage('Upload to Json data failed')
+      showErrorMessage()
       console.error('Upload to Pinnata Json failed')
     }
     setIsLoading(false);
@@ -290,7 +305,7 @@ export const Create: FC = () => {
     <>
       <Breadcrumb pageName="FormElements" />
       {successful && Successful(message, txid)} {/*sccessful message*/}
-      {error && Error()} {/*error message*/}
+      {error && Error(message, details)} {/*error message*/}
 
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
       {/* <Successful/> */}

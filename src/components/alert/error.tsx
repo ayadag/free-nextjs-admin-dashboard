@@ -1,4 +1,4 @@
-export const Error = () => {
+export const Error = (message: string, details: string) => {
     return (
         <>
             {/* <!-- Alerts Item --> */}
@@ -20,11 +20,13 @@ export const Error = () => {
                 </div>
                 <div className="w-full">
                     <h5 className="mb-3 font-semibold text-[#B45454]">
-                        There were 1 errors with your submission
+                        {/* There were 1 errors with your submission */}
+                        {message}
                     </h5>
                     <ul>
                         <li className="leading-relaxed text-[#CD5D5D]">
-                            Lorem Ipsum is simply dummy text of the printing
+                            {/* Lorem Ipsum is simply dummy text of the printing */}
+                            {details}
                         </li>
                     </ul>
                 </div>
