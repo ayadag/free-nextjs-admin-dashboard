@@ -34,6 +34,7 @@ import {
   Transaction,
 } from '@solana/web3.js';
 
+import { Error } from '../alert/error';
 // import { notify } from '../../utils/notifications';
 import { Successful } from '../alert/successful';
 
@@ -59,20 +60,29 @@ export const Create: FC = () => {
   const [token, setToken] = useState<Token>({
     name: "",
     symbol: "",
-    decimals: undefined,
-    amount: undefined,
+    decimals: Number(''),
+    amount: Number(''),
     image: "",
     description: "",
   });
-  const [successful, setSuccessful] = useState<boolean>(true);
+  const [successful, setSuccessful] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('Token create successfully');
   const [txid, setTxid] = useState<string>('3AnaX234ysBdwBxD8YMqgV2afbjkJswKVp7YPnkLM7jjgBx5VxV4odNEXaxxtqjE5js5G14e9YeLrusZ7CtGAZ7v');
+  const [error, setError] = useState<boolean>(true);
+
 
   // if(!connection || !publicKey){return console.log('!connection || !publicKey')}
 
   const handleFormFieldChange = (fieldName: any, e: any) => {
     setToken({ ...token, [fieldName]: e.target.value });
   };
+
+  const showSuccessfulMessage= () => {
+    setSuccessful(true) //show successful message
+    setTimeout(() => {
+      setSuccessful(false); //hide successful message after 10s
+    }, 10000);
+};
 
   //CREATE TOKEN FUNCION
   const createToken = useCallback(
@@ -85,6 +95,7 @@ export const Create: FC = () => {
         mintKeypair.publicKey,
         publicKey
       );
+      // showSuccessful(); //show sccessful message
 
       try {
         console.log('token: ', token)
@@ -174,7 +185,10 @@ export const Create: FC = () => {
           //     message: "Token create successfully",
           //     txid: signature,
           // });
-
+        
+        setMessage('Token create successfully');
+        setTxid(`${signature}`);
+        showSuccessfulMessage(); //show successful message for 10 seccond
         console.log('Token create successfully txid: ', signature); //ayad
       } catch (error: any) {
           // notify({ type: "error", message: "Token Creation failed, try later" });
@@ -275,7 +289,8 @@ export const Create: FC = () => {
   return (
     <>
       <Breadcrumb pageName="FormElements" />
-      {successful && Successful(message, txid)}
+      {successful && Successful(message, txid)} {/*sccessful message*/}
+      {error && Error()} {/*error message*/}
 
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
       {/* <Successful/> */}
