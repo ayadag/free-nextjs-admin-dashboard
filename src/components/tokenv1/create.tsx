@@ -46,6 +46,14 @@ import {
 //   import { notify } from '../../utils/notifications';
 //   import { InputView } from '../index';
   
+type Token ={
+    name: string,
+    symbol: string,
+    decimals: number | undefined,
+    amount: number | undefined,
+    image: string,
+    description: string,
+  }
   export const Create:FC = () => {
     const { connection } = useConnection();
     const { publicKey, sendTransaction } = useWallet();
@@ -57,11 +65,11 @@ import {
     const [enabled, setEnabled] = useState(false); //ayad
     const [image, setImage] = useState(); //ayad
 
-    const [token, setToken] = useState({
+    const [token, setToken] = useState<Token>({
       name: "",
-      Symbol: "",
-      decimals: "",
-      amount: "",
+      symbol: "",
+      decimals: undefined,
+      amount: undefined,
       image: "",
       description: "",
     });
@@ -74,7 +82,7 @@ import {
   
     //CREATE TOKEN FUNCION
     const createToken = useCallback(
-      async(token: any) => {
+      async(token: Token) => {
         if(!connection || !publicKey){return console.log('!connection || !publicKey')}
 
         const lamports = await getMinimumBalanceForRentExemptMint(connection);
@@ -85,6 +93,7 @@ import {
         );
   
         try {
+          console.log('token: ',token)
           const metadataUrl = await uploadMetadata(token);
           if(!metadataUrl){return console.error('!metadataUrl')}
           console.log(metadataUrl);
@@ -174,19 +183,20 @@ import {
   
     //IMAGE UPLOAD IPFS
     const handleImageChange = async (event: any) => {
-        //////ayad
-     if (event.target.files && event.target.files.length > 0) {
-        setImage(event.target.files[0]);
-      }
-      else {setImage(undefined)}  //deleate image
-///////ayad///////////
       const file = event.target.files[0];
 
-       if (file) {
+        if (file) {
           const imgUrl = await uploadImagePinata(file);
-          if (imgUrl)
+          if (!imgUrl){return console.error('!imgUrl')}
           setToken({ ...token, image: imgUrl });
-      }
+        //   setImage(event.target.files[0]); //ayad
+        }
+        //////ayad
+        if (event.target.files && event.target.files.length > 0) {
+            setImage(event.target.files[0]);
+        } 
+        // else {setImage(undefined)}  //deleate image
+        ///////ayad///////////
     };
   
     const uploadImagePinata = async (file: any) => {
@@ -207,6 +217,7 @@ import {
               });
   
               const ImgHash = `https://gateway.pinata.cloud/ipfs/${response.data.IpfsHash}`;
+              console.log('ImgHash: ', ImgHash)
               return ImgHash;
           } catch (error: any) {
             //   notify({ type: "error", message: "Upload image failed" });
@@ -217,12 +228,17 @@ import {
     };
   
     //METADATA
-    const uploadMetadata = async (token: any) => {
+    const uploadMetadata = async (token: Token) => {
       setIsLoading(true);
       const { name, symbol, description, image } = token;
       if (!name || !symbol || !description || !image) {
         //   return notify({ type: "error", message: "Data Is Missing" });
-        console.error('Data Is Missing')
+        console.error('Data Is Missing: !name || !symbol || !description || !image',
+            String(token.name),
+            token.symbol,
+            token.description,
+            token.image
+        )
       }
   
       const data = JSON.stringify({
@@ -314,7 +330,7 @@ import {
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   onChange={(e) =>
                     handleFormFieldChange
-                    ("Symbol", e)}
+                    ("symbol", e)}
                 />
               </div>
 
@@ -545,7 +561,7 @@ import {
 
               {/* <div className='flex'> */}
                 <label className="mb-2 block text-sm font-medium text-black dark:text-white">
-                  {`Symbol : ${token.Symbol}`}
+                  {`Symbol : ${token.symbol}`}
                 </label>
               {/* </div> */}
 
@@ -563,7 +579,7 @@ import {
 
               {/* <div className='flex'> */}
                 <label className="mb-2 block text-sm font-medium text-black dark:text-white">
-                  {`Descimals : ${token.decimals}`}
+                  {`Decimals : ${token.decimals}`}
                 </label>
               {/* </div> */}
 
@@ -574,7 +590,7 @@ import {
                       className="flex justify-center rounded bg-primary px-20 py-2 font-medium text-gray hover:bg-opacity-90"
                       type="submit"
                     //   onClick={() => onClick({decimals: Number(descimals), amount: Number(supply), metadata: metadata, symbol: symbol, tokenName: name})}
-                      onClick = {() => createToken}
+                      onClick = {createToken}
                     >
                       Save
                 </button>
