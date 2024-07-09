@@ -8,6 +8,13 @@ import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
 const FormElements = () => {
   const [mainInput, setMainInput] = useState(false);
   const [enabled, setEnabled] = useState(false);
+
+  const [image, setImage] = useState();
+  const [name, setName] = useState('');
+  const [symbol, setSymbol] = useState('');
+  const [description, setDescriotion] = useState('');
+  const [supply, setSupply] = useState('');
+  const [descimals, setDescimals] = useState('');
   return (
     <>
       <Breadcrumb pageName="FormElements" />
@@ -53,6 +60,7 @@ const FormElements = () => {
                   type="text"
                   placeholder="Name"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  onChange={e => setName(e.target.value)}
                 />
               </div>
 
@@ -64,6 +72,7 @@ const FormElements = () => {
                   type="text"
                   placeholder="Symbol"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  onChange={e => setSymbol(e.target.value)}
                 />
               </div>
 
@@ -75,6 +84,7 @@ const FormElements = () => {
                   rows={3}
                   placeholder="Description"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  onChange={e => setDescriotion(e.target.value)}
                 />
               </div>
 
@@ -86,6 +96,7 @@ const FormElements = () => {
                   type="number"
                   placeholder="Supply"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  onChange={e => setSupply(e.target.value)}
                 />
               </div>
 
@@ -97,6 +108,7 @@ const FormElements = () => {
                   type="number"
                   placeholder="Descimals"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                  onChange={e => setDescimals(e.target.value)}
                 />
               </div>
 
@@ -269,39 +281,52 @@ const FormElements = () => {
         {/* </div> */}
               </div>
 
-              <div className='flex'>
-                <label className="mb-0 block text-sm font-medium text-black dark:text-white">
-                  {`Name : ${`SALD`}`}
+              <div>
+
+              {/* <div className='flex'> */}
+                <label className="mb-2 block text-sm font-medium text-black dark:text-white">
+                  {`Name : ${name}`}
                 </label>
                 {/* <div className='self-end'> */}
                 {/* <label className="mb-3 block text-sm font-medium text-black dark:text-white">
                   {`: SALD`} 
                 </label> */}
                 {/* </div> */}
+              {/* </div> */}
+
+              {/* <div className='flex'> */}
+                <label className="mb-2 block text-sm font-medium text-black dark:text-white">
+                  {`Symbol : ${symbol}`}
+                </label>
+              {/* </div> */}
+
+              {/* <div className='flex'> */}
+                <label className="mb-2 block text-sm font-medium text-black dark:text-white">
+                  {`Description : ${description}`}
+                </label>
+              {/* </div> */}
+
+              {/* <div className='flex'> */}
+                <label className="mb-2 block text-sm font-medium text-black dark:text-white">
+                  {`Descimals : ${descimals}`}
+                </label>
+              {/* </div> */}
+
+              {/* <div className='flex'> */}
+                <label className="mb-0 block text-sm font-medium text-black dark:text-white">
+                  {`Supply : ${supply}`}
+                </label>
+              {/* </div> */}
+
               </div>
 
-              <div className='flex'>
-                <label className="mb-0 block text-sm font-medium text-black dark:text-white">
-                  {`Symbol : ${`SALD`}`}
-                </label>
-              </div>
-
-              <div className='flex'>
-                <label className="mb-0 block text-sm font-medium text-black dark:text-white">
-                  {`Description : ${`SALD is Meme token`}`}
-                </label>
-              </div>
-
-              <div className='flex'>
-                <label className="mb-0 block text-sm font-medium text-black dark:text-white">
-                  {`Decimals : ${`9`}`}
-                </label>
-              </div>
-
-              <div className='flex'>
-                <label className="mb-0 block text-sm font-medium text-black dark:text-white">
-                  {`Supply : ${`1000000000`}`}
-                </label>
+              <div className='self-center'>
+                <button
+                      className="flex justify-center rounded bg-primary px-20 py-2 font-medium text-gray hover:bg-opacity-90"
+                      type="submit"
+                    >
+                      Save
+                </button>
               </div>
 
               {/* <div>
