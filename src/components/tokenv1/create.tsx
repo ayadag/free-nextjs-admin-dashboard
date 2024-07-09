@@ -303,7 +303,7 @@ export const Create: FC = () => {
   };
   return (
     <>
-      <Breadcrumb pageName="FormElements" />
+      <Breadcrumb pageName="CreateTokenV1" />
       {successful && Successful(message, txid)} {/*sccessful message*/}
       {error && Error(message, details)} {/*error message*/}
 
@@ -343,6 +343,7 @@ export const Create: FC = () => {
                   onChange={(e) =>
                     handleFormFieldChange
                       ("name", e)}
+                  required
                 />
               </div>
 
