@@ -34,6 +34,9 @@ import {
   Transaction,
 } from '@solana/web3.js';
 
+// import { notify } from '../../utils/notifications';
+import { Successful } from '../alert/successful';
+
 type Token = {
   name: string,
   symbol: string,
@@ -61,6 +64,9 @@ export const Create: FC = () => {
     image: "",
     description: "",
   });
+  const [successful, setSuccessful] = useState<boolean>(true);
+  const [message, setMessage] = useState<string>('Token create successfully');
+  const [txid, setTxid] = useState<string>('3AnaX234ysBdwBxD8YMqgV2afbjkJswKVp7YPnkLM7jjgBx5VxV4odNEXaxxtqjE5js5G14e9YeLrusZ7CtGAZ7v');
 
   // if(!connection || !publicKey){return console.log('!connection || !publicKey')}
 
@@ -163,15 +169,16 @@ export const Create: FC = () => {
         );
 
         setTokenMintAddress(mintKeypair.publicKey.toString());
-        //   notify({
-        //       type: "success",
-        //       message: "Token create successfully",
-        //       txid: signature,
-        //   });
-        console.log('Token create successfully txid: ', signature);
+          // notify({
+          //     type: "success",
+          //     message: "Token create successfully",
+          //     txid: signature,
+          // });
+
+        console.log('Token create successfully txid: ', signature); //ayad
       } catch (error: any) {
-        //   notify({ type: "error", message: "Token Creation failed, try later" });
-        console.error('Token Creation failed, try later')
+          // notify({ type: "error", message: "Token Creation failed, try later" });
+        console.error('Token Creation failed, try later') //ayad
       }
       setIsLoading(false);
     },
@@ -214,7 +221,7 @@ export const Create: FC = () => {
         });
 
         const ImgHash = `https://gateway.pinata.cloud/ipfs/${response.data.IpfsHash}`;
-        console.log('ImgHash: ', ImgHash)
+        // console.log('ImgHash: ', ImgHash)
         return ImgHash;
       } catch (error: any) {
         //   notify({ type: "error", message: "Upload image failed" });
@@ -268,11 +275,14 @@ export const Create: FC = () => {
   return (
     <>
       <Breadcrumb pageName="FormElements" />
+      {successful && Successful(message, txid)}
 
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
+      {/* <Successful/> */}
         <div className="flex flex-col gap-9">
           {/* <!-- Main Input Details --> */}
           {/* {mainInput && */}
+          {/* <Successful/> */}
           <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
               <h3 className="font-medium text-black dark:text-white">
