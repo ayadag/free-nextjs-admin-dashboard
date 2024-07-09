@@ -1,12 +1,47 @@
 "use client";
-import { useState } from 'react';
+import {
+  FC,
+  useCallback,
+  useState,
+} from 'react';
 
 import Image from 'next/image';
 
 import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
+import {
+  createCreateMetadataAccountV3Instruction,
+  PROGRAM_ID,
+} from '@metaplex-foundation/mpl-token-metadata';
+import {
+  AuthorityType,
+  createAssociatedTokenAccountInstruction,
+  createInitializeMintInstruction,
+  createMintToInstruction,
+  createSetAuthorityInstruction,
+  getAssociatedTokenAddress,
+  getMinimumBalanceForRentExemptMint,
+  MINT_SIZE,
+  TOKEN_PROGRAM_ID,
+} from '@solana/spl-token';
+// import { FC, useCallback, useState } from 'react';
+import {
+  useConnection,
+  useWallet,
+} from '@solana/wallet-adapter-react';
+import {
+  Keypair,
+  PublicKey,
+  SystemProgram,
+  Transaction,
+} from '@solana/web3.js';
 
-const FormElements = () => {
-  const [mainInput, setMainInput] = useState(false);
+// import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+// import Image from "next/image";
+
+const FormElements:FC = () => {
+  const { connection } = useConnection();
+  const { publicKey, sendTransaction } = useWallet();
+  // const [mainInput, setMainInput] = useState(false);
   const [enabled, setEnabled] = useState(false);
 
   const [image, setImage] = useState();
@@ -15,6 +50,7 @@ const FormElements = () => {
   const [description, setDescriotion] = useState('');
   const [supply, setSupply] = useState('');
   const [descimals, setDescimals] = useState('');
+  const [metadata, setMetadata] = useState('')
 
   const handleImage = (e: any) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -22,6 +58,134 @@ const FormElements = () => {
     }
     else {setImage(undefined)}  //deleate image
   };
+
+  const onClick = useCallback(async (form: any) => {
+    const lamports = await getMinimumBalanceForRentExemptMint(connection);
+    const mintKeypair = Keypair.generate();
+
+  //   const tokenATA;
+    if(publicKey !== null ){
+      const tokenATA = await getAssociatedTokenAddress(mintKeypair.publicKey, publicKey);
+  //   } else {
+  //     return;
+  //   }
+
+  //   const tokenATA = await getAssociatedTokenAddress(mintKeypair.publicKey, publicKey);
+
+    const createMetadataInstruction = createCreateMetadataAccountV3Instruction(
+      {
+        metadata: PublicKey.findProgramAddressSync(
+          [
+            Buffer.from("metadata"),
+            PROGRAM_ID.toBuffer(),
+            mintKeypair.publicKey.toBuffer(),
+          ],
+          PROGRAM_ID,
+        )[0],
+        mint: mintKeypair.publicKey,
+        mintAuthority: publicKey,
+        payer: publicKey,
+        updateAuthority: publicKey,
+      },
+      {
+        createMetadataAccountArgsV3: {
+          data: {
+            name: form.tokenName,
+            symbol: form.symbol,
+            uri: form.metadata,
+            creators: null,
+            sellerFeeBasisPoints: 0,
+            uses: null,
+            collection: null,
+          },
+          isMutable: false,
+          collectionDetails: null,
+        },
+      },
+    );
+
+    const createNewTokenTransaction = new Transaction().add(
+      SystemProgram.createAccount({
+          fromPubkey: publicKey,
+          newAccountPubkey: mintKeypair.publicKey,
+          space: MINT_SIZE,
+          lamports: lamports,
+          programId: TOKEN_PROGRAM_ID,
+      }),
+      createInitializeMintInstruction(
+        mintKeypair.publicKey, 
+        form.decimals, 
+        publicKey, 
+        publicKey, 
+        TOKEN_PROGRAM_ID),
+      createAssociatedTokenAccountInstruction(
+        publicKey,
+        tokenATA,
+        publicKey,
+        mintKeypair.publicKey,
+      ),
+      createMintToInstruction(
+        mintKeypair.publicKey,
+        tokenATA,
+        publicKey,
+        form.amount * Math.pow(10, form.decimals),
+      ),
+      createMetadataInstruction,
+      
+      createSetAuthorityInstruction(
+        mintKeypair.publicKey, // mint acocunt || token account
+        // tokenATA,
+        publicKey, // current auth
+        AuthorityType.FreezeAccount, // authority type
+        null
+      )
+
+      
+      ////////////////ayad///////////
+      // createSetAuthorityInstruction(
+      //   mintKeypair.publicKey, // mint acocunt || token account
+      //   PublicKey, // current auth
+      //   AuthorityType.MintTokens, // authority type
+      //   null
+      // ),
+      // createSetAuthorityInstruction(
+      //   mintKeypair.publicKey, // mint acocunt || token account
+      //   PublicKey, // current auth
+      //   AuthorityType.FreezeAccount, // authority type
+      //   null
+      // )
+
+      // setAuthority(
+      //   mintKeypair.publicKey, // mint acocunt || token account
+      //   PublicKey, // current auth
+      //   AuthorityType.FreezeAccount, // authority type
+      //   null
+      // )
+      
+      
+
+    );
+    ///////////ayad//////////
+    // createNewTokenTransaction.add(
+    //   createSetAuthorityInstruction(
+    //       mintKeypair.publicKey, // mint acocunt || token account
+    //       PublicKey, // current auth
+    //       AuthorityType.FreezeAccount, // authority type
+    //       null,
+    //       TOKEN_PROGRAM_ID
+    //     )
+    // );
+
+  
+
+    await sendTransaction(createNewTokenTransaction, connection, {signers: [mintKeypair]});
+
+  } else {
+      return;
+    }
+
+}, [publicKey, connection, sendTransaction]);
+
 
   return (
     <>
@@ -319,14 +483,14 @@ const FormElements = () => {
               {/* </div> */}
 
               {/* <div className='flex'> */}
-                <label className="mb-2 block text-sm font-medium text-black dark:text-white">
-                  {`Descimals : ${descimals}`}
+                <label className="mb-0 block text-sm font-medium text-black dark:text-white">
+                  {`Supply : ${supply}`}
                 </label>
               {/* </div> */}
 
               {/* <div className='flex'> */}
-                <label className="mb-0 block text-sm font-medium text-black dark:text-white">
-                  {`Supply : ${supply}`}
+                <label className="mb-2 block text-sm font-medium text-black dark:text-white">
+                  {`Descimals : ${descimals}`}
                 </label>
               {/* </div> */}
 
@@ -336,6 +500,8 @@ const FormElements = () => {
                 <button
                       className="flex justify-center rounded bg-primary px-20 py-2 font-medium text-gray hover:bg-opacity-90"
                       type="submit"
+                      onClick={() => onClick({decimals: Number(descimals), amount: Number(supply), metadata: metadata, symbol: symbol, tokenName: name})}
+            
                     >
                       Save
                 </button>
