@@ -15,6 +15,14 @@ const FormElements = () => {
   const [description, setDescriotion] = useState('');
   const [supply, setSupply] = useState('');
   const [descimals, setDescimals] = useState('');
+
+  const handleImage = (e: any) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setImage(e.target.files[0]);
+    }
+    else {setImage(undefined)}  //deleate image
+  };
+
   return (
     <>
       <Breadcrumb pageName="FormElements" />
@@ -38,6 +46,7 @@ const FormElements = () => {
                 <input
                   type="file"
                   className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:px-5 file:py-3 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
+                  onChange={handleImage}
                 />
               </div>
 
@@ -266,18 +275,21 @@ const FormElements = () => {
                   Image
                 </label> */}
                 {/* <div className='self-center'> */}
-                <span className="h-12 w-12 rounded-full">
+                {image && <span className="h-12 w-12 rounded-full">
+          {/* {image &&  */}
           <Image
             width={112}
             height={112}
-            src={"/images/user/user-01.png"}
+            // src={"/images/user/user-01.png"}
+            src={URL.createObjectURL(image)}
             style={{
               width: "auto",
               height: "auto",
             }}
             alt="User"
           />
-        </span>
+          {/* } */}
+        </span>}
         {/* </div> */}
               </div>
 
