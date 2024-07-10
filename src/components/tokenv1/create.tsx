@@ -1,12 +1,15 @@
 import React, {
   FC,
   useCallback,
+  useEffect,
+  useRef,
   useState,
 } from 'react';
 
 import axios from 'axios';
 import Image from 'next/image';
 
+// import { useRouter } from 'next/navigation';
 import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
 import {
   createCreateMetadataAccountV3Instruction,
@@ -34,7 +37,7 @@ import {
   Transaction,
 } from '@solana/web3.js';
 
-import { Error } from '../alert/error';
+import Error from '../alert/error';
 // import { notify } from '../../utils/notifications';
 import { Successful } from '../alert/successful';
 
@@ -71,21 +74,42 @@ export const Create: FC = () => {
   const [error, setError] = useState<boolean>(false);
   const [details, setDetails] = useState<string>(''); //Error message details
 
+  // const messageRef = useRef<null | HTMLElement>(null); //ref to scroll
+  const messageRef = useRef<any>(null); //ref to scroll
+  // const router = useRouter();
+
   // if(!connection || !publicKey){return console.log('!connection || !publicKey')}
+
+  //scroll effect whenever the message change
+  useEffect(() => {
+    messageRef.current?.scrollIntoView();
+  }, [message]);
 
   const handleFormFieldChange = (fieldName: any, e: any) => {
     setToken({ ...token, [fieldName]: e.target.value });
   };
 
   const showSuccessfulMessage= () => {
+    // window.scroll({
+    //   top:0, //scroll to the top of page
+    //   behavior: 'smooth'
+    // })
     setSuccessful(true) //show successful message
+    // messageRef.current?.scrollIntoView({ behavior: 'smooth' });
     setTimeout(() => {
       setSuccessful(false); //hide successful message after 15s
     }, 15000);
   };
 
   const showErrorMessage= () => {
+    // window.scrollTo({
+    //   top:0, //scroll to the top of page
+    //   behavior: 'smooth'
+    // })
+    // router.push(`/tokenv1/create`)
     setError(true) //show Error message
+    // window.scrollTo(0,0) //scroll to x=0 y=0
+    // router.push(`/tokenv1/create`)
     setTimeout(() => {
       setError(false); //hide Error message after 10s
     }, 10000);
@@ -303,9 +327,13 @@ export const Create: FC = () => {
   };
   return (
     <>
+      <div ref={messageRef}></div> {/*scroll to this emty dev*/}
       <Breadcrumb pageName="CreateTokenV1" />
+      {/* <div ref={messageRef}></div>  */}
       {successful && Successful(message, txid)} {/*sccessful message*/}
-      {error && Error(message, details)} {/*error message*/}
+      {/* {error && Error(message, details, messageRef)} error message */}
+      {error && Error(message, details)} 
+      
 
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
       {/* <Successful/> */}
