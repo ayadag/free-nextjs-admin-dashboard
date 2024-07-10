@@ -83,7 +83,7 @@ export const Create: FC = () => {
   //scroll effect whenever the message change
   useEffect(() => {
     messageRef.current?.scrollIntoView();
-  }, [message]);
+  }, [error,txid]);
 
   const handleFormFieldChange = (fieldName: any, e: any) => {
     setToken({ ...token, [fieldName]: e.target.value });
