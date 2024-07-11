@@ -211,6 +211,7 @@ const CreateToken: FC = () => {
         //////////////////////////////////////////////
         // const transferFeeConfigAuthority = new PublicKey(event.target.fee.value);
         // const withdrawWithheldAuthority = new PublicKey(event.target.fee.value);
+        console.log('configAuthority: ',configAuthority);
         const transferFeeConfigAuthority = new PublicKey(configAuthority);
         const withdrawWithheldAuthority = new PublicKey(withdrawAuthority);
         // const feeBasisPoints = 300;
@@ -306,7 +307,7 @@ const CreateToken: FC = () => {
         //     updateFieldInstruction2,
         //     updateFieldInstruction3
         // );
-        
+
         if(taxSwitch){
           transaction = new Transaction().add(
                   createAccountInstruction,
