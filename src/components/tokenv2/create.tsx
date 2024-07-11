@@ -15,16 +15,33 @@ import {
   createCreateMetadataAccountV3Instruction,
   PROGRAM_ID,
 } from '@metaplex-foundation/mpl-token-metadata';
+// import {
+//   AuthorityType,
+//   createAssociatedTokenAccountInstruction,
+//   createInitializeMintInstruction,
+//   createMintToInstruction,
+//   createSetAuthorityInstruction,
+//   getAssociatedTokenAddress,
+//   getMinimumBalanceForRentExemptMint,
+//   MINT_SIZE,
+// } from '@solana/spl-token';
+
 import {
-  AuthorityType,
+  ASSOCIATED_TOKEN_PROGRAM_ID,
   createAssociatedTokenAccountInstruction,
+  createInitializeMetadataPointerInstruction,
   createInitializeMintInstruction,
+  createInitializeTransferFeeConfigInstruction,
   createMintToInstruction,
-  createSetAuthorityInstruction,
+  createUpdateFieldInstruction,
+  ExtensionType,
   getAssociatedTokenAddress,
+  getMintLen,
+  LENGTH_SIZE,
+  TOKEN_2022_PROGRAM_ID,
+  TYPE_SIZE,
   getMinimumBalanceForRentExemptMint,
-  MINT_SIZE,
-} from '@solana/spl-token';
+} from '@solana/spl-token-3';
 import {
   useConnection,
   useWallet,
@@ -77,6 +94,18 @@ export const Create: FC = () => {
   // const messageRef = useRef<null | HTMLElement>(null); //ref to scroll
   const messageRef = useRef<any>(null); //ref to scroll
   // const router = useRouter();
+
+  const payer = publicKey;
+  const mintKeypair = Keypair.generate();
+        // Address for Mint Account
+  const mint = mintKeypair.publicKey;
+
+        // Transaction signature returned from sent transaction
+  let transactionSignature: string;
+
+        // Authority that can mint new tokens
+  const mintAuthority = publicKey;
+  const decimals = 9;
 
   // if(!connection || !publicKey){return console.log('!connection || !publicKey')}
 
@@ -146,7 +175,7 @@ export const Create: FC = () => {
           mintAuthority: publicKey,
           payer: publicKey,
           updateAuthority: publicKey,
-        },
+          },
           {
             createMetadataAccountArgsV3: {
               data: {
@@ -161,66 +190,262 @@ export const Create: FC = () => {
               isMutable: false,
               collectionDetails: null,
             },
+        });
+        /////////////////////////////////////////////
+        const transferFeeConfigAuthority = new PublicKey(publicKey);
+        const withdrawWithheldAuthority = new PublicKey(publicKey);
+        const feeBasisPoints = 300;
+        const maxFee = BigInt(100);
+        const mintLen = getMintLen([ExtensionType.MetadataPointer, ExtensionType.TransferFeeConfig]);
+
+        // Minimum lamports required for Mint Account
+        // const lamports = await connection.getMinimumBalanceForRentExemption(mintLen + metadataExtension + metadataLen);
+
+        // Instruction to invoke System Program to create new account
+        if(!payer){return console.log('!payer')}
+        const createAccountInstruction = SystemProgram.createAccount({
+          fromPubkey: payer, // Account that will transfer lamports to created account
+          newAccountPubkey: mint, // Address of the account to create
+          space: mintLen, // Amount of bytes to allocate to the created account
+          lamports, // Amount of lamports transferred to created account
+          programId: TOKEN_2022_PROGRAM_ID, // Program assigned as owner of created account
+        });
+
+        // Instruction to initialize Metadata Pointer Extension
+        // const initializeMetadataPointerInstruction =
+        //     createInitializeMetadataPointerInstruction(
+        //         mint, // Mint Account address
+        //         updateFromUser, // Authority that can set the metadata address
+        //         mint, // Account address that holds the metadata
+        //         TOKEN_2022_PROGRAM_ID
+        // );
+
+        // Instruction to initialize TransferFeeConfig Extension
+        const initializeTransferFeeConfig =
+            createInitializeTransferFeeConfigInstruction(
+                mint, // Mint Account address
+                transferFeeConfigAuthority, // Authority to update fees
+                withdrawWithheldAuthority, // Authority to withdraw fees
+                feeBasisPoints, // Basis points for transfer fee calculation
+                maxFee, // Maximum fee per transfer
+                TOKEN_2022_PROGRAM_ID // Token Extension Program ID
+        );
+
+        // Instruction to initialize Mint Account data
+        if(!mintAuthority){return console.log('!mintAuthority')}
+        const initializeMintInstruction = createInitializeMintInstruction(
+          mint, // Mint Account Address
+          decimals, // Decimals of Mint
+          mintAuthority, // Designated Mint Authority
+          null, // Optional Freeze Authority
+          TOKEN_2022_PROGRAM_ID // Token Extension Program ID
+        );
+
+        // Instruction to initialize Metadata Account data
+        // const initializeMetadataInstruction = createInitializeInstruction({
+        //   programId: TOKEN_2022_PROGRAM_ID, // Token Extension Program as Metadata Program
+        //   metadata: mint, // Account address that holds the metadata
+        //   updateAuthority: updateFromUser, // Authority that can update the metadata
+        //   mint: mint, // Mint Account address
+        //   mintAuthority: mintAuthority, // Designated Mint Authority
+        //   name: metaData.name,
+        //   symbol: metaData.symbol,
+        //   uri: metaData.uri,
+        // });
+
+        // const updateFieldInstruction = createUpdateFieldInstruction({
+        //   programId: TOKEN_2022_PROGRAM_ID, // Token Extension Program as Metadata Program
+        //   metadata: mint, // Account address that holds the metadata
+        //   updateAuthority: updateFromUser, // Authority that can update the metadata
+        //   field: metaData.additionalMetadata[0][0], // key
+        //   value: metaData.additionalMetadata[0][1], // value
+        // });
+        // const updateFieldInstruction2 = createUpdateFieldInstruction({
+        //   programId: TOKEN_2022_PROGRAM_ID, // Token Extension Program as Metadata Program
+        //   metadata: mint, // Account address that holds the metadata
+        //   updateAuthority: updateFromUser, // Authority that can update the metadata
+        //   field: metaData.additionalMetadata[1][0], // key
+        //   value: metaData.additionalMetadata[1][1], // value
+        // });
+        // const updateFieldInstruction3 = createUpdateFieldInstruction({
+        //   programId: TOKEN_2022_PROGRAM_ID, // Token Extension Program as Metadata Program
+        //   metadata: mint, // Account address that holds the metadata
+        //   updateAuthority: updateFromUser, // Authority that can update the metadata
+        //   field: metaData.additionalMetadata[2][0], // key
+        //   value: metaData.additionalMetadata[2][1], // value
+        // });
+
+        // const owner = new PublicKey(event.target.owner.value);
+        const owner = publicKey;
+        const mintAmount = BigInt(40_000_000 * Math.pow(10, decimals));
+
+        const transaction = new Transaction().add(
+          createAccountInstruction,
+          // initializeMetadataPointerInstruction,
+          initializeTransferFeeConfig,
+          initializeMintInstruction,
+          // initializeMetadataInstruction,
+          // updateFieldInstruction,
+          // updateFieldInstruction2,
+          // updateFieldInstruction3
+
+          createMetadataInstruction //ayad
+        );
+
+        const { blockhash, lastValidBlockHeight } =    await connection.getLatestBlockhash();
+        transaction.recentBlockhash = blockhash;
+        transaction.lastValidBlockHeight = lastValidBlockHeight;
+        transaction.feePayer = publicKey;
+
+        try {
+          const serializedTransaction = transaction.serialize({    requireAllSignatures: false,
           });
+          const base64 = serializedTransaction.toString("base64");
+          console.log("TEST TX", base64);
+          transactionSignature = await sendTransaction(
+              transaction,
+              connection,
+              {signers: [mintKeypair]}
+          );
 
-        const createNewTokenTransaction = new Transaction().add(
-          SystemProgram.createAccount({
-            fromPubkey: publicKey,
-            newAccountPubkey: mintKeypair.publicKey,
-            space: MINT_SIZE,
-            lamports: lamports,
-            programId: TOKEN_PROGRAM_ID,
-          }),
-          createInitializeMintInstruction(
-            mintKeypair.publicKey,
-            Number(token.decimals),
-            publicKey,
-            publicKey,
-            TOKEN_PROGRAM_ID
-          ),
-          createAssociatedTokenAccountInstruction(
-            publicKey,
-            tokenATA,
-            publicKey,
-            mintKeypair.publicKey
-          ),
-          createMintToInstruction(
-            mintKeypair.publicKey,
-            tokenATA,
-            publicKey,
-            Number(token.amount) * Math.pow(10, Number(token.decimals))
-          ),
-          createMetadataInstruction,
+          postMessage(
+              `LET'S GOOO:"https://solana.fm/tx/${transactionSignature}?cluster=devnet-solana`
+          );
+          //ayad/////////
+          console.log("Mint Address", mint.toBase58());
+          console.log("Transaction Signature", transactionSignature);
 
-          //ayad//////////////////
-          createSetAuthorityInstruction(
-            mintKeypair.publicKey, // mint acocunt || token account
-            // tokenATA,
-            publicKey, // current auth
-            AuthorityType.FreezeAccount, // authority type
-            null
-          )
+      }
+      catch (error) {
+          console.error("Transaction failed", error);
+      }
+      // console.log("Mint Address", mint.toBase58());
+        // console.log("Transaction Signature", transactionSignature);
+
+      // Create associated token account
+    const ATAdress = await getAssociatedTokenAddress(
+        mint,
+        payer,
+        false,
+        TOKEN_2022_PROGRAM_ID
+    );
+    console.log("ATA", ATAdress.toBase58());
+    console.log("Mint", mint.toBase58());
+    // Instruction to create associated token account
+    const ATA = createAssociatedTokenAccountInstruction(
+        publicKey,
+        ATAdress,
+        publicKey,
+        mintKeypair.publicKey,
+        TOKEN_2022_PROGRAM_ID,
+        ASSOCIATED_TOKEN_PROGRAM_ID
+    );
+    console.log("ATA2", ATA);
+
+    // Instruction to mint tokens to associated token account
+    const mintToInstruction = createMintToInstruction(
+        mint, // Mint Account address
+        ATAdress, // Mint to
+        mintAuthority, // Mint Authority address
+        mintAmount, // Amount
+        [], // Additional signers
+        TOKEN_2022_PROGRAM_ID // Token Extension Program ID
+    );
+
+    // Transaction to create associated token account and mint tokens
+    const transaction2 = new Transaction().add(
+        ATA,
+        mintToInstruction
+    );
+    const {
+        blockhash: blockhash2,
+        lastValidBlockHeight: lastValidBlockHeight2
+    } = await connection.getLatestBlockhash();
+
+    transaction2.recentBlockhash = blockhash2;
+    transaction2.lastValidBlockHeight = lastValidBlockHeight2;
+    transaction2.feePayer = publicKey;
+
+    try {
+        const serializedTransaction = transaction2.serialize(
+            {
+                requireAllSignatures: false,
+            }
+        );
+        const base64 = serializedTransaction.toString("base64");
+        console.log("TEST TX", base64);
+        transactionSignature = await sendTransaction(
+            transaction2,
+            connection,
+            {signers: []}
         );
 
-        const signature = await sendTransaction(
-          createNewTokenTransaction,
-          connection,
-          {
-            signers: [mintKeypair],
-          }
+        postMessage(
+            `LET'S GOOO:"https://solana.fm/tx/${transactionSignature}?cluster=devnet-solana`
         );
+    }
+    catch (error) {
+        console.error("Transaction failed", error);
+    }
 
-        setTokenMintAddress(mintKeypair.publicKey.toString());
-          // notify({
-          //     type: "success",
-          //     message: "Token create successfully",
-          //     txid: signature,
-          // });
+        // const createNewTokenTransaction = new Transaction().add(
+        //   SystemProgram.createAccount({
+        //     fromPubkey: publicKey,
+        //     newAccountPubkey: mintKeypair.publicKey,
+        //     space: MINT_SIZE,
+        //     lamports: lamports,
+        //     programId: TOKEN_PROGRAM_ID,
+        //   }),
+        //   createInitializeMintInstruction(
+        //     mintKeypair.publicKey,
+        //     Number(token.decimals),
+        //     publicKey,
+        //     publicKey,
+        //     TOKEN_PROGRAM_ID
+        //   ),
+        //   createAssociatedTokenAccountInstruction(
+        //     publicKey,
+        //     tokenATA,
+        //     publicKey,
+        //     mintKeypair.publicKey
+        //   ),
+        //   createMintToInstruction(
+        //     mintKeypair.publicKey,
+        //     tokenATA,
+        //     publicKey,
+        //     Number(token.amount) * Math.pow(10, Number(token.decimals))
+        //   ),
+        //   createMetadataInstruction,
+
+        //   //ayad//////////////////
+        //   createSetAuthorityInstruction(
+        //     mintKeypair.publicKey, // mint acocunt || token account
+        //     // tokenATA,
+        //     publicKey, // current auth
+        //     AuthorityType.FreezeAccount, // authority type
+        //     null
+        //   )
+        // );
+
+        // const signature = await sendTransaction(
+        //   createNewTokenTransaction,
+        //   connection,
+        //   {
+        //     signers: [mintKeypair],
+        //   }
+        // );
+
+        // setTokenMintAddress(mintKeypair.publicKey.toString());
+        //   // notify({
+        //   //     type: "success",
+        //   //     message: "Token create successfully",
+        //   //     txid: signature,
+        //   // });
         
-        setMessage('Token create successfully');
-        setTxid(`${signature}`);
-        showSuccessfulMessage(); //show successful message for 10 seccond
-        console.log('Token create successfully txid: ', signature); //ayad
+        // setMessage('Token create successfully');
+        // setTxid(`${signature}`);
+        // showSuccessfulMessage(); //show successful message for 10 seccond
+        // console.log('Token create successfully txid: ', signature); //ayad
       } catch (error: any) {
           // notify({ type: "error", message: "Token Creation failed, try later" });
           setMessage('Token Creation failed, try later')
