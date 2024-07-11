@@ -130,6 +130,7 @@ export const Create: FC = () => {
 
       try {
         console.log('token: ', token)
+        
         const metadataUrl = await uploadMetadata(token);
         if (!metadataUrl) { return console.error('!metadataUrl') }
         console.log(metadataUrl);

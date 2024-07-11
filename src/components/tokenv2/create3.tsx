@@ -50,8 +50,8 @@ import { Successful } from '../alert/successful';
 type Token = {
     name: string,
     symbol: string,
-    decimals: number | undefined,
-    amount: number | undefined,
+    decimals: number,
+    amount: number,
     image: string,
     description: string,
   }
@@ -141,7 +141,9 @@ const CreateToken: FC = () => {
 
         // Authority that can mint new tokens
         const mintAuthority = publicKey;
-        const decimals = 9;
+        // const decimals = 9;
+        const decimals = token.decimals; //ayad
+        const mintAmount = BigInt(token.amount * Math.pow(10, decimals)); //ayad
 
         // METADATA POINTER STUFF
         // const updateFromUser = new PublicKey(event.target.owner.value);
@@ -279,7 +281,7 @@ const CreateToken: FC = () => {
             value: metaData.additionalMetadata[2][1], // value
         });
         // const owner = new PublicKey(event.target.owner.value);
-        const mintAmount = BigInt(40_000_000 * Math.pow(10, decimals));
+        // const mintAmount = BigInt(40_000_000 * Math.pow(10, decimals));
 
         const transaction = new Transaction().add(
             createAccountInstruction,
