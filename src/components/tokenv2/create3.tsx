@@ -204,7 +204,8 @@ const CreateToken: FC = () => {
         const transferFeeConfigAuthority = publicKey;
         const withdrawWithheldAuthority = publicKey;
         const feeBasisPoints = 300;
-        const maxFee = BigInt(100);
+        // const maxFee = BigInt(100);
+        const maxFee = BigInt(100 * Math.pow(10, decimals));  //100 token
         const mintLen = getMintLen([ExtensionType.MetadataPointer, ExtensionType.TransferFeeConfig]);
 
         // Minimum lamports required for Mint Account
