@@ -38,6 +38,7 @@ import {
 } from '@solana/wallet-adapter-react';
 import {
   Keypair,
+  PublicKey,
   SystemProgram,
   Transaction,
 } from '@solana/web3.js';
@@ -70,8 +71,8 @@ const CreateToken: FC = () => {
   const [token, setToken] = useState<Token>({
     name: "",
     symbol: "",
-    decimals: Number(''),
-    amount: Number(''),
+    decimals: Number('9'),
+    amount: Number('1000000000'),
     image: "",
     description: "",
   });
@@ -80,6 +81,11 @@ const CreateToken: FC = () => {
   const [txid, setTxid] = useState<string>('3AnaX234ysBdwBxD8YMqgV2afbjkJswKVp7YPnkLM7jjgBx5VxV4odNEXaxxtqjE5js5G14e9YeLrusZ7CtGAZ7v');
   const [error, setError] = useState<boolean>(false);
   const [details, setDetails] = useState<string>(''); //Error message details
+
+  const [withdrawAuthority, setWithdrawAuthority] = useState<string>(`${publicKey}`);
+  const [configAuthority, setConfigAuthority] = useState<string>(`${publicKey}`);
+  const [fee, setFee] = useState(0);
+  const [maxFee, setMaxFee] = useState(0);
 
   // const messageRef = useRef<null | HTMLElement>(null); //ref to scroll
   const messageRef = useRef<any>(null); //ref to scroll
@@ -124,8 +130,9 @@ const CreateToken: FC = () => {
   ///////////////////////////////////////////
     const generateExplorerTxUrl = (txId: string) => `https://explorer.solana.com/tx/${txId}?cluster=testnet`;
     // const createMint = async (event: any) => {
-    const createMint = useCallback( async (token: Token) => {
-        // event.preventDefault();
+    const createMint = useCallback( async (token: Token, event: any) => {
+        event.preventDefault(); //to cancell page reload
+        // token.preventDefault();
         if (!connection || !publicKey) {
             console.error("Connection or publicKey is missing");
             return;
@@ -201,8 +208,8 @@ const CreateToken: FC = () => {
         //////////////////////////////////////////////
         // const transferFeeConfigAuthority = new PublicKey(event.target.fee.value);
         // const withdrawWithheldAuthority = new PublicKey(event.target.fee.value);
-        const transferFeeConfigAuthority = publicKey;
-        const withdrawWithheldAuthority = publicKey;
+        const transferFeeConfigAuthority = new PublicKey(configAuthority);
+        const withdrawWithheldAuthority = new PublicKey(withdrawAuthority);
         const feeBasisPoints = 300;
         // const maxFee = BigInt(100);
         const maxFee = BigInt(100 * Math.pow(10, decimals));  //100 token
@@ -494,7 +501,7 @@ const CreateToken: FC = () => {
       {/* {error && Error(message, details, messageRef)} error message */}
       {error && Error(message, details)} 
       
-
+      <form onSubmit={(event: any) => createMint(token, event)}>
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
       {/* <Successful/> */}
         <div className="flex flex-col gap-9">
@@ -546,6 +553,7 @@ const CreateToken: FC = () => {
                   onChange={(e) =>
                     handleFormFieldChange
                       ("symbol", e)}
+                  required
                 />
               </div>
 
@@ -572,6 +580,8 @@ const CreateToken: FC = () => {
                   onChange={(e) =>
                     handleFormFieldChange
                       ("amount", e)}
+                  defaultValue={1000000000}
+                  required
                 />
               </div>
 
@@ -586,6 +596,8 @@ const CreateToken: FC = () => {
                   onChange={(e) =>
                     handleFormFieldChange
                       ("decimals", e)}
+                  defaultValue={9}
+                  required
                 />
               </div>
 
@@ -730,67 +742,62 @@ const CreateToken: FC = () => {
               </div>
 
               {/* Tax details dev */}
+              {taxSwitch && 
               <div>
-
               <div>
                 <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                  Name
+                Withdraw Authority
                 </label>
                 <input
                   type="text"
-                  placeholder="Name"
+                  placeholder="Withdraw Authority"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                  onChange={(e) =>
-                    handleFormFieldChange
-                      ("name", e)}
+                  onChange={(e) => setWithdrawAuthority(e.target.value)}
+                  defaultValue={`${publicKey}`}
                   required
                 />
               </div>
 
               <div>
-                <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                  Name
+                <label className="mt-3 mb-3 block text-sm font-medium text-black dark:text-white">
+                Config Authority
                 </label>
                 <input
                   type="text"
-                  placeholder="Name"
+                  placeholder="Config Authority"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                  onChange={(e) =>
-                    handleFormFieldChange
-                      ("name", e)}
+                  onChange={(e) => setConfigAuthority(e.target.value)}
+                  defaultValue={`${publicKey}`}
                   required
                 />
               </div>
 
               <div>
-                <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                  Supply
+                <label className="mt-3 mb-3 block text-sm font-medium text-black dark:text-white">
+                  Fee (%)
                 </label>
                 <input
                   type="number"
-                  placeholder="Supply"
+                  placeholder="Fee (%)"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                  onChange={(e) =>
-                    handleFormFieldChange
-                      ("amount", e)}
+                  onChange={(e) => setFee(Number(e.target.value))}
+                  required
                 />
               </div>
 
               <div>
-                <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                  Supply
+                <label className="mt-3 mb-3 block text-sm font-medium text-black dark:text-white">
+                  Max Fee (0 = unlimited)
                 </label>
                 <input
                   type="number"
-                  placeholder="Supply"
+                  placeholder="Max Fee"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                  onChange={(e) =>
-                    handleFormFieldChange
-                      ("amount", e)}
+                  onChange={(e) => setMaxFee(Number(e.target.value))}
+                  required
                 />
               </div>
-              
-              </div>
+              </div>}
               
 
 
@@ -813,9 +820,12 @@ const CreateToken: FC = () => {
                     height={112}
                     // src={"/images/user/user-01.png"}
                     src={URL.createObjectURL(image)}
+                    // style={{
+                    //   width: "auto",
+                    //   height: "auto",
+                    // }}
                     style={{
-                      width: "auto",
-                      height: "auto",
+                      borderRadius:5,
                     }}
                     alt="User"
                   />
@@ -848,7 +858,7 @@ const CreateToken: FC = () => {
                   type="submit"
                   //   onClick={() => onClick({decimals: Number(descimals), amount: Number(supply), metadata: metadata, symbol: symbol, tokenName: name})}
                 //   onClick={() => createToken(token)}
-                onClick={() => createMint(token)}
+                // onClick={() => createMint(token)}
                 >
                   Create
                 </button>
@@ -859,6 +869,7 @@ const CreateToken: FC = () => {
 
         </div>
       </div>
+      </form>
     </>
         // <div>
         //     {publicKey ? (
