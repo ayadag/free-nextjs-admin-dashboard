@@ -65,7 +65,6 @@ const CreateToken: FC = () => {
     const [tokenUri, setTokenUri] = useState("");
   const [tokenMintAddress, setTokenMintAddress] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [taxSwitch, setTaxSwitch] = useState(false); //ayad
   const [image, setImage] = useState(); //ayad
 ///////////////////ayad//////////////////////
   const [token, setToken] = useState<Token>({
@@ -82,10 +81,14 @@ const CreateToken: FC = () => {
   const [error, setError] = useState<boolean>(false);
   const [details, setDetails] = useState<string>(''); //Error message details
 
+  const [taxSwitch, setTaxSwitch] = useState(false);
   const [withdrawAuthority, setWithdrawAuthority] = useState<string>(`${publicKey}`);
   const [configAuthority, setConfigAuthority] = useState<string>(`${publicKey}`);
   const [fee, setFee] = useState(0);
-  const [maxFee, setMaxFee] = useState(0);
+  const [maximumFee, setMaximumFee] = useState(0);
+  // let [transaction, setTransaction] = useState();
+  let transaction: Transaction;
+  // let transaction = null;
 
   // const messageRef = useRef<null | HTMLElement>(null); //ref to scroll
   const messageRef = useRef<any>(null); //ref to scroll
@@ -210,9 +213,11 @@ const CreateToken: FC = () => {
         // const withdrawWithheldAuthority = new PublicKey(event.target.fee.value);
         const transferFeeConfigAuthority = new PublicKey(configAuthority);
         const withdrawWithheldAuthority = new PublicKey(withdrawAuthority);
-        const feeBasisPoints = 300;
+        // const feeBasisPoints = 300;
+        const feeBasisPoints = fee * 100;
         // const maxFee = BigInt(100);
-        const maxFee = BigInt(100 * Math.pow(10, decimals));  //100 token
+        // const maxFee = BigInt(100 * Math.pow(10, decimals));  //100 token
+        const maxFee = BigInt(maximumFee * Math.pow(10, decimals));
         const mintLen = getMintLen([ExtensionType.MetadataPointer, ExtensionType.TransferFeeConfig]);
 
         // Minimum lamports required for Mint Account
@@ -291,16 +296,41 @@ const CreateToken: FC = () => {
         // const owner = new PublicKey(event.target.owner.value);
         // const mintAmount = BigInt(40_000_000 * Math.pow(10, decimals));
 
-        const transaction = new Transaction().add(
-            createAccountInstruction,
-            initializeMetadataPointerInstruction,
-            initializeTransferFeeConfig,
-            initializeMintInstruction,
-            initializeMetadataInstruction,
-            updateFieldInstruction,
-            updateFieldInstruction2,
-            updateFieldInstruction3
-        );
+        // const transaction = new Transaction().add(
+        //     createAccountInstruction,
+        //     initializeMetadataPointerInstruction,
+        //     initializeTransferFeeConfig,
+        //     initializeMintInstruction,
+        //     initializeMetadataInstruction,
+        //     updateFieldInstruction,
+        //     updateFieldInstruction2,
+        //     updateFieldInstruction3
+        // );
+        
+        if(taxSwitch){
+          transaction = new Transaction().add(
+                  createAccountInstruction,
+                  initializeMetadataPointerInstruction,
+                  initializeTransferFeeConfig,
+                  initializeMintInstruction,
+                  initializeMetadataInstruction,
+                  updateFieldInstruction,
+                  updateFieldInstruction2,
+                  updateFieldInstruction3
+          )
+        }
+        else if(!taxSwitch){
+          transaction = new Transaction().add(
+                  createAccountInstruction,
+                  initializeMetadataPointerInstruction,
+                  // initializeTransferFeeConfig,
+                  initializeMintInstruction,
+                  initializeMetadataInstruction,
+                  updateFieldInstruction,
+                  updateFieldInstruction2,
+                  updateFieldInstruction3
+          )
+        }
 
         const { blockhash, lastValidBlockHeight } =    await connection.getLatestBlockhash();
         transaction.recentBlockhash = blockhash;
@@ -793,7 +823,7 @@ const CreateToken: FC = () => {
                   type="number"
                   placeholder="Max Fee"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                  onChange={(e) => setMaxFee(Number(e.target.value))}
+                  onChange={(e) => setMaximumFee(Number(e.target.value))}
                   required
                 />
               </div>
