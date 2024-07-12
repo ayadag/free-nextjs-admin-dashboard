@@ -81,14 +81,15 @@ const CreateToken: FC = () => {
   const [error, setError] = useState<boolean>(false);
   const [details, setDetails] = useState<string>(''); //Error message details
 
-  const [taxSwitch, setTaxSwitch] = useState(false);
+  const [taxSwitch, setTaxSwitch] = useState(true); //switch tax fee extantion
   const [withdrawAuthority, setWithdrawAuthority] = useState<string>(`${publicKey}`);
   const [configAuthority, setConfigAuthority] = useState<string>(`${publicKey}`);
   const [fee, setFee] = useState(0);
   const [maximumFee, setMaximumFee] = useState(0);
-  // let [transaction, setTransaction] = useState();
+  // let [transaction, setTransaction] = useState<Transaction>();
   let transaction: Transaction;
   // let transaction = null;
+  // let transaction = useRef<Transaction>();
 
   // const messageRef = useRef<null | HTMLElement>(null); //ref to scroll
   const messageRef = useRef<any>(null); //ref to scroll
@@ -308,7 +309,54 @@ const CreateToken: FC = () => {
         //     updateFieldInstruction3
         // );
 
-        if(taxSwitch){
+        // Create associated token account
+        const ATAdress = await getAssociatedTokenAddress(
+          mint,
+          payer,
+          false,
+          TOKEN_2022_PROGRAM_ID
+      );
+      console.log("ATA", ATAdress.toBase58());
+      console.log("Mint", mint.toBase58());
+      // Instruction to create associated token account
+      const ATA = createAssociatedTokenAccountInstruction(
+          publicKey,
+          ATAdress,
+          publicKey,
+          mintKeypair.publicKey,
+          TOKEN_2022_PROGRAM_ID,
+          ASSOCIATED_TOKEN_PROGRAM_ID
+      );
+      console.log("ATA2", ATA);
+
+      // Instruction to mint tokens to associated token account
+      const mintToInstruction = createMintToInstruction(
+          mint, // Mint Account address
+          ATAdress, // Mint to
+          mintAuthority, // Mint Authority address
+          mintAmount, // Amount
+          [], // Additional signers
+          TOKEN_2022_PROGRAM_ID // Token Extension Program ID
+      );
+
+        // transaction = new Transaction().add(
+        // createAccountInstruction,
+        // initializeMetadataPointerInstruction,
+        // initializeTransferFeeConfig,
+        // initializeMintInstruction,
+        // initializeMetadataInstruction,
+        // updateFieldInstruction,
+        // updateFieldInstruction2,
+        // updateFieldInstruction3,
+        // ATA,
+        // mintToInstruction
+        // );
+
+        // setTransaction2(transaction);
+        // if(!transaction2){return}
+        // transaction = transaction2
+
+        // if(taxSwitch){
           transaction = new Transaction().add(
                   createAccountInstruction,
                   initializeMetadataPointerInstruction,
@@ -317,22 +365,11 @@ const CreateToken: FC = () => {
                   initializeMetadataInstruction,
                   updateFieldInstruction,
                   updateFieldInstruction2,
-                  updateFieldInstruction3
+                  updateFieldInstruction3,
+                  ATA,
+                  mintToInstruction
           )
-        }
-        else if(!taxSwitch){
-          transaction = new Transaction().add(
-                  createAccountInstruction,
-                  initializeMetadataPointerInstruction,
-                  // initializeTransferFeeConfig,
-                  initializeMintInstruction,
-                  initializeMetadataInstruction,
-                  updateFieldInstruction,
-                  updateFieldInstruction2,
-                  updateFieldInstruction3
-          )
-        }
-
+          // setTransaction(trans)
         const { blockhash, lastValidBlockHeight } =    await connection.getLatestBlockhash();
         transaction.recentBlockhash = blockhash;
         transaction.lastValidBlockHeight = lastValidBlockHeight;
@@ -349,85 +386,162 @@ const CreateToken: FC = () => {
                 {signers: [mintKeypair]}
             );
 
-            postMessage(
-                `LET'S GOOO:"https://solana.fm/tx/${transactionSignature}?cluster=devnet-solana`
-            );
+            // postMessage(
+            //     `LET'S GOOO:"https://solana.fm/tx/${transactionSignature}?cluster=devnet-solana`
+            // );
             //ayad/////////
             console.log("Mint Address", mint.toBase58());
             console.log("Transaction Signature", transactionSignature);
 
+            setMessage('Token create successfully');
+            setTxid(`${transactionSignature}`);
+            showSuccessfulMessage(); //show successful message for 10 seccond
+
         }
         catch (error) {
             console.error("Transaction failed", error);
+            setMessage('Token Creation failed, try later')
+            setDetails(String(error))
+            showErrorMessage()
+            // console.error('Token Creation failed, try later') //ayad
         }
+
+        // }
+
+        // else if(!taxSwitch){
+        //   transaction.current = new Transaction().add(
+        //           createAccountInstruction,
+        //           initializeMetadataPointerInstruction,
+        //           // initializeTransferFeeConfig,
+        //           initializeMintInstruction,
+        //           initializeMetadataInstruction,
+        //           updateFieldInstruction,
+        //           updateFieldInstruction2,
+        //           updateFieldInstruction3,
+        //           ATA,
+        //           mintToInstruction
+        //   )
+        //   // console.log('trans: ',trans)
+        //   // setTransaction(new Transaction().add(
+        //   //   createAccountInstruction,
+        //   //   initializeMetadataPointerInstruction,
+        //   //   // initializeTransferFeeConfig,
+        //   //   initializeMintInstruction,
+        //   //   initializeMetadataInstruction,
+        //   //   updateFieldInstruction,
+        //   //   updateFieldInstruction2,
+        //   //   updateFieldInstruction3,
+        //   //   ATA,
+        //   //   mintToInstruction
+        //   // ))
+        // // }
+        // // if(!transaction){return console.error('!transaction')}
+
+        // const { blockhash, lastValidBlockHeight } =    await connection.getLatestBlockhash();
+        // transaction.current.recentBlockhash = blockhash;
+        // transaction.current.lastValidBlockHeight = lastValidBlockHeight;
+        // transaction.current.feePayer = publicKey;
+
+        // try {
+        //     const serializedTransaction = transaction.current.serialize({    requireAllSignatures: false,
+        //     });
+        //     const base64 = serializedTransaction.toString("base64");
+        //     console.log("TEST TX", base64);
+        //     transactionSignature = await sendTransaction(
+        //         transaction.current,
+        //         connection,
+        //         {signers: [mintKeypair]}
+        //     );
+
+        //     // postMessage(
+        //     //     `LET'S GOOO:"https://solana.fm/tx/${transactionSignature}?cluster=devnet-solana`
+        //     // );
+        //     //ayad/////////
+        //     console.log("Mint Address", mint.toBase58());
+        //     console.log("Transaction Signature", transactionSignature);
+
+        //     setMessage('Token create successfully');
+        //     setTxid(`${transactionSignature}`);
+        //     showSuccessfulMessage(); //show successful message for 10 seccond
+
+        // }
+        // catch (error) {
+        //     console.error("Transaction failed", error);
+        //     setMessage('Token Creation failed, try later')
+        //     setDetails(String(error))
+        //     showErrorMessage()
+        //     // console.error('Token Creation failed, try later') //ayad
+        // }
+
+        // }
         // console.log("Mint Address", mint.toBase58());
         // console.log("Transaction Signature", transactionSignature);
 
         // Create associated token account
-        const ATAdress = await getAssociatedTokenAddress(
-            mint,
-            payer,
-            false,
-            TOKEN_2022_PROGRAM_ID
-        );
-        console.log("ATA", ATAdress.toBase58());
-        console.log("Mint", mint.toBase58());
-        // Instruction to create associated token account
-        const ATA = createAssociatedTokenAccountInstruction(
-            publicKey,
-            ATAdress,
-            publicKey,
-            mintKeypair.publicKey,
-            TOKEN_2022_PROGRAM_ID,
-            ASSOCIATED_TOKEN_PROGRAM_ID
-        );
-        console.log("ATA2", ATA);
+        // const ATAdress = await getAssociatedTokenAddress(
+        //     mint,
+        //     payer,
+        //     false,
+        //     TOKEN_2022_PROGRAM_ID
+        // );
+        // console.log("ATA", ATAdress.toBase58());
+        // console.log("Mint", mint.toBase58());
+        // // Instruction to create associated token account
+        // const ATA = createAssociatedTokenAccountInstruction(
+        //     publicKey,
+        //     ATAdress,
+        //     publicKey,
+        //     mintKeypair.publicKey,
+        //     TOKEN_2022_PROGRAM_ID,
+        //     ASSOCIATED_TOKEN_PROGRAM_ID
+        // );
+        // console.log("ATA2", ATA);
 
-        // Instruction to mint tokens to associated token account
-        const mintToInstruction = createMintToInstruction(
-            mint, // Mint Account address
-            ATAdress, // Mint to
-            mintAuthority, // Mint Authority address
-            mintAmount, // Amount
-            [], // Additional signers
-            TOKEN_2022_PROGRAM_ID // Token Extension Program ID
-        );
+        // // Instruction to mint tokens to associated token account
+        // const mintToInstruction = createMintToInstruction(
+        //     mint, // Mint Account address
+        //     ATAdress, // Mint to
+        //     mintAuthority, // Mint Authority address
+        //     mintAmount, // Amount
+        //     [], // Additional signers
+        //     TOKEN_2022_PROGRAM_ID // Token Extension Program ID
+        // );
 
         // Transaction to create associated token account and mint tokens
-        const transaction2 = new Transaction().add(
-            ATA,
-            mintToInstruction
-        );
-        const {
-            blockhash: blockhash2,
-            lastValidBlockHeight: lastValidBlockHeight2
-        } = await connection.getLatestBlockhash();
+        // const transaction2 = new Transaction().add(
+        //     ATA,
+        //     mintToInstruction
+        // );
+        // const {
+        //     blockhash: blockhash2,
+        //     lastValidBlockHeight: lastValidBlockHeight2
+        // } = await connection.getLatestBlockhash();
 
-        transaction2.recentBlockhash = blockhash2;
-        transaction2.lastValidBlockHeight = lastValidBlockHeight2;
-        transaction2.feePayer = publicKey;
+        // transaction2.recentBlockhash = blockhash2;
+        // transaction2.lastValidBlockHeight = lastValidBlockHeight2;
+        // transaction2.feePayer = publicKey;
 
-        try {
-            const serializedTransaction = transaction2.serialize(
-                {
-                    requireAllSignatures: false,
-                }
-            );
-            const base64 = serializedTransaction.toString("base64");
-            console.log("TEST TX", base64);
-            transactionSignature = await sendTransaction(
-                transaction2,
-                connection,
-                {signers: []}
-            );
+        // try {
+        //     const serializedTransaction = transaction2.serialize(
+        //         {
+        //             requireAllSignatures: false,
+        //         }
+        //     );
+        //     const base64 = serializedTransaction.toString("base64");
+        //     console.log("TEST TX", base64);
+        //     transactionSignature = await sendTransaction(
+        //         transaction2,
+        //         connection,
+        //         {signers: []}
+        //     );
 
-            postMessage(
-                `LET'S GOOO:"https://solana.fm/tx/${transactionSignature}?cluster=devnet-solana`
-            );
-        }
-        catch (error) {
-            console.error("Transaction failed", error);
-        }
+        //     postMessage(
+        //         `LET'S GOOO:"https://solana.fm/tx/${transactionSignature}?cluster=devnet-solana`
+        //     );
+        // }
+        // catch (error) {
+        //     console.error("Transaction failed", error);
+        // }
     }, [publicKey, connection, sendTransaction])
     //IMAGE UPLOAD IPFS
   const handleImageChange = async (event: any) => {
@@ -481,11 +595,12 @@ const CreateToken: FC = () => {
   const uploadMetadata = async (token: Token) => {
     setIsLoading(true);
     const { name, symbol, description, image } = token;
-    if (!name || !symbol || !description || !image) {
+    // if (!name || !symbol || !description || !image) {
+      if (!name || !symbol) {
       //   return notify({ type: "error", message: "Data Is Missing" });
       setMessage('Data Is Missing')
       showErrorMessage()
-      return console.error('Data Is Missing: !name || !symbol || !description || !image',
+      return console.error('Data Is Missing: !name || !symbol',
         token.name,
         token.symbol,
         token.description,
@@ -710,12 +825,12 @@ const CreateToken: FC = () => {
           <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
               <h3 className="font-medium text-black dark:text-white">
-                Extensions
+              Transfer Tax Extension
               </h3>
             </div>
             <div className="flex flex-col gap-5.5 p-6.5">
 
-              <div>
+              {false && <div>
                 <label
                   htmlFor="toggle3"
                   className="flex cursor-pointer select-none items-center"
@@ -770,7 +885,7 @@ const CreateToken: FC = () => {
                   </div>
                   <div className='px-2'>Transfer Tax</div>
                 </label>
-              </div>
+              </div>}
 
               {/* Tax details dev */}
               {taxSwitch && 
@@ -812,6 +927,7 @@ const CreateToken: FC = () => {
                   placeholder="Fee (%)"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   onChange={(e) => setFee(Number(e.target.value))}
+                  defaultValue={0}
                   required
                 />
               </div>
@@ -825,6 +941,7 @@ const CreateToken: FC = () => {
                   placeholder="Max Fee"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   onChange={(e) => setMaximumFee(Number(e.target.value))}
+                  defaultValue={0}
                   required
                 />
               </div>
@@ -855,9 +972,9 @@ const CreateToken: FC = () => {
                     //   width: "auto",
                     //   height: "auto",
                     // }}
-                    style={{
-                      borderRadius:5,
-                    }}
+                    // style={{
+                    //   borderRadius:5,
+                    // }}
                     alt="User"
                   />
                 </span>}

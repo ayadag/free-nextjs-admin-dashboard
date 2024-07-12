@@ -225,6 +225,7 @@ export const Create: FC = () => {
       } catch (error: any) {
           // notify({ type: "error", message: "Token Creation failed, try later" });
           setMessage('Token Creation failed, try later')
+          setDetails(String(error))
           showErrorMessage()
           console.error('Token Creation failed, try later') //ayad
       }
