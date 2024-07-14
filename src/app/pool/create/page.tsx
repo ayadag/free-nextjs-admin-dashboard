@@ -33,7 +33,7 @@ const CreatePool: React.FC = () => {
     const wallet = useWallet();
     // const connection = useConnection();
     // const connection = new Connection('https://mainnet.helius-rpc.com/?api-key=YOUR_API_KEY_HERE');
-    const connection = new Connection('https://raydium-raydium-5ad5.mainnet.rpcpool.com/');
+    const connection = new Connection('https://api.devnet.solana.com/');
     const [messageApi, contextHolder] = message.useMessage();
 
     const [slippage, setSlippage] = useState(2.5);
@@ -93,7 +93,7 @@ const CreatePool: React.FC = () => {
             const walletTokens: any[] = await ( await fetch (
                 // `https://token.jup.ag/strict` //strict
                 // `https://token.jup.ag/all` //all
-                `https://serverless-6hr37hpqk-ayads-projects.vercel.app/api/wallet?walletKey=${wallet.publicKey}`
+                `https://serverless-5l5l15u9g-ayads-projects.vercel.app/api/wallet?walletKey=${wallet.publicKey}`
               )
             ).json();
             // setTokenList(tList);
