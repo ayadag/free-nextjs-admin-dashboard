@@ -135,6 +135,7 @@ const CreatePool: React.FC = () => {
                     address: token.mint,
                     uri: token.uri,
                     decimals: token.decimals,
+                    programId: token.owner,
                 })  
             }
 
