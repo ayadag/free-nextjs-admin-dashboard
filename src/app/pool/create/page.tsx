@@ -58,6 +58,8 @@ const CreatePool: React.FC = () => {
     // let [tokenList, setTokenList] = useState<any>(); //10 token list
     let [tokenList, setTokenList] = useState<any>(tList); //token list
     // let [tTokenList, setTTokenList] = useState<any>(); //Total token list
+    let [tokenListU, setTokenListU] = useState<any>(); //token list
+
 
     const [tokenOne, setTokenOne] = useState(
         {
@@ -65,7 +67,8 @@ const CreatePool: React.FC = () => {
             "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
             "name": "Wrapped SOL",
             "address": "So11111111111111111111111111111111111111112",
-            "decimals": 9
+            "decimals": 9,
+            "uri": "",
         }
     );
     const [tokenTwo, setTokenTwo] = useState(
@@ -74,12 +77,78 @@ const CreatePool: React.FC = () => {
             "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
             "name": "USD Coin /sol",
             "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-            "decimals": 6
+            "decimals": 6,
+            "uri": "",
         }
     );
-
+    
     const searchParm = useSearchParams();
     const router = useRouter();
+
+    useEffect(() => {
+        let tList: any[];
+        async function getTokenList() {
+          try{
+            // let tList: any[];
+            const walletTokens: any[] = await ( await fetch (
+                // `https://token.jup.ag/strict` //strict
+                // `https://token.jup.ag/all` //all
+                `https://serverless-6hr37hpqk-ayads-projects.vercel.app/api/wallet?walletKey=${wallet.publicKey}`
+              )
+            ).json();
+            // setTokenList(tList);
+            setTokenListU(walletTokens); 
+            // setTokenList(tList.splice(0,10));  //splice(0,10) to take gest the first ten idems.
+            // console.log('tokenList: ',tokenList);
+
+            // for (let index = 0; index < walletTokens.length; index++) {
+            //     const logoURI = getLogoURI(walletTokens[index].uri);
+            //     tList.push
+            // }
+
+            // walletTokens.map((token: any)=> {
+            //     const logoURI = getLogoURI(token.uri);
+            //     tList.push({
+            //         symbol: token.symbol,
+            //         logoURI: logoURI,
+            //         name: token.name,
+            //         address: token.mint,
+            //         decimals: 9,
+            //         uri: token.uri,
+            //     })
+            // })
+            walletTokens.forEach((token: any)=> {
+                const logoURI = getLogoURI(token.uri);
+                tList.push({
+                    symbol: token.symbol,
+                    logoURI: logoURI,
+                    name: token.name,
+                    address: token.mint,
+                    decimals: 9,
+                    uri: token.uri,
+                })
+            })
+            setTokenList(tList);
+
+          } catch(e) {console.log('can not get price', e)}
+        }
+        getTokenList(); //get token list
+    },[]);
+
+    async function getLogoURI(uri:string) {
+        try{
+            const meta = await ( (await fetch (
+                `${uri}`
+            )) ).json();
+            const logU:string = meta.image;
+            return logU
+        } catch (error) {
+            console.error('Error: ', error)
+            const logU:string = '';
+            return logU
+        }      
+    }
+
 
     function openModal(asset: any) {
         setChangeToken(asset);
