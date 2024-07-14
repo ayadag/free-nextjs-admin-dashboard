@@ -83,7 +83,7 @@ import tList from './tokenList2.json';
           } catch(e) {console.log('can not get price', e)}
         }
         getTokenList(); //get token list
-      },[]);
+      },[wallet.publicKey]);
 
       const [tokenOne, setTokenOne] = useState(
         {

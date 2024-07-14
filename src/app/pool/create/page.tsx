@@ -23,6 +23,7 @@ import { Connection } from '@solana/web3.js';
 
 import styles from './swap.module.css';
 import tList from './tokenList2.json';
+import { getTokensList } from './walletTokens';
 
 // export const metadata: Metadata = {
 //   title: "Next.js SignIn Page | TailAdmin - Next.js Dashboard Template",
@@ -59,7 +60,7 @@ const CreatePool: React.FC = () => {
     let [tokenList, setTokenList] = useState<any>(tList); //token list
     // let [tTokenList, setTTokenList] = useState<any>(); //Total token list
     let [tokenListU, setTokenListU] = useState<any>(); //token list
-
+    let getTokensL = new getTokensList; //get wallet token list
 
     const [tokenOne, setTokenOne] = useState(
         {
@@ -86,18 +87,22 @@ const CreatePool: React.FC = () => {
     const router = useRouter();
 
     useEffect(() => {
-        let tList: any[];
+        let tList: any[] = [];
+        let walletTokens: any[] = [];
         async function getTokenList() {
           try{
             // let tList: any[];
-            const walletTokens: any[] = await ( await fetch (
-                // `https://token.jup.ag/strict` //strict
-                // `https://token.jup.ag/all` //all
-                `https://serverless-278sktyk2-ayads-projects.vercel.app/api/wallet?walletKey=${wallet.publicKey}`
-              )
-            ).json();
+            // const walletTokens: any[] = await ( await fetch (
+            //     // `https://token.jup.ag/strict` //strict
+            //     // `https://token.jup.ag/all` //all
+            //     `https://serverless-278sktyk2-ayads-projects.vercel.app/api/wallet?walletKey=${wallet.publicKey}`
+            //   )
+            // ).json();
             // setTokenList(tList);
+            walletTokens = await getTokensL.getUri(String(wallet.publicKey))
             setTokenListU(walletTokens); 
+            // console.log('String(wallet.publicKey)', String(wallet.publicKey))
+            // console.log('walletTokens: ', walletTokens)
             // setTokenList(tList.splice(0,10));  //splice(0,10) to take gest the first ten idems.
             // console.log('tokenList: ',tokenList);
 
@@ -107,6 +112,35 @@ const CreatePool: React.FC = () => {
             // }
 
             // walletTokens.map((token: any)=> {
+            //     const logoURI = await getLogoURI(token.uri);
+            //     console.log('logoURI: ', logoURI)
+            //     tList.push({
+            //         symbol: token.symbol,
+            //         logoURI: logoURI,
+            //         name: token.name,
+            //         address: token.mint,
+            //         decimals: 9,
+            //         uri: token.uri,
+            //     })
+            // })
+
+            for (let index = 0; index < walletTokens.length; index++) {
+                const token = walletTokens[index];
+                const logoURI = await getLogoURI(token.uri);
+                // console.log('logoURI: ', logoURI)
+                tList.push({
+                    symbol: token.symbol,
+                    logoURI: logoURI,
+                    name: token.name,
+                    address: token.mint,
+                    decimals: 9,
+                    uri: token.uri,
+                })  
+            }
+
+            // console.log('tList: ', tList)
+
+            // walletTokens.forEach((token: any)=> {
             //     const logoURI = getLogoURI(token.uri);
             //     tList.push({
             //         symbol: token.symbol,
@@ -117,33 +151,28 @@ const CreatePool: React.FC = () => {
             //         uri: token.uri,
             //     })
             // })
-            walletTokens.forEach((token: any)=> {
-                const logoURI = getLogoURI(token.uri);
-                tList.push({
-                    symbol: token.symbol,
-                    logoURI: logoURI,
-                    name: token.name,
-                    address: token.mint,
-                    decimals: 9,
-                    uri: token.uri,
-                })
-            })
             setTokenList(tList);
+            // tList = []; //to remove elemants
+            // walletTokens = [];
 
-          } catch(e) {console.log('can not get price', e)}
+          } catch(e) {console.log('can not get wallet tokens', e)}
         }
         getTokenList(); //get token list
     },[]);
 
     async function getLogoURI(uri:string) {
+        if(uri == ''){return '';}
         try{
-            const meta = await ( (await fetch (
+            // console.log("`${uri}`: ", `${uri}`)
+            const meta = await ( await fetch (
                 `${uri}`
-            )) ).json();
+                )
+            ).json();
             const logU:string = meta.image;
+            // console.log('logU: ', logU)
             return logU
         } catch (error) {
-            console.error('Error: ', error)
+            console.error('Error in getLogoURI: ', error)
             const logU:string = '';
             return logU
         }      
@@ -182,7 +211,7 @@ const CreatePool: React.FC = () => {
     useEffect(() => {
         let from = searchParm.get('from');
         if(from){
-          console.log(`searchParm.get('from'): `,from)
+        //   console.log(`searchParm.get('from'): `,from)
           for (let index = 0; index < tokenList.length; index++) {
             if(tokenList[index].address == from){
               setTokenOne(tokenList[index]);
@@ -192,7 +221,7 @@ const CreatePool: React.FC = () => {
         }
         let to = searchParm.get('to');
         if(to){
-          console.log(`searchParm.get('to'): `,to)
+        //   console.log(`searchParm.get('to'): `,to)
           for (let index = 0; index < tokenList.length; index++) {
             if(tokenList[index].address == to){
               setTokenTwo(tokenList[index]);
