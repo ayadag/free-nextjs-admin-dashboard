@@ -133,8 +133,8 @@ const CreatePool: React.FC = () => {
                     logoURI: logoURI,
                     name: token.name,
                     address: token.mint,
-                    decimals: 9,
                     uri: token.uri,
+                    decimals: token.decimals,
                 })  
             }
 

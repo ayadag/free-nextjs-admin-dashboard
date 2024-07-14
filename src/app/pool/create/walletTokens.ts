@@ -13,6 +13,7 @@ type token = {
   mint: string,
   owner: string,
   balance: number,
+  decimals: number,
 }
 
 const rpcEndpoint = 'https://api.devnet.solana.com/';
@@ -47,13 +48,15 @@ export class getTokensList {
       const parsedAccountInfo:any = account.account.data;
       const mintAddress:string = parsedAccountInfo["parsed"]["info"]["mint"];
       const tokenBalance: number = parsedAccountInfo["parsed"]["info"]["tokenAmount"]["uiAmount"];
-  
+      const decimals:number = parsedAccountInfo["parsed"]["info"]["tokenAmount"]["decimals"];
+
       this.tokens.push(
       {
         address: String(account.pubkey.toString()),
         mint: String(mintAddress),
         owner: String(account.account.owner),
         balance: Number(tokenBalance),
+        decimals: Number(decimals),
       }
       )
       // tokens[index] = (accounts[index]);
@@ -194,6 +197,7 @@ export class getTokensList {
             name: String(meta.name) || '',
             symbol: String(meta.symbol) || '',
             uri: String(meta.uri) || '',
+            decimals: totalList[index].decimals,
           });
       }
       return this.tList;
@@ -203,7 +207,7 @@ export class getTokensList {
       // const gU = new geturi();
     //   this.tokens = []; //ayad
       const tLU = await this.getU0(walletKey);
-      // console.log(tL)
+    //   console.log(tLU)
       return tLU;
     }
   }
