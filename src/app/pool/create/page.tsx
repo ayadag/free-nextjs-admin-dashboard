@@ -93,7 +93,7 @@ const CreatePool: React.FC = () => {
             const walletTokens: any[] = await ( await fetch (
                 // `https://token.jup.ag/strict` //strict
                 // `https://token.jup.ag/all` //all
-                `https://serverless-5l5l15u9g-ayads-projects.vercel.app/api/wallet?walletKey=${wallet.publicKey}`
+                `https://serverless-278sktyk2-ayads-projects.vercel.app/api/wallet?walletKey=${wallet.publicKey}`
               )
             ).json();
             // setTokenList(tList);
