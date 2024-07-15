@@ -1,4 +1,4 @@
-//import { Connection } from '@solana/web3.js';
+import { Connection } from '@solana/web3.js';
 
 export type TxDetail = {
   state: 'success' | 'error',
