@@ -9,6 +9,7 @@ import {
   Modal,
 } from 'antd';
 import BN from 'bn.js';
+import bs58 from 'bs58';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -23,13 +24,18 @@ import {
   Raydium,
   TxVersion,
 } from '@raydium-io/raydium-sdk-v2';
+// import {
+//   useConnection,
+//   useWallet,
+// } from '@solana/wallet-adapter-react';
+import { useWallet } from '@solana/wallet-adapter-react';
 import {
-  useConnection,
-  useWallet,
-} from '@solana/wallet-adapter-react';
-// import { Connection, PublicKey } from '@solana/web3.js';
-import { PublicKey } from '@solana/web3.js';
+  Connection,
+  Keypair,
+  PublicKey,
+} from '@solana/web3.js';
 
+// import { PublicKey } from '@solana/web3.js';
 import styles from './swap.module.css';
 import tList from './tokenList2.json';
 import { getTokensList } from './walletTokens';
@@ -41,12 +47,12 @@ import { getTokensList } from './walletTokens';
 
 const CreatePool: React.FC = () => {
     const wallet = useWallet();
-    const { publicKey } = useWallet();
+    const { publicKey, signAllTransactions } = useWallet();
     
     // const connection = useConnection();
     // const connection = new Connection('https://mainnet.helius-rpc.com/?api-key=YOUR_API_KEY_HERE');
-    // const connection = new Connection('https://api.devnet.solana.com/');
-    const {connection} = useConnection()
+    const connection = new Connection('https://api.devnet.solana.com/');
+    // const { connection } = useConnection()
     const [messageApi, contextHolder] = message.useMessage();
 
     const [slippage, setSlippage] = useState(2.5);
@@ -74,9 +80,10 @@ const CreatePool: React.FC = () => {
     let [tokenListU, setTokenListU] = useState<any>(); //token list
     let getTokensL = new getTokensList; //get wallet token list
 
-    const owner = publicKey || undefined;
+    // const owner = publicKey || undefined;
+    const owner: Keypair = Keypair.fromSecretKey(Uint8Array.from(bs58.decode("43EeRipwq7QZurfASn7CnYuJ14pVaCEv7KWav9vknt1bFR6qspYXC2DbaC2gGydrVx4TFtWfyCFkEaLLLMB2bZoT")))
     const txVersion = TxVersion.V0 // or TxVersion.LEGACY
-    let raydium: Raydium | undefined
+    // let raydium: Raydium | undefined
 
     const [tokenOne, setTokenOne] = useState(
         {
@@ -257,9 +264,11 @@ const CreatePool: React.FC = () => {
 
     async function cretePool(event: any) {
         event.preventDefault(); //to cancell page reload
+        await createPool();
     }
 
     const createPool = async () => {
+        // event.preventDefault(); //to cancell page reload
         // const raydium = await initSdk({ loadToken: true })
         const raydium = await initSdk({ loadToken: false }) //ayad
       
@@ -335,7 +344,9 @@ const CreatePool: React.FC = () => {
         //   decimals: 9,
         // } 
       
+        // let createPoolFunction = raydium.cpmm.createPool
         const { execute, extInfo } = await raydium.cpmm.createPool({
+        // const { execute, extInfo } = await createPoolFunction({
           // programId: CREATE_CPMM_POOL_PROGRAM, // devnet: DEVNET_PROGRAM_ID.CREATE_CPMM_POOL_PROGRAM
           // poolFeeAccount: CREATE_CPMM_POOL_FEE_ACC, // devnet: CREATE_CPMM_POOL_FEE_ACC.CREATE_CPMM_POOL_PROGRAM
           // programId: new PublicKey('y14apbXKQPC257fK2r6mf6X1m6uYXtXjRyKmiU8rJJe'), // devnet: DEVNET_PROGRAM_ID.CREATE_CPMM_POOL_PROGRAM
@@ -381,11 +392,13 @@ const CreatePool: React.FC = () => {
         })
     }
 
+    let raydium: Raydium | undefined
     const initSdk = async (params?: { loadToken?: boolean }) => {
         if (raydium) return raydium
         // if (!owner) return console.log('wallet not connected')
         raydium = await Raydium.load({
           owner,
+        //   signAllTransactions, //ayad
           connection,
           cluster: 'devnet', // 'mainnet' | 'devnet'
           disableFeatureCheck: true,
