@@ -9,7 +9,6 @@ import {
   Modal,
 } from 'antd';
 import BN from 'bn.js';
-import bs58 from 'bs58';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -31,7 +30,6 @@ import {
 import { useWallet } from '@solana/wallet-adapter-react';
 import {
   Connection,
-  Keypair,
   PublicKey,
 } from '@solana/web3.js';
 
@@ -80,8 +78,8 @@ const CreatePool: React.FC = () => {
     let [tokenListU, setTokenListU] = useState<any>(); //token list
     let getTokensL = new getTokensList; //get wallet token list
 
-    // const owner = publicKey || undefined;
-    const owner: Keypair = Keypair.fromSecretKey(Uint8Array.from(bs58.decode("43EeRipwq7QZurfASn7CnYuJ14pVaCEv7KWav9vknt1bFR6qspYXC2DbaC2gGydrVx4TFtWfyCFkEaLLLMB2bZoT")))
+    const owner = publicKey || undefined;
+    // const owner: Keypair = Keypair.fromSecretKey(Uint8Array.from(bs58.decode("43EeRipwq7QZurfASn7CnYuJ14pVaCEv7KWav9vknt1bFR6qspYXC2DbaC2gGydrVx4TFtWfyCFkEaLLLMB2bZoT")))
     const txVersion = TxVersion.V0 // or TxVersion.LEGACY
     // let raydium: Raydium | undefined
 
@@ -398,7 +396,7 @@ const CreatePool: React.FC = () => {
         // if (!owner) return console.log('wallet not connected')
         raydium = await Raydium.load({
           owner,
-        //   signAllTransactions, //ayad
+          signAllTransactions, //ayad
           connection,
           cluster: 'devnet', // 'mainnet' | 'devnet'
           disableFeatureCheck: true,
