@@ -14,7 +14,7 @@ import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
 import {
   createCreateMetadataAccountV3Instruction,
   PROGRAM_ID,
-} from '@metaplex-foundation/mpl-token-metadata';
+} from '@metaplex-foundation/mpl-token-metadata-2';
 // import {
 //   AuthorityType,
 //   createAssociatedTokenAccountInstruction,
