@@ -37,6 +37,7 @@ import { PublicKey } from '@solana/web3.js';
 import styles from './swap.module.css';
 import tList from './tokenList2.json';
 import { getTokensList } from './walletTokens';
+import { getTransaction } from './getTxDetails';
 
 // export const metadata: Metadata = {
 //   title: "Next.js SignIn Page | TailAdmin - Next.js Dashboard Template",
@@ -387,6 +388,8 @@ const CreatePool: React.FC = () => {
             {}
           ),
         })
+        const txDetail = await getTransaction(connection, txId);
+        console.log('txDetail: ', txDetail)
     }
 
     let raydium: Raydium | undefined

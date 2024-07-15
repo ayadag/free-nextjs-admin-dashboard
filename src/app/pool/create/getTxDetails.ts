@@ -18,7 +18,7 @@ const errorMessages = {
 // const tx1 = '3G5nvdDws8GnvV9YRg1qaDmogSJRzeW8MxKAkvmfNYRL4xhcec74hkcVdehkbEmY6PX5RCHtq9JEkDUDYwbSUkNr' //Message: The program expected this account to be already initialized.
 // const connection1 = new Connection('https://api.devnet.solana.com/')
 
-async function getTransaction(connection:Connection, tx:string) {
+export async function getTransaction(connection:Connection, tx:string) {
   let txDetail: TxDetail;
   const txDetails = await connection.getTransaction(tx, {"maxSupportedTransactionVersion": 0});
   console.log(txDetails);
