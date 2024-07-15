@@ -27,11 +27,11 @@ import {
 //   useConnection,
 //   useWallet,
 // } from '@solana/wallet-adapter-react';
-import { useWallet } from '@solana/wallet-adapter-react';
 import {
-  Connection,
-  PublicKey,
-} from '@solana/web3.js';
+  useConnection,
+  useWallet,
+} from '@solana/wallet-adapter-react';
+import { PublicKey } from '@solana/web3.js';
 
 // import { PublicKey } from '@solana/web3.js';
 import styles from './swap.module.css';
@@ -47,10 +47,9 @@ const CreatePool: React.FC = () => {
     const wallet = useWallet();
     const { publicKey, signAllTransactions } = useWallet();
     
-    // const connection = useConnection();
     // const connection = new Connection('https://mainnet.helius-rpc.com/?api-key=YOUR_API_KEY_HERE');
-    const connection = new Connection('https://api.devnet.solana.com/');
-    // const { connection } = useConnection()
+    // const connection = new Connection('https://api.devnet.solana.com/');
+    const { connection } = useConnection()
     const [messageApi, contextHolder] = message.useMessage();
 
     const [slippage, setSlippage] = useState(2.5);
