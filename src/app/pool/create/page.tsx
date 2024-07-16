@@ -1,16 +1,15 @@
 "use client";
 import React, {
   useEffect,
+  useRef,
   useState,
 } from 'react';
 
 import {
-  message,
+  message as Message,
   Modal,
 } from 'antd';
 import BN from 'bn.js';
-import Image from 'next/image';
-import Link from 'next/link';
 import {
   useRouter,
   useSearchParams,
@@ -33,6 +32,9 @@ import {
 } from '@solana/wallet-adapter-react';
 import { PublicKey } from '@solana/web3.js';
 
+import Error from '../../../components/alert/error';
+// import { notify } from '../../utils/notifications';
+import { Successful } from '../../../components/alert/successful';
 import {
   getTransaction,
   TxDetail,
@@ -54,7 +56,7 @@ const CreatePool: React.FC = () => {
     // const connection = new Connection('https://mainnet.helius-rpc.com/?api-key=YOUR_API_KEY_HERE');
     // const connection = new Connection('https://api.devnet.solana.com/');
     const { connection } = useConnection()
-    const [messageApi, contextHolder] = message.useMessage();
+    const [messageApi, contextHolder] = Message.useMessage();
 
     const [slippage, setSlippage] = useState(2.5);
     // const [tokenOneAmount, setTokenOneAmount] = useState(null);
@@ -88,6 +90,12 @@ const CreatePool: React.FC = () => {
     const [txId, setTxId] = useState('')
     // const [txDetails, setTxDetails] = useState<any>();
 
+    const [error, setError] = useState<boolean>(false);
+    const messageRef = useRef<any>(null); //ref to scroll
+    const [successful, setSuccessful] = useState<boolean>(false);
+    const [message, setMessage] = useState<string>('Pool created successfully');
+    const [details, setDetails] = useState<string>(''); //Error message details
+
     let getTokensL = new getTokensList; //get wallet token list
 
     const owner = publicKey || undefined;
@@ -120,6 +128,37 @@ const CreatePool: React.FC = () => {
     
     const searchParm = useSearchParams();
     const router = useRouter();
+
+    //scroll effect whenever the message change
+    useEffect(() => {
+        messageRef.current?.scrollIntoView();
+    }, [error, txDetails]);
+
+    const showSuccessfulMessage= () => {
+        // window.scroll({
+        //   top:0, //scroll to the top of page
+        //   behavior: 'smooth'
+        // })
+        setSuccessful(true) //show successful message
+        // messageRef.current?.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => {
+          setSuccessful(false); //hide successful message after 10s
+        }, 10000);
+    };
+    
+    const showErrorMessage= () => {
+        // window.scrollTo({
+        //   top:0, //scroll to the top of page
+        //   behavior: 'smooth'
+        // })
+        // router.push(`/tokenv1/create`)
+        setError(true) //show Error message
+        // window.scrollTo(0,0) //scroll to x=0 y=0
+        // router.push(`/tokenv1/create`)
+        setTimeout(() => {
+          setError(false); //hide Error message after 10s
+        }, 10000);
+    };
 
     //get wallet tokens
     useEffect(() => {
@@ -214,7 +253,6 @@ const CreatePool: React.FC = () => {
             return logU
         }      
     }
-
 
     function openModal(asset: any) {
         setChangeToken(asset);
@@ -392,7 +430,7 @@ const CreatePool: React.FC = () => {
         const { txId } = await execute()
         // console.log('txId: ', txId)
         setTxId(txId)
-        
+
         console.log('extInfo: ', extInfo)
 
         // .then( txId => {
@@ -472,8 +510,14 @@ const CreatePool: React.FC = () => {
 
     useEffect(() => {
         if(!txDetails) {return console.log('!txDetails')}
-        console.log('txDetail: ', txDetails);
-        // console.log('txDetail: ', txDetails)
+        console.log('txDetails: ', txDetails);
+        setMessage(txDetails.message) //transaction message
+        if(txDetails.state == 'success'){
+            showSuccessfulMessage(); //show successful message for 10 seccond
+        }
+        else if(txDetails.state == 'error'){
+            showErrorMessage(); //show successful message for 10 seccond
+        }
     },[txDetails])
 
     async function get() {
@@ -518,7 +562,13 @@ const CreatePool: React.FC = () => {
 
     return (
         <DefaultLayout>
-            <Breadcrumb pageName="Sign In" />
+            <div ref={messageRef}></div> {/*scroll to this emty dev*/}
+            <Breadcrumb pageName="Create Pool" />
+            {/* <div ref={messageRef}></div>  */}
+            {successful && Successful(message, txId)} {/*sccessful message*/}
+            {/* {error && Error(message, details, messageRef)} error message */}
+            {error && Error(message, details)} 
+
             {contextHolder}
             <Modal
                 open={isOpen}
@@ -561,9 +611,12 @@ const CreatePool: React.FC = () => {
                 </div>
             </Modal>
 
+            {/* <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"> */}
             <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                <div className="flex flex-wrap items-center">
-                    <div className="hidden w-full xl:block xl:w-1/2">
+                {/* <div className="flex flex-wrap items-center"> */}
+                <div className="flex flex-wrap justify-center">
+
+                    {/* <div className="hidden w-full xl:block xl:w-1/2">
                         <div className="px-26 py-17.5 text-center">
                             <Link className="mb-5.5 inline-block" href="/">
                                 <Image
@@ -713,9 +766,10 @@ const CreatePool: React.FC = () => {
                                 </svg>
                             </span>
                         </div>
-                    </div>
+                    </div> */}
 
-                    <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
+                    {/* <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2"> */}
+                    <div className="w-full xl:w-2/3">
                         <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
                             {/* <span className="mb-1.5 block font-medium">Start for free</span> */}
                             <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
