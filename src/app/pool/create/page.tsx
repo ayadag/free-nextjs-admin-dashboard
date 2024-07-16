@@ -33,11 +33,14 @@ import {
 } from '@solana/wallet-adapter-react';
 import { PublicKey } from '@solana/web3.js';
 
+import {
+  getTransaction,
+  TxDetail,
+} from './getTxDetails';
 // import { PublicKey } from '@solana/web3.js';
 import styles from './swap.module.css';
 import tList from './tokenList2.json';
 import { getTokensList } from './walletTokens';
-import { getTransaction } from './getTxDetails';
 
 // export const metadata: Metadata = {
 //   title: "Next.js SignIn Page | TailAdmin - Next.js Dashboard Template",
@@ -76,6 +79,14 @@ const CreatePool: React.FC = () => {
     let [tokenList, setTokenList] = useState<any>(tList); //token list
     // let [tTokenList, setTTokenList] = useState<any>(); //Total token list
     let [tokenListU, setTokenListU] = useState<any>(); //token list
+    const [txDetails, setTxDetails] = useState<TxDetail>({
+        state: 'success',
+        // code: string,
+        message: "Ok"
+    });
+    const [txId, setTxId] = useState('')
+    // const [txDetails, setTxDetails] = useState<any>();
+
     let getTokensL = new getTokensList; //get wallet token list
 
     const owner = publicKey || undefined;
@@ -377,19 +388,76 @@ const CreatePool: React.FC = () => {
           // },
         })
       
-        const { txId } = await execute()
-        console.log('pool created', {
-          txId,
-          poolKeys: Object.keys(extInfo.address).reduce(
-            (acc, cur) => ({
-              ...acc,
-              [cur]: extInfo.address[cur as keyof typeof extInfo.address].toString(),
-            }),
-            {}
-          ),
-        })
-        const txDetail = await getTransaction(connection, txId);
-        console.log('txDetail: ', txDetail)
+        // const { txId } = await execute()
+        // .then( txId => {
+        //     const txDetail = await getTransaction(connection, txId);
+        //     console.log('txDetail: ', txDetail)}
+        // )
+        // console.log('pool created', {
+        //   txId,
+        //   poolKeys: Object.keys(extInfo.address).reduce(
+        //     (acc, cur) => ({
+        //       ...acc,
+        //       [cur]: extInfo.address[cur as keyof typeof extInfo.address].toString(),
+        //     }),
+        //     {}
+        //   ),
+        // })
+        // console.log('txId', txId)
+        // let tx = txId.slice(0,88);
+        // console.log('tx', tx)
+
+        try {
+         await execute().then((tx) => {
+            setTxId(tx.txId)
+         })
+        } catch (err) {console.log(err)}
+        // const txDetail = await getTransaction(connection, txId);
+
+        try {
+        await getTransaction(connection, txId).then((txD => {
+            if(!txD) {return console.log('!txD')}
+            setTxDetails(txD)
+        }))
+        } catch (err) {console.log(err)}
+
+        console.log('txId: ', txId);
+        console.log('txDetail: ', txDetails)
+        // setTimeout(doGetTransaction, 500); // get transaction details after 0.5 s
+        // async function doGetTransaction() {
+        //     const txDetail = await getTransaction(connection, txId)
+        //     // .then((txD) =>{
+        //     //     setTxDetails(txD)
+        //     //     console.log('txD: ', txD)
+        //     //     // setTimeout(doGetTransaction2, 1000);
+        //     //     setTimeout(() => console.log(txDetails), 1000);
+        //     // });
+        //     console.log('txDetail: ', txDetail)
+        //     // setTxDetails(txDetail)
+        //     // console.log(txDetails)
+        //     if(!txDetail) { return console.log('!txDetail') }
+        //     await setTxDetails(txDetail)
+        //     // setTimeout(() => setTxDetails({
+        //     //     state: txDetail.state,
+        //     //     code: txDetail.code,
+        //     //     message: txDetail.message
+        //     //   }), 1000);
+        //     // setTimeout(() => doGetTransaction2(txDetail), 1000);
+        //     setTimeout(() => console.log('txDetails: ', String(txDetails)), 15000);
+        //     setTimeout(() => console.log('txDetails?.message: ', String(txDetails?.message)), 26000);
+
+        //     async function doGetTransaction2(txDetail2: TxDetail) {
+        //         setTxDetails(txDetail2)
+        //     }
+        // }
+        async function doGetTransaction2() {
+            // setTxDetails(txD)
+            console.log('txDetails: ', txDetails)
+        }
+        // setTimeout(() => setTxDetails(txDetail), 750);
+        // setTimeout(() => console.log(txDetails), 2000);
+        // const txDetail = await getTransaction(connection,tx);
+        // console.log('txDetail: ', txDetail)
     }
 
     let raydium: Raydium | undefined
@@ -495,6 +563,9 @@ const CreatePool: React.FC = () => {
                             <p className="2xl:px-20">
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit
                                 suspendisse.
+                            </p>
+                            <p className="2xl:px-20">
+                                {String(txDetails.message)}
                             </p>
 
                             <span className="mt-15 inline-block">

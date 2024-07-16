@@ -19,10 +19,11 @@ const errorMessages = {
 // const connection1 = new Connection('https://api.devnet.solana.com/')
 
 export async function getTransaction(connection:Connection, tx:string) {
-  let txDetail: TxDetail;
   const txDetails = await connection.getTransaction(tx, {"maxSupportedTransactionVersion": 0});
-  console.log(txDetails);
-  if(txDetails?.meta?.err == null) {
+  let txDetail: TxDetail;
+  // console.log('tx: ', tx)
+  // console.log('txDetails', txDetails);
+  if(txDetails != null && txDetails?.meta?.err == null) {
     // console.log('Pool created successfully')
     txDetail = {
       state: 'success',
@@ -66,6 +67,13 @@ export async function getTransaction(connection:Connection, tx:string) {
 
       return txDetail;
     }
+  }
+  else {
+    txDetail = {
+      state: 'error',
+      message: 'Unkown',
+    }
+    return txDetail;
   }
 }
 
