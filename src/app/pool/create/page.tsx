@@ -1,5 +1,6 @@
 "use client";
 import React, {
+  useCallback,
   useEffect,
   useState,
 } from 'react';
@@ -388,7 +389,10 @@ const CreatePool: React.FC = () => {
           // },
         })
       
-        // const { txId } = await execute()
+        const { txId } = await execute()
+        setTxId(txId)
+        useC1
+        useC2
         // .then( txId => {
         //     const txDetail = await getTransaction(connection, txId);
         //     console.log('txDetail: ', txDetail)}
@@ -407,22 +411,18 @@ const CreatePool: React.FC = () => {
         // let tx = txId.slice(0,88);
         // console.log('tx', tx)
 
-        try {
-         await execute().then((tx) => {
-            setTxId(tx.txId)
-         })
-        } catch (err) {console.log(err)}
+        // try {
+        //  await execute().then((tx) => {
+        //     setTxId(tx.txId)
+        //  })
+        // } catch (err) {console.log(err)}
         // const txDetail = await getTransaction(connection, txId);
 
-        try {
-        await getTransaction(connection, txId).then((txD => {
-            if(!txD) {return console.log('!txD')}
-            setTxDetails(txD)
-        }))
-        } catch (err) {console.log(err)}
+        
+        
 
-        console.log('txId: ', txId);
-        console.log('txDetail: ', txDetails)
+        // console.log('txId: ', txId);
+        // console.log('txDetail: ', txDetails)
         // setTimeout(doGetTransaction, 500); // get transaction details after 0.5 s
         // async function doGetTransaction() {
         //     const txDetail = await getTransaction(connection, txId)
@@ -450,14 +450,32 @@ const CreatePool: React.FC = () => {
         //         setTxDetails(txDetail2)
         //     }
         // }
-        async function doGetTransaction2() {
-            // setTxDetails(txD)
-            console.log('txDetails: ', txDetails)
-        }
+        // async function doGetTransaction2() {
+        //     // setTxDetails(txD)
+        //     console.log('txDetails: ', txDetails)
+        // }
         // setTimeout(() => setTxDetails(txDetail), 750);
         // setTimeout(() => console.log(txDetails), 2000);
         // const txDetail = await getTransaction(connection,tx);
         // console.log('txDetail: ', txDetail)
+    }
+
+    const useC1 = useCallback( ()=> {
+        // try {
+           return get();
+            // } catch (err) {console.log(err)}
+    },[txId])
+
+    const useC2 = useCallback(() => {
+        return console.log('txId: ', txId, 'txDetail: ', txDetails);
+        // console.log('txDetail: ', txDetails)
+    },[txDetails])
+
+    async function get() {
+        await getTransaction(connection, txId).then((txD => {
+            if(!txD) {return console.log('!txD')}
+            setTxDetails(txD)
+        }))
     }
 
     let raydium: Raydium | undefined
