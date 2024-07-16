@@ -1,6 +1,5 @@
 "use client";
 import React, {
-  useCallback,
   useEffect,
   useState,
 } from 'react';
@@ -80,11 +79,12 @@ const CreatePool: React.FC = () => {
     let [tokenList, setTokenList] = useState<any>(tList); //token list
     // let [tTokenList, setTTokenList] = useState<any>(); //Total token list
     let [tokenListU, setTokenListU] = useState<any>(); //token list
-    const [txDetails, setTxDetails] = useState<TxDetail>({
-        state: 'success',
-        // code: string,
-        message: "Ok"
-    });
+    // const [txDetails, setTxDetails] = useState<TxDetail>({
+    //     state: 'success',
+    //     // code: string,
+    //     message: "Ok"
+    // });
+    const [txDetails, setTxDetails] = useState<TxDetail | undefined>();
     const [txId, setTxId] = useState('')
     // const [txDetails, setTxDetails] = useState<any>();
 
@@ -390,9 +390,11 @@ const CreatePool: React.FC = () => {
         })
       
         const { txId } = await execute()
+        // console.log('txId: ', txId)
         setTxId(txId)
-        useC1
-        useC2
+        
+        console.log('extInfo: ', extInfo)
+
         // .then( txId => {
         //     const txDetail = await getTransaction(connection, txId);
         //     console.log('txDetail: ', txDetail)}
@@ -460,22 +462,24 @@ const CreatePool: React.FC = () => {
         // console.log('txDetail: ', txDetail)
     }
 
-    const useC1 = useCallback( ()=> {
+    useEffect( ()=> {
         // try {
-           return get();
+           if(!txId){return console.log('!txId')}
+        //    get();
+           setTimeout(get, 500) //call get function after 0.5 second
             // } catch (err) {console.log(err)}
     },[txId])
 
-    const useC2 = useCallback(() => {
-        return console.log('txId: ', txId, 'txDetail: ', txDetails);
+    useEffect(() => {
+        if(!txDetails) {return console.log('!txDetails')}
+        console.log('txDetail: ', txDetails);
         // console.log('txDetail: ', txDetails)
     },[txDetails])
 
     async function get() {
-        await getTransaction(connection, txId).then((txD => {
-            if(!txD) {return console.log('!txD')}
-            setTxDetails(txD)
-        }))
+        const txD = await getTransaction(connection, txId)
+        if(!txD) {return console.log('!txD')}
+        setTxDetails(txD)
     }
 
     let raydium: Raydium | undefined
@@ -583,7 +587,7 @@ const CreatePool: React.FC = () => {
                                 suspendisse.
                             </p>
                             <p className="2xl:px-20">
-                                {String(txDetails.message)}
+                                {String(txDetails?.message)}
                             </p>
 
                             <span className="mt-15 inline-block">
