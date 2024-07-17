@@ -10,6 +10,7 @@ const errorMessages = {
   '0x0': 'Account Address already in use',
   '0x1779': 'Init lp amount is too less(Because 100 amount lp will be locked), you need to increase tokens amount.',
   '0xbc4': 'The program expected this account to be already initialized.',
+  '0x1772': 'Input token account empty.',
 }
 
 // const tx1 = '3xUQDeMRGpdGgWNPu8FyC35NF8GRup9qvexBUut9URfgdALeyKPy6eKFtBxwpTkkLXpFT4bFFhFNttkuRgJ53U6k' //Error Message: Init lp amount is too less(Because 100 amount lp will be locked).
@@ -59,6 +60,11 @@ export async function getTransaction(connection:Connection, tx:string) {
         state: 'error',
         code: errorCode,
         message: errorMessages['0xbc4'],
+      }
+      : errorCode == '0x1772' ? txDetail = {
+        state: 'error',
+        code: errorCode,
+        message: errorMessages['0x1772'],
       }
       : txDetail = {
         state: 'error',

@@ -645,7 +645,7 @@ const CreateToken: FC = () => {
       {/* <div ref={messageRef}></div>  */}
       {successful && Successful(message, txid)} {/*sccessful message*/}
       {/* {error && Error(message, details, messageRef)} error message */}
-      {error && Error(message, details)} 
+      {error && Error(message, details, undefined)} 
       
       <form onSubmit={(event: any) => createMint(token, event)}>
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">

@@ -95,6 +95,8 @@ const CreatePool: React.FC = () => {
     const [successful, setSuccessful] = useState<boolean>(false);
     const [message, setMessage] = useState<string>('Pool created successfully');
     const [details, setDetails] = useState<string>(''); //Error message details
+    const [poolId, setPoolId] = useState<string | undefined>(undefined)
+    const [showPoolId, setShowPoolId] = useState<boolean>(false)
 
     let getTokensL = new getTokensList; //get wallet token list
 
@@ -134,18 +136,21 @@ const CreatePool: React.FC = () => {
         messageRef.current?.scrollIntoView();
     }, [error, txDetails]);
 
+    //Show Successful message
     const showSuccessfulMessage= () => {
         // window.scroll({
         //   top:0, //scroll to the top of page
         //   behavior: 'smooth'
         // })
         setSuccessful(true) //show successful message
+        setShowPoolId(true) //show pool id
         // messageRef.current?.scrollIntoView({ behavior: 'smooth' });
         setTimeout(() => {
           setSuccessful(false); //hide successful message after 10s
         }, 10000);
     };
     
+    //Show Error message
     const showErrorMessage= () => {
         // window.scrollTo({
         //   top:0, //scroll to the top of page
@@ -234,8 +239,9 @@ const CreatePool: React.FC = () => {
           } catch(e) {console.log('can not get wallet tokens', e)}
         }
         getTokenList(); //get token list
-    },[]);
+    },[wallet, connection]);
 
+    //Get Logo url from uri
     async function getLogoURI(uri:string) {
         if(uri == ''){return '';}
         try{
@@ -254,11 +260,13 @@ const CreatePool: React.FC = () => {
         }      
     }
 
+    //open Modal
     function openModal(asset: any) {
         setChangeToken(asset);
         setIsOpen(true);
     }
 
+    //handle Token List Search
     function handleTokenListSearch(e: any) {
         if (e.target.value != '') {
             setQuery(e.target.value.toLowerCase());
@@ -267,6 +275,7 @@ const CreatePool: React.FC = () => {
         }
     }
 
+    //modify Url Param
     function modifyUrlParam(i: any) {
         setTokenOneAmount(0);
         setTokenTwoAmount(0);
@@ -283,6 +292,7 @@ const CreatePool: React.FC = () => {
         setIsOpen(false);
     }
 
+    //Handle change of token one or token two or searchParam
     useEffect(() => {
         let from = searchParm.get('from');
         if(from){
@@ -310,11 +320,35 @@ const CreatePool: React.FC = () => {
         // console.log('getttttttttttttttttttttttttttt');
     }, [tokenOne, tokenTwo, searchParm]);
 
+    //Crete Pool
     async function cretePool(event: any) {
         event.preventDefault(); //to cancell page reload
         await createPool();
     }
 
+    //Handle txId changes
+    useEffect( ()=> {
+        // try {
+           if(!txId){return console.log('!txId')}
+        //    get();
+           setTimeout(get, 500) //call get function after 0.5 second
+            // } catch (err) {console.log(err)}
+    },[txId])
+
+    //Handle txDetails changes
+    useEffect(() => {
+        if(!txDetails) {return console.log('!txDetails')}
+        console.log('txDetails: ', txDetails);
+        setMessage(txDetails.message) //transaction message
+        if(txDetails.state == 'success'){
+            showSuccessfulMessage(); //show successful message for 10 seccond
+        }
+        else if(txDetails.state == 'error'){
+            showErrorMessage(); //show successful message for 10 seccond
+        }
+    },[txDetails])
+
+    //Create Pool
     const createPool = async () => {
         // event.preventDefault(); //to cancell page reload
         // const raydium = await initSdk({ loadToken: true })
@@ -430,8 +464,9 @@ const CreatePool: React.FC = () => {
         const { txId } = await execute()
         // console.log('txId: ', txId)
         setTxId(txId)
-
-        console.log('extInfo: ', extInfo)
+        setPoolId(extInfo.address.poolId.toString())
+        console.log('poolId', extInfo.address.poolId.toString(), poolId)
+        // console.log('extInfo: ', extInfo)
 
         // .then( txId => {
         //     const txDetail = await getTransaction(connection, txId);
@@ -500,32 +535,14 @@ const CreatePool: React.FC = () => {
         // console.log('txDetail: ', txDetail)
     }
 
-    useEffect( ()=> {
-        // try {
-           if(!txId){return console.log('!txId')}
-        //    get();
-           setTimeout(get, 500) //call get function after 0.5 second
-            // } catch (err) {console.log(err)}
-    },[txId])
-
-    useEffect(() => {
-        if(!txDetails) {return console.log('!txDetails')}
-        console.log('txDetails: ', txDetails);
-        setMessage(txDetails.message) //transaction message
-        if(txDetails.state == 'success'){
-            showSuccessfulMessage(); //show successful message for 10 seccond
-        }
-        else if(txDetails.state == 'error'){
-            showErrorMessage(); //show successful message for 10 seccond
-        }
-    },[txDetails])
-
+    //Get transaction details
     async function get() {
         const txD = await getTransaction(connection, txId)
         if(!txD) {return console.log('!txD')}
         setTxDetails(txD)
     }
 
+    //Init raydium sdk
     let raydium: Raydium | undefined
     const initSdk = async (params?: { loadToken?: boolean }) => {
         if (raydium) return raydium
@@ -567,7 +584,7 @@ const CreatePool: React.FC = () => {
             {/* <div ref={messageRef}></div>  */}
             {successful && Successful(message, txId)} {/*sccessful message*/}
             {/* {error && Error(message, details, messageRef)} error message */}
-            {error && Error(message, details)} 
+            {error && Error(message, undefined, txId)} 
 
             {contextHolder}
             <Modal
@@ -877,6 +894,16 @@ const CreatePool: React.FC = () => {
                                         className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
                                     />
                                 </div>
+
+                                {showPoolId &&<div className="mt-6 text-center">
+                                    {/* <p className='text-white'>Created Pool Id:</p> */}
+                                    <p className='text-white'>
+                                        {`Created pool id: ${poolId}`}
+                                        {/* <Link href="/auth/signup" className="text-primary">
+                                            Sign Up
+                                        </Link> */}
+                                    </p>
+                                </div>}
 
                                 {/* <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
                                     <span>

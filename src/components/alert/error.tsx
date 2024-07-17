@@ -1,6 +1,13 @@
-// import { forwardRef } from 'react';
+import Link from 'next/link';
 
-function Error (message:string, details:string) {
+// import { forwardRef } from 'react';
+import { grtExplorerUrl } from '@/utils/explorer';
+
+function Error (message:string, details?:string, txId?:string) {
+    const endPoint = 'https://api.devnet.solana.com'; //devnet case
+    let url;
+    txId? url = grtExplorerUrl(endPoint, txId) :url = 'https://explorer.solana.com/'
+    // url = grtExplorerUrl(endPoint, txId) : 'https://explorer.solana.com/'
 // function Error (message:string, details:string, messageRef:any) {
 // export const Error = ({message}:{message:string}, {details}:{details:string}, messageRef:any) => {
     return (
@@ -28,12 +35,26 @@ function Error (message:string, details:string) {
                         {/* There were 1 errors with your submission */}
                         {message}
                     </h5>
+                    {details && 
                     <ul>
                         <li className="leading-relaxed text-[#CD5D5D]">
                             {/* Lorem Ipsum is simply dummy text of the printing */}
                             {details}
                         </li>
-                    </ul>
+                    </ul>}
+                    {txId && 
+                    <div>
+                        <p className="text-base leading-relaxed text-body">
+                        {/* Lorem Ipsum is simply dummy text of the printing and typesetting
+                        industry. */}
+                        {`txid: ${txId}`}
+                    </p>
+                    <Link 
+                    className="text-base leading-relaxed text-slate-300 hover:text-white"
+                    href={url} rel="noopener noreferrer" target="_blank"
+                    > show on solana explorer 
+                    </Link>
+                    </div>}
                 </div>
             </div>
         </>
