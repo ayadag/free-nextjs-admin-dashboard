@@ -1,5 +1,6 @@
 "use client"
 import React, {
+  FC,
   useEffect,
   useState,
 } from 'react';
@@ -11,6 +12,7 @@ import { FaCopy } from 'react-icons/fa';
 import useClipboardCopy from '@/hooks/useClipboardCopy';
 
 import poolsL from './poolsList.json';
+import poolsL2 from './poolsList2.json';
 import { getMetadataLogoURI } from './tokenMeta';
 
 type Pool = {
@@ -60,7 +62,7 @@ type PoolLogoURI = {
 }
 
 const poolsList: Pool[] = poolsL.data;
-let poolsList2: PoolLogoURI[];
+let poolsList2: PoolLogoURI[] =[];
 const logo = "/images/brand/brand-01.svg"
 
 // const brandData: BRAND[] = [
@@ -107,20 +109,22 @@ const brandData = [
   },
 ];
 
-const PoolsC = () => {
+const PoolsC:FC = () => {
     const copyToClipboard = useClipboardCopy();
     const [pool, setPool] = useState<PoolLogoURI | undefined>()
-    const [poolL, setPoolL] = useState<PoolLogoURI[]>(poolsList)
+    const [poolL, setPoolL] = useState<PoolLogoURI[]>(poolsL2.data)
+    const [foundPools, setFoundPools] = useState(false)
 
     //Get pools
     useEffect(() => {
-        getPools();
+        // getPools();
     })
 
     useEffect(() => {
         getMeta();
         setPoolL(poolsList2)
         async function getMeta() {
+            try{
             for (let index = 0; index < poolsList.length; index++) {
                 const pool2 = poolsList[index]
                 const metaA = await getMetadataLogoURI(pool2.mintA, pool2.mintProgramA)
@@ -166,6 +170,8 @@ const PoolsC = () => {
                     }
                 })
             }
+            setFoundPools(true)
+        } catch (err) {console.log('error in get pools', err)}
         }
     }, [poolsList])
 
@@ -247,7 +253,8 @@ const PoolsC = () => {
           </div> */}
         </div>
 
-        {poolsList2.map((pool, key) => (
+        {/* {foundPools && poolsList2.map((pool, key) => ( */}
+        {poolL.map((pool, key) => (    //poolL
           <div
             // className={`grid grid-cols-3 sm:grid-cols-5 ${
             // className={`grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 ${
@@ -262,7 +269,7 @@ const PoolsC = () => {
             <div className="flex items-center gap-3 p-2.5 xl:p-5">
               {/* <div className="hidden flex-shrink-0 bg-meta-4 rounded-full sm:block"> */}
               <div className="flex-shrink-0 bg-meta-4 rounded-full">
-                <Image src={logo} alt="Brand" width={30} height={30} />
+                <Image src={pool.tokenAMetadata?.logoURI || ''} alt="Brand" width={30} height={30} />
               </div>
               <p className="text-black text-sm dark:text-white">
                 {/* {brand.name} */}
@@ -271,7 +278,7 @@ const PoolsC = () => {
               <p>-</p>
               {/* <div className="hidden flex-shrink-0 bg-meta-4 rounded-full sm:block"> */}
               <div className="flex-shrink-0 bg-meta-4 rounded-full">
-                <Image src={logo} alt="Brand" width={30} height={30} />
+                <Image src={pool.tokenBMetadata?.logoURI || ''} alt="Brand" width={30} height={30} />
               </div>
               <p className="text-black text-sm dark:text-white">
                 {/* {brand.name} */}
