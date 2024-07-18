@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 
 // import { BRAND } from "@/types/brand";
 import Image from 'next/image';
+import { FaCopy } from 'react-icons/fa';
 
 import poolsL from './poolsList.json';
 
@@ -171,6 +172,9 @@ const PoolsC = () => {
 
             <div className="flex items-center justify-center p-2.5 xl:p-5">
               <p className="text-black text-sm dark:text-white">{pool.poolId.substring(0, 4)} ...</p>
+              <div className='hover:cursor-pointer' onClick={() => console.log('clicked copy')}>
+                <FaCopy />
+              </div>
             </div>
 
             {/* <div className="flex items-center justify-center p-2.5 xl:p-5">
@@ -182,6 +186,9 @@ const PoolsC = () => {
             </div> */}
             <div className="hidden items-center justify-center p-2.5 xl:flex xl:p-5">
               <p className="text-black text-sm dark:text-white">{pool.mintA.substring(0, 4)} ...</p>
+              <div className='hover:cursor-pointer' onClick={() => console.log('clicked copy')}>
+                <FaCopy />
+              </div>
             </div>
 
             {/* <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
@@ -189,6 +196,9 @@ const PoolsC = () => {
             </div> */}
             <div className="hidden items-center justify-center p-2.5 xl:flex xl:p-5">
               <p className="text-black text-sm dark:text-white">{pool.mintB.substring(0, 4)} ...</p>
+              <div className='hover:cursor-pointer' onClick={() => console.log('clicked copy')}>
+                <FaCopy />
+              </div>
             </div>
 
             <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
