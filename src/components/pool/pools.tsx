@@ -5,6 +5,8 @@ import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { FaCopy } from 'react-icons/fa';
 
+import useClipboardCopy from '@/hooks/useClipboardCopy';
+
 import poolsL from './poolsList.json';
 
 const poolsList: any[] = poolsL.data
@@ -55,6 +57,7 @@ const brandData = [
 ];
 
 const PoolsC = () => {
+    const copyToClipboard = useClipboardCopy();
     //Get pools
     useEffect(() => {
         getPools();
@@ -172,7 +175,7 @@ const PoolsC = () => {
 
             <div className="flex items-center justify-center p-2.5 xl:p-5">
               <p className="text-black text-sm dark:text-white">{pool.poolId.substring(0, 4)} ...</p>
-              <div className='hover:cursor-pointer' onClick={() => console.log('clicked copy')}>
+              <div className='hover:cursor-pointer' onClick={() => copyToClipboard(pool.poolId)}>
                 <FaCopy />
               </div>
             </div>
@@ -186,7 +189,7 @@ const PoolsC = () => {
             </div> */}
             <div className="hidden items-center justify-center p-2.5 xl:flex xl:p-5">
               <p className="text-black text-sm dark:text-white">{pool.mintA.substring(0, 4)} ...</p>
-              <div className='hover:cursor-pointer' onClick={() => console.log('clicked copy')}>
+              <div className='hover:cursor-pointer' onClick={() => copyToClipboard(pool.mintA)}>
                 <FaCopy />
               </div>
             </div>
@@ -196,13 +199,13 @@ const PoolsC = () => {
             </div> */}
             <div className="hidden items-center justify-center p-2.5 xl:flex xl:p-5">
               <p className="text-black text-sm dark:text-white">{pool.mintB.substring(0, 4)} ...</p>
-              <div className='hover:cursor-pointer' onClick={() => console.log('clicked copy')}>
+              <div className='hover:cursor-pointer' onClick={() => copyToClipboard(pool.mintB)}>
                 <FaCopy />
               </div>
             </div>
 
             <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-              <p className="text-meta-5">{Number(Math.floor(pool.poolPrice * 10000).toFixed(5))/10000}</p>
+              <p className="text-meta-5">{Number(Math.floor(pool.poolPrice * 100000).toFixed(5))/100000}</p>
             </div>
             {/* <div className="items-center justify-center flex p-2.5 xl:p-5">
               <p className="text-meta-5 text-sm">{Number(Math.floor(pool.poolPrice * 10000).toFixed(5))/10000}</p>
