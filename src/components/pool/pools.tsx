@@ -8,6 +8,7 @@ import React, {
 // import { BRAND } from "@/types/brand";
 // import Image from 'next/image';
 import { FaCopy } from 'react-icons/fa';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 import useClipboardCopy from '@/hooks/useClipboardCopy';
 
@@ -29,6 +30,8 @@ const PoolsC:FC = () => {
     const [poolL, setPoolL] = useState<PoolLogoURI[]>(poolsL2.data)
     const [foundPools, setFoundPools] = useState(false)
     const [poolsList, setPoolsList] = useState<Pool[]>(poolsList1)
+    let [page, setPage] = useState<number>(1)
+    const [hasMore, setHasMore] = useState(true)
 
     //Get pools
     useEffect(() => {
@@ -36,8 +39,8 @@ const PoolsC:FC = () => {
         async function getPools () {
           // const url = 'https://serverless-fy6j77er0-ayads-projects.vercel.app';       
           const searchParam = {
-              page: 1,
-              perPage: 5,
+              page: page,
+              perPage: 3,
           }
           const url = `/api/pools?page=${searchParam.page}&perPage=${searchParam.perPage}`;
   
@@ -53,7 +56,7 @@ const PoolsC:FC = () => {
               console.log('error', error)
           }
         }
-    },[])
+    },[page])
 
     useEffect(() => {
         getMeta();
@@ -109,6 +112,18 @@ const PoolsC:FC = () => {
         } catch (err) {console.log('error in get pools', err)}
         }
     }, [poolsList])
+
+    //Get another page data
+    const fetchMoreData = () => {
+      if (poolL.length < 7) {
+        setTimeout(() => {
+          setPage(page++)
+        }, 500);
+      } else {
+        setHasMore(false);
+      }
+      
+    }
 
     // const getPools = async () => {
     //     // const url = 'https://serverless-fy6j77er0-ayads-projects.vercel.app';       
@@ -190,6 +205,14 @@ const PoolsC:FC = () => {
         </div>
 
         {/* {foundPools && poolsList2.map((pool, key) => ( */}
+        <InfiniteScroll 
+          dataLength={poolL.length} 
+          next={fetchMoreData}
+          hasMore={hasMore}
+          loader={<p>Loading...</p>}
+          endMessage={<p>You are all set!</p>}
+          height={400}
+        >
         {poolL.map((pool, key) => (    //poolL
           <div
             // className={`grid grid-cols-3 sm:grid-cols-5 ${
@@ -276,6 +299,7 @@ const PoolsC:FC = () => {
             </div> */}
           </div>
         ))}
+        </InfiniteScroll>
       </div>
     </div>
   );
