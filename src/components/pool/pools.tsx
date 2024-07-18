@@ -86,7 +86,10 @@ const PoolsC = () => {
       </h4>
 
       <div className="flex flex-col">
-        <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5">
+        {/* <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5"> */}
+        {/* <div className="grid grid-cols-2 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-4 xl:grid-cols-5"> */}
+        {/* <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 xl:grid-cols-5"> */}
+        <div className="grid grid-cols-2 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-3 xl:grid-cols-5">
           <div className="p-2.5 xl:p-5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
               Pair
@@ -97,12 +100,27 @@ const PoolsC = () => {
               Pool
             </h5>
           </div>
-          <div className="p-2.5 text-center xl:p-5">
+          {/* <div className="p-2.5 text-center xl:p-5">
+            <h5 className="text-sm font-medium uppercase xsm:text-base">
+              Mint A
+            </h5>
+          </div> */}
+          {/* <div className="hidden p-2.5 text-center sm:block xl:p-5">
+            <h5 className="text-sm font-medium uppercase xsm:text-base">
+              Mint A
+            </h5>
+          </div> */}
+          <div className="hidden p-2.5 text-center xl:block xl:p-5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
               Mint A
             </h5>
           </div>
-          <div className="hidden p-2.5 text-center sm:block xl:p-5">
+          {/* <div className="hidden p-2.5 text-center sm:block xl:p-5">
+            <h5 className="text-sm font-medium uppercase xsm:text-base">
+              Mint B
+            </h5>
+          </div> */}
+          <div className="hidden p-2.5 text-center xl:block xl:p-5">
             <h5 className="text-sm font-medium uppercase xsm:text-base">
               Mint B
             </h5>
@@ -112,42 +130,73 @@ const PoolsC = () => {
               Pool Price
             </h5>
           </div>
+          {/* <div className="p-2.5 text-center xl:p-5">
+            <h5 className="text-sm font-medium uppercase xsm:text-base">
+              Pool Price
+            </h5>
+          </div> */}
         </div>
 
         {poolsList.map((pool, key) => (
           <div
-            className={`grid grid-cols-3 sm:grid-cols-5 ${
-              key === brandData.length - 1
+            // className={`grid grid-cols-3 sm:grid-cols-5 ${
+            // className={`grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 ${
+                // className={`grid grid-cols-3 xl:grid-cols-5 ${
+                    className={`grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 ${
+                        key === brandData.length - 1
                 ? ""
                 : "border-b border-stroke dark:border-strokedark"
             }`}
             key={key}
           >
             <div className="flex items-center gap-3 p-2.5 xl:p-5">
-              <div className="flex-shrink-0">
-                <Image src={logo} alt="Brand" width={48} height={48} />
+              {/* <div className="hidden flex-shrink-0 bg-meta-4 rounded-full sm:block"> */}
+              <div className="flex-shrink-0 bg-meta-4 rounded-full">
+                <Image src={logo} alt="Brand" width={30} height={30} />
               </div>
-              <p className="hidden text-black dark:text-white sm:block">
+              <p className="text-black text-sm dark:text-white">
                 {/* {brand.name} */}
-                tokenA - tokenB
+                tokenA
+              </p>
+              <p>-</p>
+              {/* <div className="hidden flex-shrink-0 bg-meta-4 rounded-full sm:block"> */}
+              <div className="flex-shrink-0 bg-meta-4 rounded-full">
+                <Image src={logo} alt="Brand" width={30} height={30} />
+              </div>
+              <p className="text-black text-sm dark:text-white">
+                {/* {brand.name} */}
+                tokenB
               </p>
             </div>
 
             <div className="flex items-center justify-center p-2.5 xl:p-5">
-              <p className="text-black dark:text-white">{pool.poolId.substring(0, 4)} ...</p>
+              <p className="text-black text-sm dark:text-white">{pool.poolId.substring(0, 4)} ...</p>
             </div>
 
-            <div className="flex items-center justify-center p-2.5 xl:p-5">
+            {/* <div className="flex items-center justify-center p-2.5 xl:p-5">
               <p className="text-meta-3">{pool.mintA.substring(0, 4)} ...</p>
+            </div> */}
+
+            {/* <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+              <p className="text-black dark:text-white">{pool.mintA.substring(0, 4)} ...</p>
+            </div> */}
+            <div className="hidden items-center justify-center p-2.5 xl:flex xl:p-5">
+              <p className="text-black text-sm dark:text-white">{pool.mintA.substring(0, 4)} ...</p>
             </div>
 
-            <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+            {/* <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
               <p className="text-black dark:text-white">{pool.mintB.substring(0, 4)} ...</p>
+            </div> */}
+            <div className="hidden items-center justify-center p-2.5 xl:flex xl:p-5">
+              <p className="text-black text-sm dark:text-white">{pool.mintB.substring(0, 4)} ...</p>
             </div>
 
             <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
               <p className="text-meta-5">{Number(Math.floor(pool.poolPrice * 10000).toFixed(5))/10000}</p>
             </div>
+            {/* <div className="items-center justify-center flex p-2.5 xl:p-5">
+              <p className="text-meta-5 text-sm">{Number(Math.floor(pool.poolPrice * 10000).toFixed(5))/10000}</p>
+            </div> */}
           </div>
         ))}
       </div>
