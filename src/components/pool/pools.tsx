@@ -14,111 +14,46 @@ import useClipboardCopy from '@/hooks/useClipboardCopy';
 import poolsL from './poolsList.json';
 import poolsL2 from './poolsList2.json';
 import { getMetadataLogoURI } from './tokenMeta';
+import {
+  Pool,
+  PoolLogoURI,
+} from './type';
 
-type Pool = {
-    poolId: string, //"BjWinURsx9WnAW2XrCYXx7ZiWfX3GsS9z8ZvFwsDsUo4"
-    programId?: string, //"97MQhx2fniaNsQgC4G2M6tLUQBah1etEnhsKe1aMCXbo"
-    poolCreator?: string, //"hCjWAhZNZ4z8gSKhokcZ3HFW761Bb2WhVkmemmajCus"
-    configId?: string, //"Co1iQhsPe6HFp3ppdWhbhp1yX7Epkgt7A2aps4LkZWkK"
-    mintA: string, //"uBAsEVJJh8GKj6m5jXqLzWkB4PuysMpxmwFxDDk5Qdz"
-    mintProgramA: string, //"TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
-    vaultA?: string, //"3fBVQc6JYf59gyU5m798q2qDpTdZjgt4qLpPfuzAcRBk"
-    mintB: string, //"DYd2TX2skjBzSKdcciMZpPKXh1nV75vm9jSyEtws3Vwb"
-    mintProgramB: string, //"TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
-    vaultB?: string, //"BobvpVczCcqiTuwkuSjvr2D6WYovcjXHKMUN3qJnPnpz"
-    bump?: number, //254
-    status?: number, //0
-    lpAmount?: number, //10488
-    openTime?: number, //1721191830
-    poolPrice: string //"0.90909090909090909091"
-}
-
-type PoolLogoURI = {
-    poolId: string, //"BjWinURsx9WnAW2XrCYXx7ZiWfX3GsS9z8ZvFwsDsUo4"
-    programId?: string, //"97MQhx2fniaNsQgC4G2M6tLUQBah1etEnhsKe1aMCXbo"
-    poolCreator?: string, //"hCjWAhZNZ4z8gSKhokcZ3HFW761Bb2WhVkmemmajCus"
-    configId?: string, //"Co1iQhsPe6HFp3ppdWhbhp1yX7Epkgt7A2aps4LkZWkK"
-    mintA: string, //"uBAsEVJJh8GKj6m5jXqLzWkB4PuysMpxmwFxDDk5Qdz"
-    mintProgramA: string, //"TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
-    vaultA?: string, //"3fBVQc6JYf59gyU5m798q2qDpTdZjgt4qLpPfuzAcRBk"
-    mintB: string, //"DYd2TX2skjBzSKdcciMZpPKXh1nV75vm9jSyEtws3Vwb"
-    mintProgramB: string, //"TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
-    vaultB?: string, //"BobvpVczCcqiTuwkuSjvr2D6WYovcjXHKMUN3qJnPnpz"
-    bump?: number, //254
-    status?: number, //0
-    lpAmount?: number, //10488
-    openTime?: number, //1721191830
-    poolPrice: string, //"0.90909090909090909091"
-    tokenAMetadata: {
-        name: String,
-        symbol: String,
-        logoURI: string,
-    }
-    tokenBMetadata: {
-        name: String,
-        symbol: String,
-        logoURI: string,
-    }
-}
-
-const poolsList: Pool[] = poolsL.data;
+const poolsList1: Pool[] = poolsL.data;
 let poolsList2: PoolLogoURI[] =[];
 const logo = "/images/brand/brand-01.svg"
-
-// const brandData: BRAND[] = [
-const brandData = [
-        {
-    logo: "/images/brand/brand-01.svg",
-    name: "Google",
-    visitors: 3.5,
-    revenues: "5,768",
-    sales: 590,
-    conversion: 4.8,
-  },
-  {
-    logo: "/images/brand/brand-02.svg",
-    name: "Twitter",
-    visitors: 2.2,
-    revenues: "4,635",
-    sales: 467,
-    conversion: 4.3,
-  },
-  {
-    logo: "/images/brand/brand-03.svg",
-    name: "Github",
-    visitors: 2.1,
-    revenues: "4,290",
-    sales: 420,
-    conversion: 3.7,
-  },
-  {
-    logo: "/images/brand/brand-04.svg",
-    name: "Vimeo",
-    visitors: 1.5,
-    revenues: "3,580",
-    sales: 389,
-    conversion: 2.5,
-  },
-  {
-    logo: "/images/brand/brand-05.svg",
-    name: "Facebook",
-    visitors: 3.5,
-    revenues: "6,768",
-    sales: 390,
-    conversion: 4.2,
-  },
-];
 
 const PoolsC:FC = () => {
     const copyToClipboard = useClipboardCopy();
     const [pool, setPool] = useState<PoolLogoURI | undefined>()
     const [poolL, setPoolL] = useState<PoolLogoURI[]>(poolsL2.data)
     const [foundPools, setFoundPools] = useState(false)
+    const [poolsList, setPoolsList] = useState<Pool[]>(poolsList1)
 
     //Get pools
     useEffect(() => {
-        // getPools();
-    })
+        getPools();
+        async function getPools () {
+          // const url = 'https://serverless-fy6j77er0-ayads-projects.vercel.app';       
+          const searchParam = {
+              page: 1,
+              perPage: 5,
+          }
+          const url = `/api/pools?page=${searchParam.page}&perPage=${searchParam.perPage}`;
+  
+          try {
+              const pools = await ( await fetch(
+                  `${url}`
+                  )
+              ).json();
+  
+              // console.log(pools)
+              setPoolsList(pools)
+          } catch (error) {
+              console.log('error', error)
+          }
+        }
+    },[])
 
     useEffect(() => {
         getMeta();
@@ -175,25 +110,26 @@ const PoolsC:FC = () => {
         }
     }, [poolsList])
 
-    const getPools = async () => {
-        // const url = 'https://serverless-fy6j77er0-ayads-projects.vercel.app';       
-        const searchParam = {
-            page: 1,
-            perPage: 10,
-        }
-        const url = `/api/pools?page=${searchParam.page}&perPage=${searchParam.perPage}`;
+    // const getPools = async () => {
+    //     // const url = 'https://serverless-fy6j77er0-ayads-projects.vercel.app';       
+    //     const searchParam = {
+    //         page: 1,
+    //         perPage: 10,
+    //     }
+    //     const url = `/api/pools?page=${searchParam.page}&perPage=${searchParam.perPage}`;
 
-        try {
-            const pools = await ( await fetch(
-                `${url}`
-                )
-            ).json();
+    //     try {
+    //         const pools = await ( await fetch(
+    //             `${url}`
+    //             )
+    //         ).json();
 
-            console.log(pools)
-        } catch (error) {
-            console.log('error', error)
-        }
-    }
+    //         console.log(pools)
+            
+    //     } catch (error) {
+    //         console.log('error', error)
+    //     }
+    // }
 
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -260,7 +196,7 @@ const PoolsC:FC = () => {
             // className={`grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 ${
                 // className={`grid grid-cols-3 xl:grid-cols-5 ${
                     className={`grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 ${
-                        key === brandData.length - 1
+                        key === poolL.length - 1
                 ? ""
                 : "border-b border-stroke dark:border-strokedark"
             }`}
