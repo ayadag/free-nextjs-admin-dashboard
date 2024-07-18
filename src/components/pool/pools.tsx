@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 
 // import { BRAND } from "@/types/brand";
-import Image from 'next/image';
+// import Image from 'next/image';
 import { FaCopy } from 'react-icons/fa';
 
 import useClipboardCopy from '@/hooks/useClipboardCopy';
@@ -49,12 +49,12 @@ type PoolLogoURI = {
     lpAmount?: number, //10488
     openTime?: number, //1721191830
     poolPrice: string, //"0.90909090909090909091"
-    tokenAMetadata?: {
+    tokenAMetadata: {
         name: String,
         symbol: String,
         logoURI: string,
     }
-    tokenBMetadata?: {
+    tokenBMetadata: {
         name: String,
         symbol: String,
         logoURI: string,
@@ -268,21 +268,35 @@ const PoolsC:FC = () => {
           >
             <div className="flex items-center gap-3 p-2.5 xl:p-5">
               {/* <div className="hidden flex-shrink-0 bg-meta-4 rounded-full sm:block"> */}
-              <div className="flex-shrink-0 bg-meta-4 rounded-full">
-                <Image src={pool.tokenAMetadata?.logoURI || ''} alt="Brand" width={30} height={30} />
+
+              {/* <div className="flex-shrink-0 bg-meta-4 rounded-full">
+                <Image src={pool.tokenAMetadata.logoURI} alt="Brand" width={30} height={30} />
+              </div> */}
+              <div className="flex-shrink-0 bg-meta-4 rounded-full max-w-8 max-h-8">
+                {/* <Image src={pool.tokenAMetadata.logoURI} alt="Brand" width={30} height={30} /> */}
+                <img src={pool.tokenAMetadata.logoURI} alt="imageA" width={30} height={30}/>
               </div>
-              <p className="text-black text-sm dark:text-white">
+
+              <p className="text-meta-5 text-sm">
                 {/* {brand.name} */}
-                tokenA
+                {/* tokenA */}
+                {pool.tokenAMetadata.name}
               </p>
               <p>-</p>
               {/* <div className="hidden flex-shrink-0 bg-meta-4 rounded-full sm:block"> */}
-              <div className="flex-shrink-0 bg-meta-4 rounded-full">
-                <Image src={pool.tokenBMetadata?.logoURI || ''} alt="Brand" width={30} height={30} />
+
+              {/* <div className="flex-shrink-0 bg-meta-4 rounded-full">
+                <Image src={pool.tokenBMetadata.logoURI} alt="Brand" width={30} height={30} />
+              </div> */}
+              <div className="flex-shrink-0 bg-meta-4 rounded-full max-w-8 max-h-8">
+                {/* <Image src={pool.tokenAMetadata.logoURI} alt="Brand" width={30} height={30} /> */}
+                <img src={pool.tokenBMetadata.logoURI} alt="imageB" width={30} height={30}/>
               </div>
-              <p className="text-black text-sm dark:text-white">
+
+              <p className="text-meta-3 text-sm">
                 {/* {brand.name} */}
-                tokenB
+                {/* tokenB */}
+                {pool.tokenBMetadata.name}
               </p>
             </div>
 
@@ -301,7 +315,7 @@ const PoolsC:FC = () => {
               <p className="text-black dark:text-white">{pool.mintA.substring(0, 4)} ...</p>
             </div> */}
             <div className="hidden items-center justify-center p-2.5 xl:flex xl:p-5">
-              <p className="text-black text-sm dark:text-white">{pool.mintA.substring(0, 4)} ...</p>
+              <p className="text-meta-5 text-sm">{pool.mintA.substring(0, 4)} ...</p>
               <div className='hover:cursor-pointer' onClick={() => copyToClipboard(pool.mintA)}>
                 <FaCopy />
               </div>
@@ -311,14 +325,15 @@ const PoolsC:FC = () => {
               <p className="text-black dark:text-white">{pool.mintB.substring(0, 4)} ...</p>
             </div> */}
             <div className="hidden items-center justify-center p-2.5 xl:flex xl:p-5">
-              <p className="text-black text-sm dark:text-white">{pool.mintB.substring(0, 4)} ...</p>
+              <p className="text-meta-3 text-sm">{pool.mintB.substring(0, 4)} ...</p>
               <div className='hover:cursor-pointer' onClick={() => copyToClipboard(pool.mintB)}>
                 <FaCopy />
               </div>
             </div>
 
             <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-              <p className="text-meta-5">{Number(Math.floor(Number(pool.poolPrice) * 100000).toFixed(5))/100000}</p>
+              {/* <p className="text-meta-5">{Number(Math.floor(Number(pool.poolPrice) * 100000).toFixed(5))/100000}</p> */}
+              <p className="text-black text-sm dark:text-white">{Number(Math.floor(Number(pool.poolPrice) * 100000).toFixed(5))/100000}</p>
             </div>
             {/* <div className="items-center justify-center flex p-2.5 xl:p-5">
               <p className="text-meta-5 text-sm">{Number(Math.floor(pool.poolPrice * 10000).toFixed(5))/10000}</p>
