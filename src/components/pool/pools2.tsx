@@ -13,6 +13,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import useClipboardCopy from '@/hooks/useClipboardCopy';
 
 import poolsL from './poolsList.json';
+import poolsL3 from './poolsList3.json';
 import { getMetadataLogoURI } from './tokenMeta';
 import {
   Pool,
@@ -20,14 +21,43 @@ import {
 } from './type';
 
 const poolsList1: Pool[] = poolsL.data;
-let poolsList2: PoolLogoURI[] =[];
+// let poolsList2: PoolLogoURI[] =[];
 const logo = "/images/brand/brand-01.svg"
 
 const PoolsC:FC = () => {
     const copyToClipboard = useClipboardCopy();
-    const [pool, setPool] = useState<PoolLogoURI | undefined>()
+    // const [pool, setPool] = useState<PoolLogoURI | undefined>()
+    const [pool, setPool] = useState<PoolLogoURI>({
+      "poolId": "3KoaZu9J2XXRTvzsP3Z9kJfJQyM1rg1b17oVaLRk5d2v",
+      "programId": "97MQhx2fniaNsQgC4G2M6tLUQBah1etEnhsKe1aMCXbo",
+      "poolCreator": "hCjWAhZNZ4z8gSKhokcZ3HFW761Bb2WhVkmemmajCus",
+      "configId": "Co1iQhsPe6HFp3ppdWhbhp1yX7Epkgt7A2aps4LkZWkK",
+      "mintA": "AZDzcSuVg69kjoSCM97BoL8wUkMKTzu3XwVgxzW8RTr8",
+      "mintProgramA": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+      "vaultA": "B6asWZHdNxbA2T7CkwoZMPKwcrLLT41ozYhRJ3ohAJXk",
+      "mintB": "Duqm5K5U1H8KfsSqwyWwWNWY5TLB9WseqNEAQMhS78hb",
+      "mintProgramB": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+      "vaultB": "5qNNTWaU3b8HeX9gdjVGVyobWbf2ABeXKHAYPefwiPhE",
+      "bump": 254,
+      "status": 0,
+      "lpAmount": 100,
+      "openTime": 1720292630,
+      "poolPrice": "0.0001",
+      "tokenAMetadata": {
+          "name": "String",
+          "symbol": "String",
+          "logoURI": "/images/brand/brand-01.svg"
+      },
+      "tokenBMetadata": {
+          "name": "String",
+          "symbol": "String",
+          "logoURI": "/images/brand/brand-01.svg"
+      }
+  })
     // const [poolL, setPoolL] = useState<PoolLogoURI[]>(poolsL3.data)
-    const [poolL, setPoolL] = useState<PoolLogoURI[]>([])
+    const [poolL, setPoolL] = useState<any>(poolsL3.data)
+    // const [poolL, setPoolL] = useState<PoolLogoURI[]>([])
+    // const [poolL, setPoolL] = useState<PoolLogoURI[]>()
     const [foundPools, setFoundPools] = useState(false)
     // const [poolsList, setPoolsList] = useState<Pool[]>(poolsList1)
     const [poolsList, setPoolsList] = useState<Pool[]>([{
@@ -51,6 +81,7 @@ const PoolsC:FC = () => {
     const searchParam = {
       // page: page,
       perPage: 4,
+      finalPage:3 //maximum number of pages = 3
     }
 
     //Get metadata
@@ -132,86 +163,78 @@ const PoolsC:FC = () => {
   // }, [triger])
 
     //Get pools
+
+    // useEffect(() => {
+    //   console.log('page: ', page)
+    //   getPools();
+    //   async function getPools () {
+    //     const url = `/api/pools?page=${page}&perPage=${searchParam.perPage}`;
+
+    //     try {
+    //         const pools: Pool[] = await ( await fetch(
+    //             `${url}`
+    //             )
+    //         ).json();
+
+    //         for (let index = 0; index < pools.length; index++) {
+    //           const pool2 = poolsList[index]
+    //           const metaA = await getMetadataLogoURI(pool2.mintA, pool2.mintProgramA)
+    //           const metaB = await getMetadataLogoURI(pool2.mintB, pool2.mintProgramB)
+    //           const mintALogo = metaA.logoURI? metaA.logoURI :''
+    //           const mintBLogo = metaB.logoURI? metaB.logoURI :''
+
+    //           setPoolL((prev) => [...prev, {
+    //             poolId: pool2.poolId,
+    //             mintA: pool2.mintA,
+    //             mintProgramA: pool2.mintProgramA,
+    //             mintB: pool2.mintB,
+    //             mintProgramB: pool2.mintProgramB,
+    //             poolPrice: pool2.poolPrice,
+    //             tokenAMetadata: {
+    //                 name: metaA.name,
+    //                 symbol: metaA.symbol,
+    //                 logoURI: mintALogo,
+    //             },
+    //             tokenBMetadata: {
+    //                 name: metaB.name,
+    //                 symbol: metaB.symbol,
+    //                 logoURI: mintBLogo,
+    //             }
+    //         }])
+    //       }
+    //     } catch (error) {
+    //         console.log('error', error)
+    //     }
+    //   }
+    // },[])
     useEffect(() => {
+      let poolsList2: any[] =[];
+      let pools: any;
+      let poolsData: any[] =[];
       console.log('page: ', page)
-      getPools();
+      // getPools();
       async function getPools () {
-        // const url = 'https://serverless-fy6j77er0-ayads-projects.vercel.app';       
-        // const searchParam = {
-        //     page: page,
-        //     perPage: 3,
-        // }
-        // const url = `/api/pools?page=${searchParam.page}&perPage=${searchParam.perPage}`;
-        // const url = `/api/pools?page=${page}&perPage=${searchParam.perPage}`;
         const url = `/api/pools?page=${page}&perPage=${searchParam.perPage}`;
 
         try {
-            const pools: Pool[] = await ( await fetch(
-                `${url}`
+            // const pools: Pool[] = await ( await fetch(
+            pools = await ( await fetch(
+                // `${url}`
+                url
                 )
             ).json();
+            console.log('pools', pools)
+            poolsData = pools.data
 
-            // // let pools3: Pool[];
-            // // pools3 = pools
-            // console.log('pools: ', pools)
-            // // setPoolsList((prev) => [...prev, ...pools3])
-            // setPoolsList(pools)
-
-            // setTimeout(() =>{
-            //   // setPoolsList(pools)
-            //   setTriger(triger ++) //time delay
-            // }, 1000)
-            
-            // console.log('poolsList: ', poolsList)
-            
-            // console.log('page: ', page)
-
-            for (let index = 0; index < pools.length; index++) {
-              const pool2 = poolsList[index]
+            for (let index = 0; index < poolsData.length; index++) {
+              // const pool2 = poolsList[index]
+              const pool2 = poolsData[index]  //Noooooooooooooooooooooooooooooo
               const metaA = await getMetadataLogoURI(pool2.mintA, pool2.mintProgramA)
               const metaB = await getMetadataLogoURI(pool2.mintB, pool2.mintProgramB)
               const mintALogo = metaA.logoURI? metaA.logoURI :''
               const mintBLogo = metaB.logoURI? metaB.logoURI :''
-              
-              // setPool({
-              //     poolId: pool2.poolId,
-              //     mintA: pool2.mintA,
-              //     mintProgramA: pool2.mintProgramA,
-              //     mintB: pool2.mintB,
-              //     mintProgramB: pool2.mintProgramB,
-              //     poolPrice: pool2.poolPrice,
-              //     tokenAMetadata: {
-              //         name: metaA.name,
-              //         symbol: metaA.symbol,
-              //         logoURI: mintALogo,
-              //     },
-              //     tokenBMetadata: {
-              //         name: metaB.name,
-              //         symbol: metaB.symbol,
-              //         logoURI: mintBLogo,
-              //     }
-              // })
 
-              // poolsList2.push({
-              //     poolId: pool2.poolId,
-              //     mintA: pool2.mintA,
-              //     mintProgramA: pool2.mintProgramA,
-              //     mintB: pool2.mintB,
-              //     mintProgramB: pool2.mintProgramB,
-              //     poolPrice: pool2.poolPrice,
-              //     tokenAMetadata: {
-              //         name: metaA.name,
-              //         symbol: metaA.symbol,
-              //         logoURI: mintALogo,
-              //     },
-              //     tokenBMetadata: {
-              //         name: metaB.name,
-              //         symbol: metaB.symbol,
-              //         logoURI: mintBLogo,
-              //     }
-              // })
-
-              setPoolL((prev) => [...prev, {
+              const poolD = {
                 poolId: pool2.poolId,
                 mintA: pool2.mintA,
                 mintProgramA: pool2.mintProgramA,
@@ -228,13 +251,79 @@ const PoolsC:FC = () => {
                     symbol: metaB.symbol,
                     logoURI: mintBLogo,
                 }
-            }])
-          }
+              }
+              // setPoolL((prev) => [...prev, {
+              //   poolId: pool2.poolId,
+              //   mintA: pool2.mintA,
+              //   mintProgramA: pool2.mintProgramA,
+              //   mintB: pool2.mintB,
+              //   mintProgramB: pool2.mintProgramB,
+              //   poolPrice: pool2.poolPrice,
+              //   tokenAMetadata: {
+              //       name: metaA.name,
+              //       symbol: metaA.symbol,
+              //       logoURI: mintALogo,
+              //   },
+              //   tokenBMetadata: {
+              //       name: metaB.name,
+              //       symbol: metaB.symbol,
+              //       logoURI: mintBLogo,
+              //   }
+              // }])
+              // poolsList2.push({
+              //       poolId: pool2.poolId,
+              //       mintA: pool2.mintA,
+              //       mintProgramA: pool2.mintProgramA,
+              //       mintB: pool2.mintB,
+              //       mintProgramB: pool2.mintProgramB,
+              //       poolPrice: pool2.poolPrice,
+              //       tokenAMetadata: {
+              //           name: metaA.name,
+              //           symbol: metaA.symbol,
+              //           logoURI: mintALogo,
+              //       },
+              //       tokenBMetadata: {
+              //           name: metaB.name,
+              //           symbol: metaB.symbol,
+              //           logoURI: mintBLogo,
+              //       }
+              // })
+
+              // setPool({
+              //   poolId: pool2.poolId,
+              //   mintA: pool2.mintA,
+              //   mintProgramA: pool2.mintProgramA,
+              //   mintB: pool2.mintB,
+              //   mintProgramB: pool2.mintProgramB,
+              //   poolPrice: pool2.poolPrice,
+              //   tokenAMetadata: {
+              //       name: metaA.name,
+              //       symbol: metaA.symbol,
+              //       logoURI: mintALogo,
+              //   },
+              //   tokenBMetadata: {
+              //       name: metaB.name,
+              //       symbol: metaB.symbol,
+              //       logoURI: mintBLogo,
+              //   }
+              // })
+
+              // setPool(poolD)
+              // setPoolL((prev) => [...prev, pool])
+              console.log('poolD: ', poolD)
+              poolsList2.push(poolD)
+            }
+            console.log('poolsList2:' ,poolsList2)
+            // setPoolL(poolsList2)
+            setPoolL((prev:any) => [...prev, ...poolsList2])
+            // console.log('poolL: ', poolL)
         } catch (error) {
             console.log('error', error)
         }
       }
-  },[page])
+      // setPoolL(poolsList2)
+      getPools();
+    },[page])
     // },[triger2])
 // },[])
 
@@ -242,14 +331,19 @@ const PoolsC:FC = () => {
     const fetchMoreData = () => {
       console.log('fetching more data')
       // if (poolL.length < searchParam.perPage) {
-      if (poolL.length < 9) { //maxData = 9
-        setTimeout(() => {
-          setPage(page++)
+      // if (poolL.length < 14) { //maxData = 14
+      //   console.log('poolL.length < 14')
+      if (page < searchParam.finalPage) { 
+        console.log('page < searchParam.finalPage')
+        // setTimeout(() => {
+        //setPage(page++)
+          setPage(page +1)
         // setTriger2(triger2 ++) //time delay
-        }, 1000);
+        // }, 1000);
         // setPage(page +1)
         // console.log('page +1', page)
       } else {
+        console.log('setHasMore(false)')
         setHasMore(false);
       }
       
@@ -336,16 +430,16 @@ const PoolsC:FC = () => {
         </div>
 
         {/* {foundPools && poolsList2.map((pool, key) => ( */}
-        <InfiniteScroll 
+        {poolL && <InfiniteScroll 
           dataLength={poolL.length} 
           // dataLength={10} 
           next={fetchMoreData}
           hasMore={hasMore}
-          loader={<p>Loading...</p>}
-          endMessage={<p>You are all set!</p>}
-          height={100}
+          loader={<p className='text-center'>Loading...</p>}
+          endMessage={<p className='text-center'>You are all set!</p>}
+          height={500}
         >
-        {poolL.map((pool, key) => (    //poolL
+        {poolL.map((pool:any, key:any) => (    //poolL
           <div
             // className={`grid grid-cols-3 sm:grid-cols-5 ${
             // className={`grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 ${
@@ -371,7 +465,7 @@ const PoolsC:FC = () => {
               <p className="text-meta-5 text-sm">
                 {/* {brand.name} */}
                 {/* tokenA */}
-                {pool.tokenAMetadata.name}
+                {pool.tokenAMetadata.symbol}
               </p>
               <p>-</p>
               {/* <div className="hidden flex-shrink-0 bg-meta-4 rounded-full sm:block"> */}
@@ -387,7 +481,7 @@ const PoolsC:FC = () => {
               <p className="text-meta-3 text-sm">
                 {/* {brand.name} */}
                 {/* tokenB */}
-                {pool.tokenBMetadata.name}
+                {pool.tokenBMetadata.symbol}
               </p>
             </div>
 
@@ -431,7 +525,7 @@ const PoolsC:FC = () => {
             </div> */}
           </div>
         ))}
-        </InfiniteScroll>
+        </InfiniteScroll>}
       </div>
     </div>
   );
