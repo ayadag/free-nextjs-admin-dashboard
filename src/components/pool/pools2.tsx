@@ -5,10 +5,17 @@ import React, {
   useState,
 } from 'react';
 
+import {
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from 'next/navigation';
+// import { AiOutlineSearch } from 'react-icons/ai';
 // import { BRAND } from "@/types/brand";
 // import Image from 'next/image';
 import { FaCopy } from 'react-icons/fa';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useDebouncedCallback } from 'use-debounce';
 
 import useClipboardCopy from '@/hooks/useClipboardCopy';
 
@@ -83,6 +90,11 @@ const PoolsC:FC = () => {
       perPage: 4,
       finalPage:3 //maximum number of pages = 3
     }
+
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const { replace } = useRouter();
+    const query = searchParams.get('query');
 
     //Get metadata
   //   useEffect(() => {
@@ -349,33 +361,39 @@ const PoolsC:FC = () => {
       
     }
 
-    // const getPools = async () => {
-    //     // const url = 'https://serverless-fy6j77er0-ayads-projects.vercel.app';       
-    //     const searchParam = {
-    //         page: 1,
-    //         perPage: 10,
-    //     }
-    //     const url = `/api/pools?page=${searchParam.page}&perPage=${searchParam.perPage}`;
+    useEffect(() => {
+      console.log('query: ', query)
+    }, [query])
 
-    //     try {
-    //         const pools = await ( await fetch(
-    //             `${url}`
-    //             )
-    //         ).json();
-
-    //         console.log(pools)
-            
-    //     } catch (error) {
-    //         console.log('error', error)
-    //     }
-    // }
+    const handleSearch = useDebouncedCallback((term: string) => {
+      const params = new URLSearchParams(searchParams);
+      if (term) {
+        params.set('query', term)
+      } else {
+        params.delete('query')
+      }
+      replace(`${pathname}?${params.toString()}`)
+    }, 300); //run this code after 300 ms
 
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-      <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
+      {/* <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
         Pools List
-      </h4>
-      <h5>poolList.length {poolsList.length}</h5>
+      </h4> */}
+      {/* //Searchbar */}
+      <div className="relative">
+      {/* focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary */}
+          <input 
+          // type="search" 
+          placeholder='search' 
+          className='w-1/2 p-2 mb-2 rounded-full bg-slate-800' 
+          onChange={(e) => handleSearch(e.target.value)}
+          defaultValue={searchParams.get('query')?.toString()}
+          />
+          {/* <button className='absolute right-1 top-1/2 -translate-y-1/2 p-4 mb-2 bg-slate-600 rounded-full'>
+              <AiOutlineSearch />
+          </button> */}
+      </div>
 
       <div className="flex flex-col">
         {/* <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-5"> */}
@@ -430,7 +448,7 @@ const PoolsC:FC = () => {
         </div>
 
         {/* {foundPools && poolsList2.map((pool, key) => ( */}
-        {poolL && <InfiniteScroll 
+        {(!query && poolL) && <InfiniteScroll 
           dataLength={poolL.length} 
           // dataLength={10} 
           next={fetchMoreData}
