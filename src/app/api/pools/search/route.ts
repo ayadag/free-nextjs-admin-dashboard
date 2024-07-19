@@ -9,6 +9,8 @@ import {
   PublicKey,
 } from '@solana/web3.js';
 
+import { getMetadataLogoURI } from './tokenMeta';
+
 // const SENDER_SECRET_KEY = process.env.SOLANA_SECRET_KEY //
 //     ? new Uint8Array(process.env.SOLANA_SECRET_KEY.split(',').map(Number)) 
 //     : new Uint8Array([]);
@@ -54,6 +56,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
       }
       console.log('poolsM: ', poolsM)
 
+      const poolsM1 = await getPools(poolsM);
       let poolsM2: any[];
       // poolsM?.filter((pool: any) => {
       //   pool.poolId.toLowerCase().includes(query.toLowerCase())
@@ -61,8 +64,21 @@ export async function GET(req: NextRequest, res: NextResponse) {
       //   poolsM2.push(e)
       //   console.log('e: ', e)
       // })
-      poolsM2 = poolsM?.filter((pool: any) => {
-          return pool.poolId.toLowerCase().includes(query.toLowerCase())
+      // poolsM2 = poolsM?.filter((pool: any) => {
+      if(!poolsM1) {return console.log('!poolsM1')}
+      poolsM2 = poolsM1?.filter((pool: any) => {
+          // return pool.poolId.toLowerCase().includes(query.toLowerCase())
+          // return pool.tokenAMetadata.symbol.toLowerCase().includes(query.toLowerCase()) || pool.tokenAMetadata.name.toLowerCase().includes(query.toLowerCase()) || pool.poolId.toLowerCase().includes(query.toLowerCase())
+          // return pool.tokenAMetadata.symbol.toLowerCase().includes(query.toLowerCase())
+          const symbolResult: any[] = pool.tokenAMetadata.symbol.toLowerCase().includes(query.toLowerCase())
+          // if(symbolResult.length != 0) {return symbolResult}
+          return symbolResult
+          // const nameResult: any[] = pool.tokenAMetadata.name.toLowerCase().includes(query.toLowerCase())
+          // if(nameResult.length != 0) {return nameResult}
+          // return nameResult
+          // const poolIdResult: any[] = pool.poolId.toLowerCase().includes(query.toLowerCase())
+          // return poolIdResult
+          // return [...symbolResult, ...nameResult]
       })
 
       const data = poolsM2;
@@ -199,4 +215,116 @@ const initSdk = async (params?: { loadToken?: boolean }) => {
   */
 
   return raydium
+}
+
+async function getPools (poolsData: any[]) {
+  let poolsList2: any[] =[];
+
+  // const url = `/api/pools?page=${page}&perPage=${searchParam.perPage}`;
+
+  try {
+      // const pools: Pool[] = await ( await fetch(
+      // pools = await ( await fetch(
+      //     // `${url}`
+      //     url
+      //     )
+      // ).json();
+      // console.log('pools', pools)
+      // poolsData = pools.data
+
+      for (let index = 0; index < poolsData.length; index++) {
+        // const pool2 = poolsList[index]
+        const pool2 = poolsData[index]  //Noooooooooooooooooooooooooooooo
+        const metaA = await getMetadataLogoURI(pool2.mintA, pool2.mintProgramA)
+        const metaB = await getMetadataLogoURI(pool2.mintB, pool2.mintProgramB)
+        const mintALogo = metaA.logoURI? metaA.logoURI :''
+        const mintBLogo = metaB.logoURI? metaB.logoURI :''
+
+        const poolD = {
+          poolId: pool2.poolId,
+          mintA: pool2.mintA,
+          mintProgramA: pool2.mintProgramA,
+          mintB: pool2.mintB,
+          mintProgramB: pool2.mintProgramB,
+          poolPrice: pool2.poolPrice,
+          tokenAMetadata: {
+              name: metaA.name,
+              symbol: metaA.symbol,
+              logoURI: mintALogo,
+          },
+          tokenBMetadata: {
+              name: metaB.name,
+              symbol: metaB.symbol,
+              logoURI: mintBLogo,
+          }
+        }
+        // setPoolL((prev) => [...prev, {
+        //   poolId: pool2.poolId,
+        //   mintA: pool2.mintA,
+        //   mintProgramA: pool2.mintProgramA,
+        //   mintB: pool2.mintB,
+        //   mintProgramB: pool2.mintProgramB,
+        //   poolPrice: pool2.poolPrice,
+        //   tokenAMetadata: {
+        //       name: metaA.name,
+        //       symbol: metaA.symbol,
+        //       logoURI: mintALogo,
+        //   },
+        //   tokenBMetadata: {
+        //       name: metaB.name,
+        //       symbol: metaB.symbol,
+        //       logoURI: mintBLogo,
+        //   }
+        // }])
+        // poolsList2.push({
+        //       poolId: pool2.poolId,
+        //       mintA: pool2.mintA,
+        //       mintProgramA: pool2.mintProgramA,
+        //       mintB: pool2.mintB,
+        //       mintProgramB: pool2.mintProgramB,
+        //       poolPrice: pool2.poolPrice,
+        //       tokenAMetadata: {
+        //           name: metaA.name,
+        //           symbol: metaA.symbol,
+        //           logoURI: mintALogo,
+        //       },
+        //       tokenBMetadata: {
+        //           name: metaB.name,
+        //           symbol: metaB.symbol,
+        //           logoURI: mintBLogo,
+        //       }
+        // })
+
+        // setPool({
+        //   poolId: pool2.poolId,
+        //   mintA: pool2.mintA,
+        //   mintProgramA: pool2.mintProgramA,
+        //   mintB: pool2.mintB,
+        //   mintProgramB: pool2.mintProgramB,
+        //   poolPrice: pool2.poolPrice,
+        //   tokenAMetadata: {
+        //       name: metaA.name,
+        //       symbol: metaA.symbol,
+        //       logoURI: mintALogo,
+        //   },
+        //   tokenBMetadata: {
+        //       name: metaB.name,
+        //       symbol: metaB.symbol,
+        //       logoURI: mintBLogo,
+        //   }
+        // })
+
+        // setPool(poolD)
+        // setPoolL((prev) => [...prev, pool])
+        console.log('poolD: ', poolD)
+        poolsList2.push(poolD)
+      }
+      console.log('poolsList2:' ,poolsList2)
+      // setPoolL(poolsList2)
+      // setPoolL((prev:any) => [...prev, ...poolsList2])
+      // console.log('poolL: ', poolL)
+      return poolsList2
+  } catch (error) {
+      console.log('error', error)
+  }
 }
