@@ -54,85 +54,86 @@ const PoolsC:FC = () => {
     }
 
     //Get metadata
-    useEffect(() => {
-        getMeta();
-        // setPoolL(poolsList2)
-        async function getMeta() {
-          if(!poolsList){return console.log('!poolList')}
-          try{
-            for (let index = 0; index < poolsList.length; index++) {
-                const pool2 = poolsList[index]
-                const metaA = await getMetadataLogoURI(pool2.mintA, pool2.mintProgramA)
-                const metaB = await getMetadataLogoURI(pool2.mintB, pool2.mintProgramB)
-                const mintALogo = metaA.logoURI? metaA.logoURI :''
-                const mintBLogo = metaB.logoURI? metaB.logoURI :''
+  //   useEffect(() => {
+  //       getMeta();
+  //       // setPoolL(poolsList2)
+  //       async function getMeta() {
+  //         if(!poolsList){return console.log('!poolList')}
+  //         try{
+  //           for (let index = 0; index < poolsList.length; index++) {
+  //               const pool2 = poolsList[index]
+  //               const metaA = await getMetadataLogoURI(pool2.mintA, pool2.mintProgramA)
+  //               const metaB = await getMetadataLogoURI(pool2.mintB, pool2.mintProgramB)
+  //               const mintALogo = metaA.logoURI? metaA.logoURI :''
+  //               const mintBLogo = metaB.logoURI? metaB.logoURI :''
                 
-                // setPool({
-                //     poolId: pool2.poolId,
-                //     mintA: pool2.mintA,
-                //     mintProgramA: pool2.mintProgramA,
-                //     mintB: pool2.mintB,
-                //     mintProgramB: pool2.mintProgramB,
-                //     poolPrice: pool2.poolPrice,
-                //     tokenAMetadata: {
-                //         name: metaA.name,
-                //         symbol: metaA.symbol,
-                //         logoURI: mintALogo,
-                //     },
-                //     tokenBMetadata: {
-                //         name: metaB.name,
-                //         symbol: metaB.symbol,
-                //         logoURI: mintBLogo,
-                //     }
-                // })
+  //               // setPool({
+  //               //     poolId: pool2.poolId,
+  //               //     mintA: pool2.mintA,
+  //               //     mintProgramA: pool2.mintProgramA,
+  //               //     mintB: pool2.mintB,
+  //               //     mintProgramB: pool2.mintProgramB,
+  //               //     poolPrice: pool2.poolPrice,
+  //               //     tokenAMetadata: {
+  //               //         name: metaA.name,
+  //               //         symbol: metaA.symbol,
+  //               //         logoURI: mintALogo,
+  //               //     },
+  //               //     tokenBMetadata: {
+  //               //         name: metaB.name,
+  //               //         symbol: metaB.symbol,
+  //               //         logoURI: mintBLogo,
+  //               //     }
+  //               // })
 
-                // poolsList2.push({
-                //     poolId: pool2.poolId,
-                //     mintA: pool2.mintA,
-                //     mintProgramA: pool2.mintProgramA,
-                //     mintB: pool2.mintB,
-                //     mintProgramB: pool2.mintProgramB,
-                //     poolPrice: pool2.poolPrice,
-                //     tokenAMetadata: {
-                //         name: metaA.name,
-                //         symbol: metaA.symbol,
-                //         logoURI: mintALogo,
-                //     },
-                //     tokenBMetadata: {
-                //         name: metaB.name,
-                //         symbol: metaB.symbol,
-                //         logoURI: mintBLogo,
-                //     }
-                // })
+  //               // poolsList2.push({
+  //               //     poolId: pool2.poolId,
+  //               //     mintA: pool2.mintA,
+  //               //     mintProgramA: pool2.mintProgramA,
+  //               //     mintB: pool2.mintB,
+  //               //     mintProgramB: pool2.mintProgramB,
+  //               //     poolPrice: pool2.poolPrice,
+  //               //     tokenAMetadata: {
+  //               //         name: metaA.name,
+  //               //         symbol: metaA.symbol,
+  //               //         logoURI: mintALogo,
+  //               //     },
+  //               //     tokenBMetadata: {
+  //               //         name: metaB.name,
+  //               //         symbol: metaB.symbol,
+  //               //         logoURI: mintBLogo,
+  //               //     }
+  //               // })
 
-                setPoolL((prev) => [...prev, {
-                  poolId: pool2.poolId,
-                  mintA: pool2.mintA,
-                  mintProgramA: pool2.mintProgramA,
-                  mintB: pool2.mintB,
-                  mintProgramB: pool2.mintProgramB,
-                  poolPrice: pool2.poolPrice,
-                  tokenAMetadata: {
-                      name: metaA.name,
-                      symbol: metaA.symbol,
-                      logoURI: mintALogo,
-                  },
-                  tokenBMetadata: {
-                      name: metaB.name,
-                      symbol: metaB.symbol,
-                      logoURI: mintBLogo,
-                  }
-              }])
-            }
-            console.log('poolL: ', poolL)
-            setFoundPools(true)
-          } catch (err) {console.log('error in get pools', err)}
-        }
-    // }, [poolsList])
-  }, [triger])
+  //               setPoolL((prev) => [...prev, {
+  //                 poolId: pool2.poolId,
+  //                 mintA: pool2.mintA,
+  //                 mintProgramA: pool2.mintProgramA,
+  //                 mintB: pool2.mintB,
+  //                 mintProgramB: pool2.mintProgramB,
+  //                 poolPrice: pool2.poolPrice,
+  //                 tokenAMetadata: {
+  //                     name: metaA.name,
+  //                     symbol: metaA.symbol,
+  //                     logoURI: mintALogo,
+  //                 },
+  //                 tokenBMetadata: {
+  //                     name: metaB.name,
+  //                     symbol: metaB.symbol,
+  //                     logoURI: mintBLogo,
+  //                 }
+  //             }])
+  //           }
+  //           console.log('poolL: ', poolL)
+  //           setFoundPools(true)
+  //         } catch (err) {console.log('error in get pools', err)}
+  //       }
+  //   // }, [poolsList])
+  // }, [triger])
 
     //Get pools
     useEffect(() => {
+      console.log('page: ', page)
       getPools();
       async function getPools () {
         // const url = 'https://serverless-fy6j77er0-ayads-projects.vercel.app';       
@@ -150,26 +151,91 @@ const PoolsC:FC = () => {
                 )
             ).json();
 
-            // let pools3: Pool[];
-            // pools3 = pools
-            console.log('pools: ', pools)
-            // setPoolsList((prev) => [...prev, ...pools3])
-            setPoolsList(pools)
+            // // let pools3: Pool[];
+            // // pools3 = pools
+            // console.log('pools: ', pools)
+            // // setPoolsList((prev) => [...prev, ...pools3])
+            // setPoolsList(pools)
 
-            setTimeout(() =>{
-              // setPoolsList(pools)
-              setTriger(triger ++) //time delay
-            }, 1000)
+            // setTimeout(() =>{
+            //   // setPoolsList(pools)
+            //   setTriger(triger ++) //time delay
+            // }, 1000)
             
-            console.log('poolsList: ', poolsList)
+            // console.log('poolsList: ', poolsList)
             
-            console.log('page: ', page)
+            // console.log('page: ', page)
+
+            for (let index = 0; index < pools.length; index++) {
+              const pool2 = poolsList[index]
+              const metaA = await getMetadataLogoURI(pool2.mintA, pool2.mintProgramA)
+              const metaB = await getMetadataLogoURI(pool2.mintB, pool2.mintProgramB)
+              const mintALogo = metaA.logoURI? metaA.logoURI :''
+              const mintBLogo = metaB.logoURI? metaB.logoURI :''
+              
+              // setPool({
+              //     poolId: pool2.poolId,
+              //     mintA: pool2.mintA,
+              //     mintProgramA: pool2.mintProgramA,
+              //     mintB: pool2.mintB,
+              //     mintProgramB: pool2.mintProgramB,
+              //     poolPrice: pool2.poolPrice,
+              //     tokenAMetadata: {
+              //         name: metaA.name,
+              //         symbol: metaA.symbol,
+              //         logoURI: mintALogo,
+              //     },
+              //     tokenBMetadata: {
+              //         name: metaB.name,
+              //         symbol: metaB.symbol,
+              //         logoURI: mintBLogo,
+              //     }
+              // })
+
+              // poolsList2.push({
+              //     poolId: pool2.poolId,
+              //     mintA: pool2.mintA,
+              //     mintProgramA: pool2.mintProgramA,
+              //     mintB: pool2.mintB,
+              //     mintProgramB: pool2.mintProgramB,
+              //     poolPrice: pool2.poolPrice,
+              //     tokenAMetadata: {
+              //         name: metaA.name,
+              //         symbol: metaA.symbol,
+              //         logoURI: mintALogo,
+              //     },
+              //     tokenBMetadata: {
+              //         name: metaB.name,
+              //         symbol: metaB.symbol,
+              //         logoURI: mintBLogo,
+              //     }
+              // })
+
+              setPoolL((prev) => [...prev, {
+                poolId: pool2.poolId,
+                mintA: pool2.mintA,
+                mintProgramA: pool2.mintProgramA,
+                mintB: pool2.mintB,
+                mintProgramB: pool2.mintProgramB,
+                poolPrice: pool2.poolPrice,
+                tokenAMetadata: {
+                    name: metaA.name,
+                    symbol: metaA.symbol,
+                    logoURI: mintALogo,
+                },
+                tokenBMetadata: {
+                    name: metaB.name,
+                    symbol: metaB.symbol,
+                    logoURI: mintBLogo,
+                }
+            }])
+          }
         } catch (error) {
             console.log('error', error)
         }
       }
-  // },[page])
-    },[triger2])
+  },[page])
+    // },[triger2])
 // },[])
 
     //Get another page data
@@ -178,11 +244,11 @@ const PoolsC:FC = () => {
       // if (poolL.length < searchParam.perPage) {
       if (poolL.length < 9) { //maxData = 9
         setTimeout(() => {
-        //   setPage(page++)
-        setTriger2(triger2 ++) //time delay
+          setPage(page++)
+        // setTriger2(triger2 ++) //time delay
         }, 1000);
-        setPage(page +1)
-        console.log('page +1', page)
+        // setPage(page +1)
+        // console.log('page +1', page)
       } else {
         setHasMore(false);
       }
