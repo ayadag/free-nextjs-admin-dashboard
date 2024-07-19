@@ -70,9 +70,10 @@ export async function GET(req: NextRequest, res: NextResponse) {
           // return pool.poolId.toLowerCase().includes(query.toLowerCase())
           // return pool.tokenAMetadata.symbol.toLowerCase().includes(query.toLowerCase()) || pool.tokenAMetadata.name.toLowerCase().includes(query.toLowerCase()) || pool.poolId.toLowerCase().includes(query.toLowerCase())
           // return pool.tokenAMetadata.symbol.toLowerCase().includes(query.toLowerCase())
-          const symbolResult: any[] = pool.tokenAMetadata.symbol.toLowerCase().includes(query.toLowerCase())
-          // if(symbolResult.length != 0) {return symbolResult}
-          return symbolResult
+          const symbolAResult: any[] = pool.tokenAMetadata.symbol.toLowerCase().includes(query.toLowerCase())
+          if(symbolAResult.length != 0) {return symbolAResult}
+          const symbolBResult: any[] = pool.tokenBMetadata.symbol.toLowerCase().includes(query.toLowerCase())
+          return symbolBResult
           // const nameResult: any[] = pool.tokenAMetadata.name.toLowerCase().includes(query.toLowerCase())
           // if(nameResult.length != 0) {return nameResult}
           // return nameResult
