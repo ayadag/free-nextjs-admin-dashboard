@@ -1,0 +1,32 @@
+{
+    "success": true,
+    "data": [
+        {
+            "poolId": "3KoaZu9J2XXRTvzsP3Z9kJfJQyM1rg1b17oVaLRk5d2v",
+            "programId": "97MQhx2fniaNsQgC4G2M6tLUQBah1etEnhsKe1aMCXbo",
+            "poolCreator": "hCjWAhZNZ4z8gSKhokcZ3HFW761Bb2WhVkmemmajCus",
+            "configId": "Co1iQhsPe6HFp3ppdWhbhp1yX7Epkgt7A2aps4LkZWkK",
+            "mintA": "AZDzcSuVg69kjoSCM97BoL8wUkMKTzu3XwVgxzW8RTr8",
+            "mintProgramA": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+            "vaultA": "B6asWZHdNxbA2T7CkwoZMPKwcrLLT41ozYhRJ3ohAJXk",
+            "mintB": "Duqm5K5U1H8KfsSqwyWwWNWY5TLB9WseqNEAQMhS78hb",
+            "mintProgramB": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+            "vaultB": "5qNNTWaU3b8HeX9gdjVGVyobWbf2ABeXKHAYPefwiPhE",
+            "bump": 254,
+            "status": 0,
+            "lpAmount": 100,
+            "openTime": 1720292630,
+            "poolPrice": "0.0001",
+            "tokenAMetadata": {
+                "name": "String",
+                "symbol": "String",
+                "logoURI": "/images/brand/brand-01.svg"
+            },
+            "tokenBMetadata": {
+                "name": "String",
+                "symbol": "String",
+                "logoURI": "/images/brand/brand-01.svg"
+            }
+        }
+    ]
+}
