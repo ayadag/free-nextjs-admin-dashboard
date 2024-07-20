@@ -151,24 +151,24 @@ const PoolsC:FC = () => {
     }
 
     //handle search param
-    useEffect(() => {
-      console.log('query: ', query)
-      if(query == null) {
-        setPoolLSearch(null)
-        return setPoolLToShow(poolL)
-      }
-      try{
-      poolL.filter((pool: any) => {
-      const symbolAResult: any[] = pool.tokenAMetadata.symbol.toLowerCase().includes(query.toLowerCase())
-      if(symbolAResult.length != 0) {
-        setPoolLSearch(symbolAResult)
-        return setPoolLToShow(symbolAResult)}
-      const symbolBResult: any[] = pool.tokenBMetadata.symbol.toLowerCase().includes(query.toLowerCase())
-      setPoolLSearch(symbolBResult)
-      return setPoolLToShow(symbolBResult)
-      })
-      } catch (err) {console.log('err', err)}
-    }, [query, poolL])
+    // useEffect(() => {
+    //   console.log('query: ', query)
+    //   if(query == null) {
+    //     setPoolLSearch(null)
+    //     return setPoolLToShow(poolL)
+    //   }
+    //   try{
+    //   poolL.filter((pool: any) => {
+    //   const symbolAResult: any[] = pool.tokenAMetadata.symbol.toLowerCase().includes(query.toLowerCase())
+    //   if(symbolAResult.length != 0) {
+    //     setPoolLSearch(symbolAResult)
+    //     return setPoolLToShow(symbolAResult)}
+    //   const symbolBResult: any[] = pool.tokenBMetadata.symbol.toLowerCase().includes(query.toLowerCase())
+    //   setPoolLSearch(symbolBResult)
+    //   return setPoolLToShow(symbolBResult)
+    //   })
+    //   } catch (err) {console.log('err', err)}
+    // }, [query, poolL])
 
     const handleSearch = useDebouncedCallback((term: string) => {
       const params = new URLSearchParams(searchParams);
@@ -264,7 +264,11 @@ const PoolsC:FC = () => {
           height={500}
         >
         {/* <div style={{height: 500}}> */}
-        {poolLToShow && poolLToShow.map((pool:any, key:any) => (    //poolL
+        {/* {poolLToShow && poolLToShow.map((pool:any, key:any) => (    //poolL */}
+        {poolLToShow.filter((p: any) => 
+        p.tokenAMetadata.symbol.toLowerCase().includes(query.toLowerCase())
+        ).map((pool:any, key:any) => {
+          return (    //poolL
           <div
             // className={`grid grid-cols-3 sm:grid-cols-5 ${
             // className={`grid grid-cols-2 sm:grid-cols-4 xl:grid-cols-5 ${
@@ -349,7 +353,7 @@ const PoolsC:FC = () => {
               <p className="text-meta-5 text-sm">{Number(Math.floor(pool.poolPrice * 10000).toFixed(5))/10000}</p>
             </div> */}
           </div>
-        ))}
+        )})}
         {/* </div> */}
         </InfiniteScroll>}
       </div>
