@@ -191,7 +191,7 @@ const PoolsC:FC = () => {
           <input 
           // type="search" 
           placeholder='search' 
-          className='w-1/2 p-2 mb-2 rounded-full bg-slate-800' 
+          className='w-full p-2 mb-2 rounded-full bg-slate-800 xl:w-1/2' 
           onChange={(e) => handleSearch(e.target.value)}
           defaultValue={searchParams.get('query')?.toString()}
           />
