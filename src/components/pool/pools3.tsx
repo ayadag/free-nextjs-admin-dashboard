@@ -265,8 +265,10 @@ const PoolsC:FC = () => {
         >
         {/* <div style={{height: 500}}> */}
         {/* {poolLToShow && poolLToShow.map((pool:any, key:any) => (    //poolL */}
-        {poolLToShow.filter((p: any) => 
-        p.tokenAMetadata.symbol.toLowerCase().includes(query.toLowerCase())
+        {poolLToShow.filter((p: any) => {
+          if (!query) {return p}
+          return p.tokenAMetadata.symbol.toLowerCase().includes(query.toLowerCase())
+        }
         ).map((pool:any, key:any) => {
           return (    //poolL
           <div
