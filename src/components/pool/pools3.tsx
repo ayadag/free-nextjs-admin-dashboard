@@ -267,7 +267,11 @@ const PoolsC:FC = () => {
         {/* {poolLToShow && poolLToShow.map((pool:any, key:any) => (    //poolL */}
         {poolLToShow.filter((p: any) => {
           if (!query) {return p}
-          return p.tokenAMetadata.symbol.toLowerCase().includes(query.toLowerCase())
+          // return p.tokenAMetadata.symbol.toLowerCase().includes(query.toLowerCase())
+          const tAMeta = p.tokenAMetadata.symbol.toLowerCase().includes(query.toLowerCase())
+          const tBMeta = p.tokenBMetadata.symbol.toLowerCase().includes(query.toLowerCase())
+          const pId = p.poolId.toLowerCase().includes(query.toLowerCase())
+          return tAMeta || tBMeta || pId
         }
         ).map((pool:any, key:any) => {
           return (    //poolL
