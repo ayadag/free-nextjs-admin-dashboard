@@ -550,7 +550,7 @@ export const Create: FC = () => {
 
               </div>
 
-              <div className='self-center'>
+              {/* <div className='self-center'>
                 <button
                   className="flex justify-center rounded bg-primary px-25 py-2 font-medium text-gray hover:bg-opacity-90"
                   type="submit"
@@ -559,6 +559,14 @@ export const Create: FC = () => {
                 >
                   Create
                 </button>
+              </div> */}
+              <div className='mb-5'>
+                <input 
+                  type="submit"
+                  value="Crete Token"
+                  onClick={() => createToken(token)}
+                  className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                />
               </div>
 
             </div>

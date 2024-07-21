@@ -260,7 +260,7 @@ const PoolsC:FC = () => {
           // hasMore={hasMore}
           hasMore={false}
           loader={<p className='text-center'>Loading...</p>}
-          endMessage={<p className='text-center'>You are all set!</p>}
+          // endMessage={<p className='text-center'>You are all set!</p>}
           height={500}
         >
         {/* <div style={{height: 500}}> */}
@@ -300,7 +300,7 @@ const PoolsC:FC = () => {
               <p className="text-meta-5 text-sm">
                 {/* {brand.name} */}
                 {/* tokenA */}
-                {pool.tokenAMetadata.symbol}
+                {pool.tokenAMetadata.symbol.substring(0, 10)} 
               </p>
               <p>-</p>
               {/* <div className="hidden flex-shrink-0 bg-meta-4 rounded-full sm:block"> */}
@@ -316,7 +316,7 @@ const PoolsC:FC = () => {
               <p className="text-meta-3 text-sm">
                 {/* {brand.name} */}
                 {/* tokenB */}
-                {pool.tokenBMetadata.symbol}
+                {pool.tokenBMetadata.symbol.substring(0, 10)}
               </p>
             </div>
 

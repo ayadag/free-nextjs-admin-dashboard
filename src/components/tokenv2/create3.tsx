@@ -639,7 +639,7 @@ const CreateToken: FC = () => {
   }
 
     return (
-        <>
+      <>
       <div ref={messageRef}></div> {/*scroll to this emty dev*/}
       <Breadcrumb pageName="CreateTokenV1" />
       {/* <div ref={messageRef}></div>  */}
@@ -1000,16 +1000,23 @@ const CreateToken: FC = () => {
 
               </div>
 
-              <div className='self-center'>
-                <button
-                  className="flex justify-center rounded bg-primary px-25 py-2 font-medium text-gray hover:bg-opacity-90"
+              {/* <div className='self-center'> */}
+                {/* <button
+                  // className="flex justify-center rounded bg-primary px-25 py-2 font-medium text-gray hover:bg-opacity-90"
+                  className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
                   type="submit"
                   //   onClick={() => onClick({decimals: Number(descimals), amount: Number(supply), metadata: metadata, symbol: symbol, tokenName: name})}
                 //   onClick={() => createToken(token)}
                 // onClick={() => createMint(token)}
                 >
                   Create
-                </button>
+                </button> */}
+              <div className='mb-5'>
+                <input 
+                  type="submit"
+                  value="Crete Token"
+                  className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                />
               </div>
 
             </div>
