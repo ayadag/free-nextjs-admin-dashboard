@@ -55,6 +55,8 @@ type Token = {
     amount: number,
     image: string,
     description: string,
+    fee: number,
+    maxFee: number
   }
 
 const CreateToken: FC = () => {
@@ -74,6 +76,8 @@ const CreateToken: FC = () => {
     amount: Number('1000000000'),
     image: "",
     description: "",
+    fee: 0,
+    maxFee: 0,
   });
   const [successful, setSuccessful] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('Token create successfully');
@@ -217,10 +221,12 @@ const CreateToken: FC = () => {
         const withdrawWithheldAuthority = new PublicKey(withdrawAuthority);
         // const feeBasisPoints = 300;
         // const feeBasisPoints = fee * 100;
-        const feeBasisPoints = fee;
+        const feeBasisPoints = token.fee*100;
+        // const feeBasisPoints = fee;
         // const maxFee = BigInt(100);
         // const maxFee = BigInt(100 * Math.pow(10, decimals));  //100 token
-        const maxFee = BigInt(maximumFee * Math.pow(10, decimals));
+        // const maxFee = BigInt(maximumFee * Math.pow(10, decimals));
+        const maxFee = BigInt(token.maxFee * Math.pow(10, decimals));
         const mintLen = getMintLen([ExtensionType.MetadataPointer, ExtensionType.TransferFeeConfig]);
 
         // Minimum lamports required for Mint Account
@@ -928,7 +934,10 @@ const CreateToken: FC = () => {
                   placeholder="Fee (%)"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   // onChange={(e) => setFee(Number(e.target.value))}
-                  onChange={(e) => setFee(Number(e.target.value)*100)}
+                  // onChange={(e) => setFee(Number(e.target.value)*100)}
+                  onChange={(e) =>
+                    handleFormFieldChange
+                      ("fee", e)}
                   defaultValue={0}
                   required
                 />
@@ -942,7 +951,10 @@ const CreateToken: FC = () => {
                   type="number"
                   placeholder="Max Fee"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                  onChange={(e) => setMaximumFee(Number(e.target.value))}
+                  // onChange={(e) => setMaximumFee(Number(e.target.value))}
+                  onChange={(e) =>
+                    handleFormFieldChange
+                      ("maxFee", e)}
                   defaultValue={0}
                   required
                 />
@@ -993,11 +1005,17 @@ const CreateToken: FC = () => {
                 <label className="mb-2 block text-sm font-medium text-black dark:text-white">
                   {`Description : ${token.description}`}
                 </label>
-                <label className="mb-0 block text-sm font-medium text-black dark:text-white">
+                <label className="mb-2 block text-sm font-medium text-black dark:text-white">
                   {`Supply : ${token.amount}`}
                 </label>
                 <label className="mb-2 block text-sm font-medium text-black dark:text-white">
                   {`Decimals : ${token.decimals}`}
+                </label>
+                <label className="mb-2 block text-sm font-medium text-black dark:text-white">
+                  {`Fee : ${token.fee}`}
+                </label>
+                <label className="mb-2 block text-sm font-medium text-black dark:text-white">
+                  {`Maximum Fee : ${token.maxFee}`}
                 </label>
 
               </div>
