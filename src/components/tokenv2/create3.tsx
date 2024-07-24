@@ -84,8 +84,8 @@ const CreateToken: FC = () => {
   const [taxSwitch, setTaxSwitch] = useState(true); //switch tax fee extantion
   const [withdrawAuthority, setWithdrawAuthority] = useState<string>(`${publicKey}`);
   const [configAuthority, setConfigAuthority] = useState<string>(`${publicKey}`);
-  const [fee, setFee] = useState(0);
-  const [maximumFee, setMaximumFee] = useState(0);
+  const [fee, setFee] = useState<number>(0);
+  const [maximumFee, setMaximumFee] = useState<number>(0);
   // let [transaction, setTransaction] = useState<Transaction>();
   let transaction: Transaction;
   // let transaction = null;
