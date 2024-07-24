@@ -25,9 +25,10 @@ const WithDrawTokenFee: FC = () => {
 
     const {publicKey, sendTransaction} = useWallet();
     const {connection} = useConnection();
-
+    const wallet = useWallet();
 
     const withdrawTokenFee = async (event: any) => {
+        event.preventDefault(); //to cancell page reload
         //ayad/////////
         if(!publicKey){return console.log('wallet not connected!')}
         let transactionSignature: string;
@@ -73,7 +74,7 @@ const WithDrawTokenFee: FC = () => {
             mint,
             publicKey,
             feeAuth,
-            [],
+            [publicKey], //ayad
             accountsToWithdrawFrom,
             TOKEN_2022_PROGRAM_ID
         );
