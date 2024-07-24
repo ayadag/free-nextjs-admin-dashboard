@@ -216,7 +216,8 @@ const CreateToken: FC = () => {
         const transferFeeConfigAuthority = new PublicKey(configAuthority);
         const withdrawWithheldAuthority = new PublicKey(withdrawAuthority);
         // const feeBasisPoints = 300;
-        const feeBasisPoints = fee * 100;
+        // const feeBasisPoints = fee * 100;
+        const feeBasisPoints = fee;
         // const maxFee = BigInt(100);
         // const maxFee = BigInt(100 * Math.pow(10, decimals));  //100 token
         const maxFee = BigInt(maximumFee * Math.pow(10, decimals));
@@ -926,7 +927,8 @@ const CreateToken: FC = () => {
                   type="number"
                   placeholder="Fee (%)"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                  onChange={(e) => setFee(Number(e.target.value))}
+                  // onChange={(e) => setFee(Number(e.target.value))}
+                  onChange={(e) => setFee(Number(e.target.value)*100)}
                   defaultValue={0}
                   required
                 />
