@@ -1,3 +1,5 @@
+"use client";
+
 import React, {
   useEffect,
   useRef,
@@ -39,8 +41,6 @@ import {
   getTransaction,
   TxDetail,
 } from './getTxDetails';
-
-"use client";
 
 // import styles from './swap.module.css';
 // import tList from './tokenList2.json';
