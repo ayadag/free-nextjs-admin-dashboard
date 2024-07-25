@@ -8,6 +8,7 @@ import { message as Message } from 'antd';
 import bs58 from 'bs58';
 
 import {
+  createWithdrawWithheldTokensFromAccountsInstruction,
   getAssociatedTokenAddress,
   getTransferFeeAmount,
   TOKEN_2022_PROGRAM_ID,
@@ -28,6 +29,7 @@ import {
 import {
   Keypair,
   PublicKey,
+  Transaction,
 } from '@solana/web3.js';
 
 import Error from '../../alert/error';
@@ -300,6 +302,29 @@ const WithdrawC: React.FC = () => {
         //     'Bag secured, check it:',
         //     `https://solana.fm/tx/${withdrawTokensSig}?cluster=devnet-solana`
         // );
+
+        const instruction = createWithdrawWithheldTokensFromAccountsInstruction(
+            new PublicKey(mint), // the token mint
+            new PublicKey(ata),  // the destination account
+            withdrawWithheldAuthority.publicKey, // the withdraw withheld token authority
+            [], // signing accounts
+            accountsToWithdrawFrom, // source accounts from which to withdraw withheld fees
+            TOKEN_2022_PROGRAM_ID // SPL token program id
+        );
+        const transaction = new Transaction()
+        .add(instruction);
+            // .add(feeVaultAccountInstruction, instruction);
+
+        const {blockhash, lastValidBlockHeight} = await connection.getLatestBlockhash();
+        transaction.recentBlockhash = blockhash;
+        transaction.lastValidBlockHeight = lastValidBlockHeight;
+        transaction.feePayer = publicKey;
+        try {
+            let transactionSignature = await sendTransaction(transaction, connection);
+            console.log("Transaction Signature", transactionSignature);
+        } catch (error) {
+            console.error("Transaction failed", error);
+        }
     }
 
     return (
