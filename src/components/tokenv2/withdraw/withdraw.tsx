@@ -12,7 +12,6 @@ import {
   getTransferFeeAmount,
   TOKEN_2022_PROGRAM_ID,
   unpackAccount,
-  withdrawWithheldTokensFromAccounts,
 } from '@solana/spl-token';
 // import {
 //   Raydium,
@@ -52,7 +51,7 @@ import {
 
 const WithdrawC: React.FC = () => {
     const wallet = useWallet();
-    const { publicKey, signAllTransactions } = useWallet();
+    const { publicKey, signAllTransactions, sendTransaction } = useWallet();
 
     // const connection = new Connection('https://mainnet.helius-rpc.com/?api-key=YOUR_API_KEY_HERE');
     // const connection = new Connection('https://api.devnet.solana.com/');
@@ -283,23 +282,24 @@ const WithdrawC: React.FC = () => {
             // new Uint8Array(withheld)
             new Uint8Array(bs58.decode(withheld))
         );
-        const withdrawTokensSig = await withdrawWithheldTokensFromAccounts(
-            connection, // connection to use
-            wallet, // payer of the transaction fee
-            new PublicKey(mint), // the token mint
-            // recipientKeypair.publicKey, // the destination account
-            new PublicKey(ata),  // the destination account
-            withdrawWithheldAuthority, // the withdraw withheld token authority
-            [], // signing accounts
-            accountsToWithdrawFrom, // source accounts from which to withdraw withheld fees
-            undefined, // options for confirming the transaction
-            TOKEN_2022_PROGRAM_ID // SPL token program id
-        );
 
-        console.log(
-            'Bag secured, check it:',
-            `https://solana.fm/tx/${withdrawTokensSig}?cluster=devnet-solana`
-        );
+        // const withdrawTokensSig = await withdrawWithheldTokensFromAccounts(
+        //     connection, // connection to use
+        //     owner, // payer of the transaction fee
+        //     new PublicKey(mint), // the token mint
+        //     // recipientKeypair.publicKey, // the destination account
+        //     new PublicKey(ata),  // the destination account
+        //     withdrawWithheldAuthority, // the withdraw withheld token authority
+        //     [], // signing accounts
+        //     accountsToWithdrawFrom, // source accounts from which to withdraw withheld fees
+        //     undefined, // options for confirming the transaction
+        //     TOKEN_2022_PROGRAM_ID // SPL token program id
+        // );
+
+        // console.log(
+        //     'Bag secured, check it:',
+        //     `https://solana.fm/tx/${withdrawTokensSig}?cluster=devnet-solana`
+        // );
     }
 
     return (
