@@ -74,7 +74,7 @@ const WithDrawTokenFee: FC = () => {
             mint,
             publicKey,
             feeAuth,
-            [publicKey], //ayad
+            [], 
             accountsToWithdrawFrom,
             TOKEN_2022_PROGRAM_ID
         );
