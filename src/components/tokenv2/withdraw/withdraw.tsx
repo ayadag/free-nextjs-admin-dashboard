@@ -7,6 +7,10 @@ import React, {
 
 import { message as Message } from 'antd';
 
+import {
+  getAssociatedTokenAddress,
+  TOKEN_2022_PROGRAM_ID,
+} from '@solana/spl-token';
 // import {
 //   Raydium,
 //   TxVersion,
@@ -19,6 +23,7 @@ import {
   useConnection,
   useWallet,
 } from '@solana/wallet-adapter-react';
+import { PublicKey } from '@solana/web3.js';
 
 import Error from '../../alert/error';
 // import { notify } from '../../utils/notifications';
@@ -28,7 +33,6 @@ import {
   TxDetail,
 } from './getTxDetails';
 
-// import { PublicKey } from '@solana/web3.js';
 // import styles from './swap.module.css';
 // import tList from './tokenList2.json';
 // import { getTokensList } from './walletTokens';
@@ -119,9 +123,34 @@ const WithdrawC: React.FC = () => {
     
 
     //ayad/////////////////////////////////////////////////////////////
-    const [mint, setMint] = useState('');
+    // const [mint, setMint] = useState<string | undefined>('');
+    const [mint, setMint] = useState<string | undefined>(undefined);
+    const [tokenOwner, setTokenOwner] = useState<string | undefined>(owner?.toBase58())
     const [ata, setAta] = useState('');
     const [withheld, setWithheld] = useState('');
+    
+    //Handle mint changes
+    useEffect(() => {
+        if(!mint || !tokenOwner) {return console.log('!mint || !tokenOwner')}
+
+        getATADetails();
+
+        async function getATADetails() {
+            if(!mint || !tokenOwner) {return console.log('!mint || !tokenOwner')}
+            const ATAdress = await getAssociatedTokenAddress(
+                new PublicKey(mint),
+                // payer.publicKey,
+                // owner,
+                new PublicKey(tokenOwner),
+                false,
+                TOKEN_2022_PROGRAM_ID
+            );
+
+            setAta(ATAdress.toBase58())
+            console.log('ATAdress.toBase58(): ', ATAdress.toBase58())
+            console.log('setAta: ', ata)
+        }
+    },[mint])
 
 
     //scroll effect whenever the message change
@@ -242,6 +271,23 @@ const WithdrawC: React.FC = () => {
 
                                 <div className="mb-4">
                                     <label className="mb-2.5 block font-medium text-black dark:text-white">
+                                        Token Owner
+                                    </label>
+                                    <div className="relative">
+                                        <input
+                                            type="text"
+                                            placeholder="Enter token owner address"
+                                            // step="0.000000001"
+                                            onChange={(e) => setTokenOwner(String(e.target.value))}
+                                            // defaultValue={tokenOneAmount}
+                                            required
+                                            className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="mb-4">
+                                    <label className="mb-2.5 block font-medium text-black dark:text-white">
                                         {`Recipient (Associated Token Address)`}
                                     </label>
                                     <div className="relative">
@@ -293,6 +339,7 @@ const WithdrawC: React.FC = () => {
                                 </div>}
                                 <div>
                                     <p>{mint}</p>
+                                    <p>{tokenOwner}</p>
                                     <p>{ata}</p>
                                     <p>{withheld}</p>
                                 </div>
