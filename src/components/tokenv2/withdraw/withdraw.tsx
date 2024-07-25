@@ -178,7 +178,7 @@ const WithdrawC: React.FC = () => {
         // messageRef.current?.scrollIntoView({ behavior: 'smooth' });
         setTimeout(() => {
             setSuccessful(false); //hide successful message after 10s
-        }, 10000);
+        }, 15000);
     };
 
     //Show Error message
@@ -197,13 +197,13 @@ const WithdrawC: React.FC = () => {
     };
 
     //Handle txId changes
-    useEffect(() => {
-        // try {
-        if (!txId) { return console.log('!txId') }
-        //    get();
-        setTimeout(get, 500) //call get function after 0.5 second
-        // } catch (err) {console.log(err)}
-    }, [txId])
+    // useEffect(() => {
+    //     // try {
+    //     if (!txId) { return console.log('!txId') }
+    //     //    get();
+    //     setTimeout(get, 500) //call get function after 0.5 second
+    //     // } catch (err) {console.log(err)}
+    // }, [txId])
 
     //Handle txDetails changes
     useEffect(() => {
@@ -211,23 +211,23 @@ const WithdrawC: React.FC = () => {
         console.log('txDetails: ', txDetails);
         setMessage(txDetails.message) //transaction message
         if (txDetails.state == 'success') {
-            showSuccessfulMessage(); //show successful message for 10 seccond
+            showSuccessfulMessage(); //show successful message for 15 seccond
         }
         else if (txDetails.state == 'error') {
-            showErrorMessage(); //show successful message for 10 seccond
+            showErrorMessage(); //show error message for 10 seccond
         }
     }, [txDetails])
 
 
 
     //Get transaction details
-    async function get() {
-        const txD = await getTransaction(connection, txId)
-        if (!txD) { return console.log('!txD') }
-        setTxDetails(txD)
-    }
+    // async function get() {
+    //     const txD = await getTransaction(connection, txId)
+    //     if (!txD) { return console.log('!txD') }
+    //     setTxDetails(txD)
+    // }
 
-    //Crete Pool
+    //Start withdraw action
     async function withdrawf(event: any) {
         event.preventDefault(); //to cancell page reload
         await withdrawF();
@@ -237,7 +237,11 @@ const WithdrawC: React.FC = () => {
         if (!publicKey || !mint) { return console.log('!publicKey') }
         const balance = await connection.getBalance(publicKey);
         if (balance < 10000000) { // 0.01 SOL
-            return console.error('Not enough SOL in payer account, please fund your waalet');
+            setTxDetails({
+                state: 'error'
+                message: 'Not enough SOL in payer account, please fund your wallet'
+            })
+            return console.error('Not enough SOL in payer account, please fund your wallet');
         }
 
         const allAccounts = await connection.getProgramAccounts(TOKEN_2022_PROGRAM_ID, {
@@ -274,6 +278,10 @@ const WithdrawC: React.FC = () => {
         }
 
         if (accountsToWithdrawFrom.length === 0) {
+            setTxDetails({
+                state: 'error'
+                message: 'No accounts to withdraw from: no transfers have been made'
+            })
             return console.error('No accounts to withdraw from: no transfers have been made');
         } else {
             console.log('Found', accountsToWithdrawFrom.length, 'accounts to withdraw from 🤑');
@@ -322,8 +330,17 @@ const WithdrawC: React.FC = () => {
         try {
             let transactionSignature = await sendTransaction(transaction, connection);
             console.log("Transaction Signature", transactionSignature);
+            setTxId(String(transactionSignature))
+            setTxDetails({
+                state: 'success'
+                message: 'Withdraw successful'
+            })
         } catch (error) {
             console.error("Transaction failed", error);
+            setTxDetails({
+                state: 'error'
+                message: 'Withdraw unsuccessful'
+            })
         }
     }
 
