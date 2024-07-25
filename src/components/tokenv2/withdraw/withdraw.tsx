@@ -117,7 +117,12 @@ const WithdrawC: React.FC = () => {
         }
     );
     
+
     //ayad/////////////////////////////////////////////////////////////
+    const [mint, setMint] = useState('');
+    const [ata, setAta] = useState('');
+    const [withheld, setWithheld] = useState('');
+
 
     //scroll effect whenever the message change
     useEffect(() => {
@@ -220,15 +225,32 @@ const WithdrawC: React.FC = () => {
                             <form onSubmit={(event) => withdrawf(event)}>
                                 <div className="mb-4">
                                     <label className="mb-2.5 block font-medium text-black dark:text-white">
-                                        Token one
+                                        Token Mint
                                     </label>
                                     <div className="relative">
                                         <input
                                             type="text"
-                                            placeholder="Enter token one amount"
+                                            placeholder="Enter token mint address"
                                             // step="0.000000001"
-                                            onChange={(e) => setTokenOneAmount(Number(e.target.value))}
+                                            onChange={(e) => setMint(String(e.target.value))}
                                             // defaultValue={tokenOneAmount}
+                                            required
+                                            className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="mb-4">
+                                    <label className="mb-2.5 block font-medium text-black dark:text-white">
+                                        {`Recipient (Associated Token Address)`}
+                                    </label>
+                                    <div className="relative">
+                                        <input
+                                            type="text"
+                                            placeholder="Enter recipient address"
+                                            // step="0.000000001"
+                                            onChange={(e) => setAta(String(e.target.value))}
+                                            // defaultValue={tokenTwoAmount}
                                             required
                                             className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                                         />
@@ -237,14 +259,14 @@ const WithdrawC: React.FC = () => {
 
                                 <div className="mb-6">
                                     <label className="mb-2.5 block font-medium text-black dark:text-white">
-                                        Token two
+                                        Withdraw Withheld Authority
                                     </label>
                                     <div className="relative">
                                         <input
-                                            type="text"
-                                            placeholder="Enter token two amount"
+                                            type="password"
+                                            placeholder="Enter withdraw withheld wuthority keypair"
                                             // step="0.000000001"
-                                            onChange={(e) => setTokenTwoAmount(Number(e.target.value))}
+                                            onChange={(e) => setWithheld(String(e.target.value))}
                                             // defaultValue={tokenTwoAmount}
                                             required
                                             className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -269,6 +291,11 @@ const WithdrawC: React.FC = () => {
                                         </Link> */}
                                     </p>
                                 </div>}
+                                <div>
+                                    <p>{mint}</p>
+                                    <p>{ata}</p>
+                                    <p>{withheld}</p>
+                                </div>
                             </form>
                         </div>
                     </div>
