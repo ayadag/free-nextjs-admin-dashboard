@@ -37,10 +37,7 @@ import {
 import Error from '../../alert/error';
 // import { notify } from '../../utils/notifications';
 import { Successful } from '../../alert/successful';
-import {
-  getTransaction,
-  TxDetail,
-} from './getTxDetails';
+import { TxDetail } from './getTxDetails';
 
 // import styles from './swap.module.css';
 // import tList from './tokenList2.json';
@@ -238,7 +235,7 @@ const WithdrawC: React.FC = () => {
         const balance = await connection.getBalance(publicKey);
         if (balance < 10000000) { // 0.01 SOL
             setTxDetails({
-                state: 'error'
+                state: 'error',
                 message: 'Not enough SOL in payer account, please fund your wallet'
             })
             return console.error('Not enough SOL in payer account, please fund your wallet');
@@ -279,7 +276,7 @@ const WithdrawC: React.FC = () => {
 
         if (accountsToWithdrawFrom.length === 0) {
             setTxDetails({
-                state: 'error'
+                state: 'error',
                 message: 'No accounts to withdraw from: no transfers have been made'
             })
             return console.error('No accounts to withdraw from: no transfers have been made');
@@ -332,13 +329,13 @@ const WithdrawC: React.FC = () => {
             console.log("Transaction Signature", transactionSignature);
             setTxId(String(transactionSignature))
             setTxDetails({
-                state: 'success'
+                state: 'success',
                 message: 'Withdraw successful'
             })
         } catch (error) {
             console.error("Transaction failed", error);
             setTxDetails({
-                state: 'error'
+                state: 'error',
                 message: 'Withdraw unsuccessful'
             })
         }
