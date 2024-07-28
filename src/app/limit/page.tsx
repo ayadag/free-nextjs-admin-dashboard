@@ -858,8 +858,10 @@ const Swap = () => {
                     <ArrowDownOutlined className={styles.switchArrow2} onClick={switchParams} />
                   </div>
 
-                  <Input placeholder="0"
-                    value={tokenOneAmount == 0 ? 0 : tokenTwoAmount}
+                  <Input 
+                    placeholder="0"
+                    // value={tokenOneAmount == 0 ? 0 : tokenTwoAmount}
+                    value={tokenTwoAmount}
                     onChange={changeTokenTwoAmount}
                     // disabled={true}
                   />
