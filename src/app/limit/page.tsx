@@ -279,6 +279,7 @@ const Swap = () => {
     };
   };
 
+  //Handle token one change
   const debounceQuoteCall = useCallback(debounce(getQuote, 500), [tokenOne, tokenTwo]);
 
   useEffect(() => {
@@ -389,12 +390,17 @@ const Swap = () => {
   }, [tokenOne, tokenTwo])
 
   //Get token Rate twice
-  useEffect(() => {
-    setTimeout(() => {
-      getTokenRate();
-    }, 1000)
-  // }, [tokenOnePrice, tokenTwoPrice])
-  },)
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     getTokenRate();
+  //   }, 1000)
+  // // }, [tokenOnePrice, tokenTwoPrice])
+  // })
+
+  //Get token Rate after 30 sec
+  setTimeout(() => {
+    getTokenRate();
+  }, 30000);
 
   async function getPrice() {
     //https://price.jup.ag/v6/price?ids=So11111111111111111111111111111111111111112
@@ -447,11 +453,11 @@ const Swap = () => {
   }
 
   // get Token Rate
-  function getTokenRate() {
+  async function getTokenRate() {
     const tOPrice = tokenOnePrice;
     const tTPrice = tokenTwoPrice;
     const tRate = tTPrice / tOPrice;
-    setTokenRate(tRate)
+    return setTokenRate(tRate)
   }
 
   // function switchTokens() {
