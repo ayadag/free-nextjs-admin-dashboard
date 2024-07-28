@@ -586,7 +586,8 @@ const Swap = () => {
                 <iframe
                   className='rounded-xl'
                   width="100%"
-                  height="404"
+                  // height="404"
+                  height="507"
                   src="https://birdeye.so/tv-widget/DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263?chain=solana&viewMode=pair&chartInterval=1D&chartType=CANDLE&chartTimezone=Asia%2FSingapore&chartLeftToolbar=show&theme=dark"
                   frameBorder="0"
                   allowFullScreen
@@ -722,12 +723,26 @@ const Swap = () => {
                   // onChange={handleFromValueChange}
                   // disabled={!prices}
                   />
+
+                  {/* Sell MNGO at rate */}
+                  <div className='flex'>
+                    <Input
+                      placeholder="0"
+                      // value={tokenOneAmount}
+                      // onChange={changeAmount}
+                    // onChange={handleFromValueChange}
+                    // disabled={!prices}
+                    />
+                    {/* <label className='text-center px-1'>x</label> */}
+                  </div>
+
                   {/* //ayad/////// */}
                   {/* <div className={styles.switchButton2}> */}
                   <div className='h-8 self-center'>
                     {/* <ArrowDownOutlined className={styles.switchArrow2} onClick={switchTokens}/> */}
                     <ArrowDownOutlined className={styles.switchArrow2} onClick={switchParams} />
                   </div>
+
                   <Input placeholder="0"
                     value={tokenOneAmount == 0 ? 0 : tokenTwoAmount}
                     disabled={true}
@@ -747,9 +762,19 @@ const Swap = () => {
                     {tokenTwo.symbol}
                     <DownOutlined />
                   </div>
+
                   <div className={styles.assetOnePrice}>
                     <h3>{tokenOnePrice} USDC</h3>
                   </div>
+
+                  {/* Sell MNGO at rate */}
+                  <div className={styles.assetOneRate}>
+                    <h3>Sell {tokenOne.symbol} at rate</h3>
+                  </div>
+                  <div className={styles.assetTwoSymbol}>
+                    <h3>{tokenTwo.symbol}</h3>
+                  </div>
+
                   <div className={styles.assetTwoPrice}>
                     <h3>{tokenTwoPrice} USDC</h3>
                   </div>
