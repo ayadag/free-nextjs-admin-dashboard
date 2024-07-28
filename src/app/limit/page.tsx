@@ -51,6 +51,7 @@ const Swap = () => {
   // const [tokenTwoAmount, setTokenTwoAmount] = useState(null);
   const [tokenOneAmount, setTokenOneAmount] = useState(0);
   const [tokenTwoAmount, setTokenTwoAmount] = useState(0);
+  const [tokenRate, setTokenRate] = useState(0);
 
   // let [tokenList, setTokenList] = useState<any>();
   // const [tokenOne, setTokenOne] = useState(tokenList[0]);
@@ -322,6 +323,12 @@ const Swap = () => {
     }
 
     debouncePriceCall();
+
+    // setTimeout(() => {
+    //   getTokenRate()
+    // }, 1000)
+    // getTokenRate(); //ayad
+
     // getPrice(); //ayad
     console.log('getttttttttttttttttttttttttttt');
   }, [tokenOne, tokenTwo, debouncePriceCall, searchParm]);
@@ -352,6 +359,13 @@ const Swap = () => {
     // getPrice(); //ayad
     console.log('getttttttttttt111111111111');
   });
+  
+  //Get token Rate
+  useEffect(() => {
+    setTimeout(() => {
+      getTokenRate();
+    }, 1000)
+  }, [tokenOnePrice, tokenTwoPrice])
 
   async function getPrice() {
     //https://price.jup.ag/v6/price?ids=So11111111111111111111111111111111111111112
@@ -403,6 +417,13 @@ const Swap = () => {
     }
   }
 
+  // get Token Rate
+  function getTokenRate() {
+    const tOPrice = tokenOnePrice;
+    const tTPrice = tokenTwoPrice;
+    const tRate = tTPrice / tOPrice;
+    setTokenRate(tRate)
+  }
 
   // function switchTokens() {
   //     // setPrices(null);
@@ -422,7 +443,7 @@ const Swap = () => {
     // const from = searchParm.get('from');
     // const to = searchParm.get('to');
 
-    router.push(`/swap2?from=${tokenTwo.address}&to=${tokenOne.address}`)
+    router.push(`/limit?from=${tokenTwo.address}&to=${tokenOne.address}`)
   }
 
   function openModal(asset: any) {
@@ -468,10 +489,10 @@ const Swap = () => {
     setTokenTwoAmount(0);
 
     if (changeToken === 1) {
-      router.push(`/swap2?from=${i.address}&to=${tokenTwo.address}`)
+      router.push(`/limit?from=${i.address}&to=${tokenTwo.address}`)
     }
     else {
-      router.push(`/swap2?from=${tokenOne.address}&to=${i.address}`)
+      router.push(`/limit?from=${tokenOne.address}&to=${i.address}`)
     }
 
     setIsOpen(false);
@@ -576,18 +597,19 @@ const Swap = () => {
         {/* <div className="flex justify-center mt-10 w-full md:w-9/12 xl:w-2/3"> */}
         <div className="flex justify-center mt-10 w-full">
 
-          <div className="grid grid-cols-1 gap-0 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-1 sm:grid-cols-2">
           {/* <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 xl:grid-cols-3"> */}
 
             <div className="flex flex-col gap-0">
             {/* <div className="flex flex-col gap-0 xl:grid-cols-2"> */}
               {/* <div className="flex"> */}
-              <div className="">
+              <div className="flex h-70 sm:h-125">
                 <iframe
                   className='rounded-xl'
                   width="100%"
                   // height="404"
-                  height="507"
+                  // height="507"
+                  height="100%"
                   // src="https://birdeye.so/tv-widget/DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263?chain=solana&viewMode=pair&chartInterval=1D&chartType=CANDLE&chartTimezone=Asia%2FSingapore&chartLeftToolbar=show&theme=dark"
                   src={`https://birdeye.so/tv-widget/${tokenTwo.address}?chain=solana&viewMode=pair&chartInterval=1D&chartType=CANDLE&chartTimezone=Asia%2FSingapore&chartLeftToolbar=show&theme=dark`}
                   frameBorder="0"
@@ -729,7 +751,7 @@ const Swap = () => {
                   <div className='flex'>
                     <Input
                       placeholder="0"
-                      // value={tokenOneAmount}
+                      value={tokenRate}
                       // onChange={changeAmount}
                     // onChange={handleFromValueChange}
                     // disabled={!prices}
