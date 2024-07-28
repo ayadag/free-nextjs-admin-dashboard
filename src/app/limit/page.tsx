@@ -225,7 +225,7 @@ const Swap = () => {
     setSlippage(e.target.value);
   }
 
-  function changeAmount(e: any) {
+  function changeAmount(e: any, type: 'tokenOne' | 'tokenRate' | 'tokenTwo'):void {
     setTokenOneAmount(e.target.value);
     // if(e.target.value && prices){
     //   setTokenTwoAmount((e.target.value * prices.ratio).toFixed(2))
@@ -742,7 +742,7 @@ const Swap = () => {
                   <Input
                     placeholder="0"
                     value={tokenOneAmount}
-                    onChange={changeAmount}
+                    onChange={changeAmount(event ,'tokenOne')}
                   // onChange={handleFromValueChange}
                   // disabled={!prices}
                   />
