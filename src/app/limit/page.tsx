@@ -225,8 +225,28 @@ const Swap = () => {
     setSlippage(e.target.value);
   }
 
-  function changeAmount(e: any, type: 'tokenOne' | 'tokenRate' | 'tokenTwo'):void {
+  function changeTokenOneAmount(e: any) {
     setTokenOneAmount(e.target.value);
+    // if(e.target.value && prices){
+    //   setTokenTwoAmount((e.target.value * prices.ratio).toFixed(2))
+    // }else{
+    // //   setTokenTwoAmount(null);
+    // setTokenTwoAmount(0);
+    // }
+  }
+
+  function changeTokenRateAmount(e: any) {
+    setTokenRate(e.target.value);
+    // if(e.target.value && prices){
+    //   setTokenTwoAmount((e.target.value * prices.ratio).toFixed(2))
+    // }else{
+    // //   setTokenTwoAmount(null);
+    // setTokenTwoAmount(0);
+    // }
+  }
+
+  function changeTokenTwoAmount(e: any) {
+    setTokenTwoAmount(e.target.value);
     // if(e.target.value && prices){
     //   setTokenTwoAmount((e.target.value * prices.ratio).toFixed(2))
     // }else{
@@ -365,7 +385,16 @@ const Swap = () => {
     setTimeout(() => {
       getTokenRate();
     }, 1000)
-  }, [tokenOnePrice, tokenTwoPrice])
+  // }, [tokenOnePrice, tokenTwoPrice])
+  }, [tokenOne, tokenTwo])
+
+  //Get token Rate twice
+  useEffect(() => {
+    setTimeout(() => {
+      getTokenRate();
+    }, 1000)
+  // }, [tokenOnePrice, tokenTwoPrice])
+  },)
 
   async function getPrice() {
     //https://price.jup.ag/v6/price?ids=So11111111111111111111111111111111111111112
@@ -742,7 +771,7 @@ const Swap = () => {
                   <Input
                     placeholder="0"
                     value={tokenOneAmount}
-                    onChange={changeAmount(event ,'tokenOne')}
+                    onChange={changeTokenOneAmount}
                   // onChange={handleFromValueChange}
                   // disabled={!prices}
                   />
@@ -752,7 +781,7 @@ const Swap = () => {
                     <Input
                       placeholder="0"
                       value={tokenRate}
-                      // onChange={changeAmount}
+                      onChange={changeTokenRateAmount}
                     // onChange={handleFromValueChange}
                     // disabled={!prices}
                     />
@@ -768,6 +797,7 @@ const Swap = () => {
 
                   <Input placeholder="0"
                     value={tokenOneAmount == 0 ? 0 : tokenTwoAmount}
+                    onChange={changeTokenTwoAmount}
                     // disabled={true}
                   />
                   {/* <div className={styles.switchButton} onClick={switchTokens}>
