@@ -17,6 +17,7 @@ import {
   useSearchParams,
 } from 'next/navigation';
 
+import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
 // import { useRouter } from 'next/router';
 import DefaultLayout from '@/components/Layouts/DefaultLayout';
 import {
@@ -563,16 +564,23 @@ import tList from './tokenList2.json';
         );
       return (
         <DefaultLayout>
+          <Breadcrumb pageName="Swap" />
           <div className='flex flex-wrap justify-center text-center'>
+          {/* <div className="flex flex-wrap justify-center text-center rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"> */}
           {/* <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"> */}
 
           {/* <div className={styles.App}> */}
 
           {/* <div className="text-center"> */}
           {/* <div className="w-full xl:w-2/3"> */}
-              <div className="flex justify-center mt-10 w-full md:w-9/12 xl:w-2/3">
+              {/* <div className="flex justify-center mt-10 w-full md:w-9/12 xl:w-2/3"> */}
+              <div className="flex justify-center mt-10 w-full">
 
-              {/* <div className={styles.mainWindow}> */}
+              <div className="grid grid-cols-1 gap-0 sm:grid-cols-2">
+              {/* <div className="grid grid-cols-1 gap-0 xl:grid-cols-2"> */}
+              {/* <div className="flex flex-col gap-0"> */}
+              <div className="flex flex-col gap-0">
+                {/* <div className={styles.mainWindow}> */}
                   {contextHolder}
                   <Modal
                       open={isOpen}
@@ -672,7 +680,11 @@ import tList from './tokenList2.json';
                       </div>
                   </Modal>
                   {/* <div className={styles.tradeBox}> */}
-                  <div className="w-full rounded-lg p-4 bg-slate-950 xl:w-2/3">
+                  {/* <div className="w-full rounded-lg p-4 bg-slate-950 xl:w-2/3"> */}
+                  {/* <div className="w-full rounded-lg p-4 bg-slate-900 xl:w-2/3"> */}
+                  {/* <div className="w-full rounded-lg p-4 bg-slate-900"> */}
+                  <div className="w-full rounded-lg p-4 dark:border-strokedark dark:bg-boxdark">{/* dark:border-strokedark dark:bg-boxdark */}
+                  {/* <div className="w-full rounded-lg p-4 bg-gray-2 dark:bg-meta-4 xl:w-2/3">// bg-gray-2 dark:bg-meta-4 */}
                       <div className={styles.tradeBoxHeader}>
                           <h4>Swap</h4>
                           <Popover
@@ -740,6 +752,9 @@ import tList from './tokenList2.json';
                   </div>
 
                   {/* iFrame */}
+
+                  </div>
+                  <div className="flex flex-col gap-0">
                   <div className="flex">
                   <iframe
                     width="100%"
@@ -748,6 +763,8 @@ import tList from './tokenList2.json';
                     frameBorder="0"
                     allowFullScreen
                   ></iframe>
+                  </div>
+                  </div>
                   </div>
                   
                  {/* </div> */}
