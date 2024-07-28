@@ -564,7 +564,7 @@ const Swap = () => {
   );
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Swap" />
+      <Breadcrumb pageName="Limit Order" />
       <div className='flex flex-wrap justify-center text-center'>
         {/* <div className="flex flex-wrap justify-center text-center rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"> */}
         {/* <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"> */}
@@ -705,7 +705,7 @@ const Swap = () => {
               <div className="w-full rounded-lg p-4 dark:border-strokedark dark:bg-boxdark">{/* dark:border-strokedark dark:bg-boxdark */}
                 {/* <div className="w-full rounded-lg p-4 bg-gray-2 dark:bg-meta-4 xl:w-2/3">// bg-gray-2 dark:bg-meta-4 */}
                 <div className={styles.tradeBoxHeader}>
-                  <h4>Swap</h4>
+                  <h4>{`You're Selling`}</h4>
                   <Popover
                     content={settings}
                     title="Settings"
@@ -746,7 +746,7 @@ const Swap = () => {
 
                   <Input placeholder="0"
                     value={tokenOneAmount == 0 ? 0 : tokenTwoAmount}
-                    disabled={true}
+                    // disabled={true}
                   />
                   {/* <div className={styles.switchButton} onClick={switchTokens}>
                               <ArrowDownOutlined className={styles.switchArrow} />
@@ -785,7 +785,7 @@ const Swap = () => {
                 <div className="mb-5">
                   <input
                     type="submit"
-                    value={!wallet.publicKey ? "Connect wallet" : "Swap"}
+                    value={!wallet.publicKey ? "Connect wallet" : "Place Limit Order"}
                     disabled={!tokenOneAmount || tokenOneAmount == 0 || !wallet.publicKey}
                     onClick={signAndSendTransaction}
                     className="w-full mt-7 text-xl font-bold cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90 
