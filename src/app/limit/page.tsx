@@ -279,44 +279,82 @@ const Swap = () => {
     };
   };
 
-  //Handle token one change
-  const debounceQuoteCall = useCallback(debounce(getQuote, 500), [tokenOne, tokenTwo]);
+  // //Handle token one Amunt change
+  // const debounceTokenOneCall = useCallback(debounce(getTokenTwoAmount, 500), [tokenOne, tokenTwo, tokenRate]);
+
+  // useEffect(() => {
+  //   debounceTokenOneCall(tokenOneAmount);
+  // }, [tokenOneAmount, debounceTokenOneCall]);
+
+  // async function getTokenTwoAmount(currentAmount: number) {
+  //   if (isNaN(currentAmount) || currentAmount <= 0) {
+  //     console.error('Invalid fromAmount value:', currentAmount);
+  //     return;
+  //   }
+
+  //   const tTowAmount = tokenOneAmount / tokenRate;
+  //   setTokenTwoAmount(tTowAmount);
+  //   return;
+  // }
+
+  //Handle token Amount change
+  const debounceTokenCall = useCallback(debounce(getTokenTwoAmount, 500), [tokenOne, tokenTwo, tokenRate]);
 
   useEffect(() => {
-    debounceQuoteCall(tokenOneAmount);
-  }, [tokenOneAmount, debounceQuoteCall]);
+    debounceTokenCall(tokenOneAmount, tokenTwoAmount, tokenRate);
+  }, [tokenOneAmount, tokenTwoAmount, tokenRate, debounceTokenCall]);
 
-  async function getQuote(currentAmount: number) {
-    if (isNaN(currentAmount) || currentAmount <= 0) {
-      console.error('Invalid fromAmount value:', currentAmount);
+  async function getTokenTwoAmount(tOA: number, tTA: number, tRA: number) {
+    if (isNaN(tOA) || tOA <= 0 || isNaN(tTA) || tTA <= 0 || isNaN(tRA) || tRA <= 0) {
+      console.error('Invalid fromAmount value:', tOA, tTA, tRA);
       return;
     }
 
-    // const quote = await (
-    //   await fetch(
-    //     `https://quote-api.jup.ag/v6/quote?inputMint=${tokenOne.address}&outputMint=${tokenTwo.address}&amount=${currentAmount * Math.pow(10, tokenOne.decimals)}&slippage=${slippage}`
-    //   )
-    // ).json();
-
-    let quote;
-    try {
-      quote = await (
-        await fetch(
-          `https://quote-api.jup.ag/v6/quote?inputMint=${tokenOne.address}&outputMint=${tokenTwo.address}&amount=${currentAmount * Math.pow(10, tokenOne.decimals)}&slippage=${slippage}`
-        )
-      ).json();
-    } catch (e) { console.log('Error: ', e) }
-
-    if (quote && quote.outAmount) {
-      const outAmountNumber =
-        Number(quote.outAmount) / Math.pow(10, tokenTwo.decimals);
-      setTokenTwoAmount(outAmountNumber);
-    } else {
-      setTokenTwoAmount(0);
-    }
-
-    setQuoteResponse(quote);
+    const tTowAmount = tokenOneAmount / tokenRate;
+    setTokenTwoAmount(tTowAmount);
+    return;
   }
+
+
+
+  //Handle token one change
+  // const debounceQuoteCall = useCallback(debounce(getQuote, 500), [tokenOne, tokenTwo]);
+
+  // useEffect(() => {
+  //   debounceQuoteCall(tokenOneAmount);
+  // }, [tokenOneAmount, debounceQuoteCall]);
+
+  // async function getQuote(currentAmount: number) {
+  //   if (isNaN(currentAmount) || currentAmount <= 0) {
+  //     console.error('Invalid fromAmount value:', currentAmount);
+  //     return;
+  //   }
+
+  //   // const quote = await (
+  //   //   await fetch(
+  //   //     `https://quote-api.jup.ag/v6/quote?inputMint=${tokenOne.address}&outputMint=${tokenTwo.address}&amount=${currentAmount * Math.pow(10, tokenOne.decimals)}&slippage=${slippage}`
+  //   //   )
+  //   // ).json();
+
+  //   let quote;
+  //   try {
+  //     quote = await (
+  //       await fetch(
+  //         `https://quote-api.jup.ag/v6/quote?inputMint=${tokenOne.address}&outputMint=${tokenTwo.address}&amount=${currentAmount * Math.pow(10, tokenOne.decimals)}&slippage=${slippage}`
+  //       )
+  //     ).json();
+  //   } catch (e) { console.log('Error: ', e) }
+
+  //   if (quote && quote.outAmount) {
+  //     const outAmountNumber =
+  //       Number(quote.outAmount) / Math.pow(10, tokenTwo.decimals);
+  //     setTokenTwoAmount(outAmountNumber);
+  //   } else {
+  //     setTokenTwoAmount(0);
+  //   }
+
+  //   setQuoteResponse(quote);
+  // }
 
   //Get tokens price
   const debouncePriceCall = useCallback(debounce(getPrice, 500), [tokenOne, tokenTwo]);
