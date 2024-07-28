@@ -51,7 +51,7 @@ const Swap = () => {
   // const [tokenTwoAmount, setTokenTwoAmount] = useState(null);
   const [tokenOneAmount, setTokenOneAmount] = useState(0);
   const [tokenTwoAmount, setTokenTwoAmount] = useState(0);
-  const [tokenRate, setTokenRate] = useState(0);
+  const [tokenRate, setTokenRate] = useState(1);
 
   // let [tokenList, setTokenList] = useState<any>();
   // const [tokenOne, setTokenOne] = useState(tokenList[0]);
@@ -297,16 +297,17 @@ const Swap = () => {
   //   return;
   // }
 
-  //Handle token Amount change
-  const debounceTokenCall = useCallback(debounce(getTokenTwoAmount, 500), [tokenOne, tokenTwo, tokenRate]);
+  //Handle token one or rate Amount change
+  const debounceTokenCall = useCallback(debounce(getTokenTwoAmount, 500), [tokenOne, tokenRate]);
 
   useEffect(() => {
-    debounceTokenCall(tokenOneAmount, tokenTwoAmount, tokenRate);
-  }, [tokenOneAmount, tokenTwoAmount, tokenRate, debounceTokenCall]);
+    debounceTokenCall(tokenOneAmount, tokenRate);
+  }, [tokenOneAmount, tokenRate, debounceTokenCall]);
 
-  async function getTokenTwoAmount(tOA: number, tTA: number, tRA: number) {
-    if (isNaN(tOA) || tOA <= 0 || isNaN(tTA) || tTA <= 0 || isNaN(tRA) || tRA <= 0) {
-      console.error('Invalid fromAmount value:', tOA, tTA, tRA);
+  async function getTokenTwoAmount(tOA: number, tRA: number) {
+    // if (isNaN(tOA) || tOA <= 0 || isNaN(tTA) || tTA <= 0 || isNaN(tRA) || tRA <= 0) {
+      if (isNaN(tOA) || isNaN(tRA)) {
+        console.error('Invalid fromAmount value:', tOA, tRA);
       return;
     }
 
@@ -315,6 +316,24 @@ const Swap = () => {
     return;
   }
 
+  //Handle token two Amount change
+  const debounceTokenOneCall = useCallback(debounce(getTokenOneAmount, 500), [tokenTwo]);
+
+  useEffect(() => {
+    debounceTokenOneCall(tokenTwoAmount, tokenRate);
+  }, [tokenTwoAmount, debounceTokenOneCall]);
+
+  async function getTokenOneAmount(tTA: number, tRA: number) {
+    // if (isNaN(tOA) || tOA <= 0 || isNaN(tTA) || tTA <= 0 || isNaN(tRA) || tRA <= 0) {
+      if (isNaN(tTA) || isNaN(tRA)) {
+        console.error('Invalid fromAmount value:', tTA, tRA);
+      return;
+    }
+
+    const tOneAmount = tokenTwoAmount * tokenRate;
+    setTokenOneAmount(tOneAmount);
+    return;
+  }
 
 
   //Handle token one change
@@ -435,10 +454,10 @@ const Swap = () => {
   // // }, [tokenOnePrice, tokenTwoPrice])
   // })
 
-  //Get token Rate after 30 sec
+  //Get token Rate after 50 sec
   setTimeout(() => {
     getTokenRate();
-  }, 30000);
+  }, 50000);
 
   async function getPrice() {
     //https://price.jup.ag/v6/price?ids=So11111111111111111111111111111111111111112
