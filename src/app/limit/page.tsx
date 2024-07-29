@@ -51,7 +51,8 @@ const Swap = () => {
   // const [tokenTwoAmount, setTokenTwoAmount] = useState(null);
   const [tokenOneAmount, setTokenOneAmount] = useState(0);
   const [tokenTwoAmount, setTokenTwoAmount] = useState(0);
-  const [tokenRate, setTokenRate] = useState(1);
+  // const [tokenRate, setTokenRate] = useState<any>(0);
+  const [tokenRate, setTokenRate] = useState<number>(0);
 
   // let [tokenList, setTokenList] = useState<any>();
   // const [tokenOne, setTokenOne] = useState(tokenList[0]);
@@ -245,15 +246,15 @@ const Swap = () => {
     // }
   }
 
-  function changeTokenTwoAmount(e: any) {
-    setTokenTwoAmount(e.target.value);
-    // if(e.target.value && prices){
-    //   setTokenTwoAmount((e.target.value * prices.ratio).toFixed(2))
-    // }else{
-    // //   setTokenTwoAmount(null);
-    // setTokenTwoAmount(0);
-    // }
-  }
+  // function changeTokenTwoAmount(e: any) {
+  //   setTokenTwoAmount(e.target.value);
+  //   // if(e.target.value && prices){
+  //   //   setTokenTwoAmount((e.target.value * prices.ratio).toFixed(2))
+  //   // }else{
+  //   // //   setTokenTwoAmount(null);
+  //   // setTokenTwoAmount(0);
+  //   // }
+  // }
 
   ////////////ayad///////////
   // const handleFromValueChange = (
@@ -298,7 +299,7 @@ const Swap = () => {
   // }
 
   //Handle token one or rate Amount change
-  const debounceTokenCall = useCallback(debounce(getTokenTwoAmount, 500), [tokenOne, tokenRate]);
+  const debounceTokenCall = useCallback(debounce(getTokenTwoAmount, 500), [tokenOneAmount, tokenRate]);
 
   useEffect(() => {
     debounceTokenCall(tokenOneAmount, tokenRate);
@@ -306,13 +307,13 @@ const Swap = () => {
 
   async function getTokenTwoAmount(tOA: number, tRA: number) {
     // if (isNaN(tOA) || tOA <= 0 || isNaN(tTA) || tTA <= 0 || isNaN(tRA) || tRA <= 0) {
-      if (isNaN(tOA) || isNaN(tRA)) {
-        console.error('Invalid fromAmount value:', tOA, tRA);
+    if (isNaN(tOA) || isNaN(tRA)) {
+      console.error('Invalid fromAmount value:', tOA, tRA);
       return;
     }
 
-    const tTowAmount = tokenOneAmount / tokenRate;
-    setTokenTwoAmount(tTowAmount);
+    const tTA = tOA / tRA;
+    setTokenTwoAmount(tTA);
     return;
   }
 
@@ -437,13 +438,13 @@ const Swap = () => {
     // getPrice(); //ayad
     console.log('getttttttttttt111111111111');
   });
-  
+
   //Get token Rate
   useEffect(() => {
     setTimeout(() => {
       getTokenRate();
     }, 1000)
-  // }, [tokenOnePrice, tokenTwoPrice])
+    // }, [tokenOnePrice, tokenTwoPrice])
   }, [tokenOne, tokenTwo])
 
   //Get token Rate twice every 40 sec
@@ -452,7 +453,7 @@ const Swap = () => {
       getTokenRate();
       console.log('40 sec')
     }, 4000)
-  // }, [tokenOnePrice, tokenTwoPrice])
+    // }, [tokenOnePrice, tokenTwoPrice])
   }, [])
 
   //Get token Rate after 50 sec
@@ -516,7 +517,11 @@ const Swap = () => {
     const tOPrice = tokenOnePrice;
     const tTPrice = tokenTwoPrice;
     const tRate = tTPrice / tOPrice;
-    setTokenRate(tRate);
+    if (isNaN(tRate)) { return console.log('tRate NaN', tRate) }
+    // setTokenRate(tRate);
+    setTimeout(() => {
+      setTokenRate(tRate);
+    }, 1000)
     return;
   }
 
@@ -666,6 +671,15 @@ const Swap = () => {
     }
   }
 
+  async function signAndSendTransaction2() {
+    if (!wallet.connected || !wallet.signTransaction) {
+      console.error(
+        'Wallet is not connected or does not support signing transactions'
+      );
+      return;
+    }
+  }
+
   const settings = (
     <>
       <div>Slippage Tolerance</div>
@@ -693,10 +707,10 @@ const Swap = () => {
         <div className="flex justify-center mt-10 w-full">
 
           <div className="grid grid-cols-1 gap-1 sm:grid-cols-2">
-          {/* <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 xl:grid-cols-3"> */}
+            {/* <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 xl:grid-cols-3"> */}
 
             <div className="flex flex-col gap-0">
-            {/* <div className="flex flex-col gap-0 xl:grid-cols-2"> */}
+              {/* <div className="flex flex-col gap-0 xl:grid-cols-2"> */}
               {/* <div className="flex"> */}
               <div className="flex h-70 sm:h-125">
                 <iframe
@@ -861,7 +875,7 @@ const Swap = () => {
                     <ArrowDownOutlined className={styles.switchArrow2} onClick={switchParams} />
                   </div>
 
-                  <Input 
+                  <Input
                     placeholder="0"
                     // value={tokenOneAmount == 0 ? 0 : tokenTwoAmount}
                     value={tokenTwoAmount}
@@ -907,7 +921,7 @@ const Swap = () => {
                     type="submit"
                     value={!wallet.publicKey ? "Connect wallet" : "Place Limit Order"}
                     disabled={!tokenOneAmount || tokenOneAmount == 0 || !wallet.publicKey}
-                    onClick={signAndSendTransaction}
+                    onClick={signAndSendTransaction2}
                     className="w-full mt-7 text-xl font-bold cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90 
                                         disabled:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50 disabled:border-y-green-950"
                   />
