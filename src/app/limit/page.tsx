@@ -446,18 +446,20 @@ const Swap = () => {
   // }, [tokenOnePrice, tokenTwoPrice])
   }, [tokenOne, tokenTwo])
 
-  //Get token Rate twice
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     getTokenRate();
-  //   }, 1000)
-  // // }, [tokenOnePrice, tokenTwoPrice])
-  // })
+  //Get token Rate twice every 40 sec
+  useEffect(() => {
+    setTimeout(() => {
+      getTokenRate();
+      console.log('40 sec')
+    }, 4000)
+  // }, [tokenOnePrice, tokenTwoPrice])
+  }, [])
 
   //Get token Rate after 50 sec
-  setTimeout(() => {
-    getTokenRate();
-  }, 50000);
+  // setTimeout(() => {
+  //   getTokenRate();
+  //   console.log('50 sec')
+  // }, 50000);
 
   async function getPrice() {
     //https://price.jup.ag/v6/price?ids=So11111111111111111111111111111111111111112
@@ -514,7 +516,8 @@ const Swap = () => {
     const tOPrice = tokenOnePrice;
     const tTPrice = tokenTwoPrice;
     const tRate = tTPrice / tOPrice;
-    return setTokenRate(tRate)
+    setTokenRate(tRate);
+    return;
   }
 
   // function switchTokens() {
