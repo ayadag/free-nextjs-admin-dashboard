@@ -317,23 +317,23 @@ const Swap = () => {
   }
 
   //Handle token two Amount change
-  const debounceTokenOneCall = useCallback(debounce(getTokenOneAmount, 500), [tokenTwo]);
+  // const debounceTokenOneCall = useCallback(debounce(getTokenOneAmount, 500), [tokenTwo]);
 
-  useEffect(() => {
-    debounceTokenOneCall(tokenTwoAmount, tokenRate);
-  }, [tokenTwoAmount, debounceTokenOneCall]);
+  // useEffect(() => {
+  //   debounceTokenOneCall(tokenTwoAmount, tokenRate);
+  // }, [tokenTwoAmount, debounceTokenOneCall]);
 
-  async function getTokenOneAmount(tTA: number, tRA: number) {
-    // if (isNaN(tOA) || tOA <= 0 || isNaN(tTA) || tTA <= 0 || isNaN(tRA) || tRA <= 0) {
-      if (isNaN(tTA) || isNaN(tRA)) {
-        console.error('Invalid fromAmount value:', tTA, tRA);
-      return;
-    }
+  // async function getTokenOneAmount(tTA: number, tRA: number) {
+  //   // if (isNaN(tOA) || tOA <= 0 || isNaN(tTA) || tTA <= 0 || isNaN(tRA) || tRA <= 0) {
+  //     if (isNaN(tTA) || isNaN(tRA)) {
+  //       console.error('Invalid fromAmount value:', tTA, tRA);
+  //     return;
+  //   }
 
-    const tOneAmount = tokenTwoAmount * tokenRate;
-    setTokenOneAmount(tOneAmount);
-    return;
-  }
+  //   const tOneAmount = tokenTwoAmount * tokenRate;
+  //   setTokenOneAmount(tOneAmount);
+  //   return;
+  // }
 
 
   //Handle token one change
@@ -862,8 +862,8 @@ const Swap = () => {
                     placeholder="0"
                     // value={tokenOneAmount == 0 ? 0 : tokenTwoAmount}
                     value={tokenTwoAmount}
-                    onChange={changeTokenTwoAmount}
-                    // disabled={true}
+                    // onChange={changeTokenTwoAmount}
+                    disabled={true}
                   />
                   {/* <div className={styles.switchButton} onClick={switchTokens}>
                               <ArrowDownOutlined className={styles.switchArrow} />
