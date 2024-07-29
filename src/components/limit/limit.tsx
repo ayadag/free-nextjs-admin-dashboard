@@ -480,8 +480,8 @@ const LimitC = () => {
   useEffect(() => {
     setTimeout(() => {
       getTokenRate();
-      console.log('40 sec')
-    }, 4000)
+      console.log('10 sec')
+    }, 10000)
     // }, [tokenOnePrice, tokenTwoPrice])
   }, [])
 
@@ -733,14 +733,52 @@ const LimitC = () => {
 
         // validateCreateOrderFields(orderData); //ayad
 
-    const { tx, orderPubKey } = await limitOrder.createOrder(
-        orderData as CreateOrderParams
-    );
-    console.log('orderPubKey: ', orderPubKey);
+    // const { tx, orderPubKey } = await limitOrder.createOrder(
+    //     orderData as CreateOrderParams
+    // );
+    // console.log('orderPubKey: ', orderPubKey);
 
-    // const trx = await sendAndConfirmTransaction(connection, tx, [Owner, base]);
-    const trx = await sendTransaction(tx, connection);
-    return console.log(`[✅] Order placed successfully TRX: ${trx}`);
+    // // const trx = await sendAndConfirmTransaction(connection, tx, [Owner, base]);
+    // const trx = await sendTransaction(tx, connection, {signers: [base]});
+    // return console.log(`[✅] Order placed successfully TRX: ${trx}`);
+
+    try{
+        //sending transaction
+      messageApi.destroy();
+      messageApi.open({
+        type: 'loading',
+        content: 'Transaction is Pending...',
+        duration: 0,
+      })
+
+        const { tx, orderPubKey } = await limitOrder.createOrder(
+            orderData as CreateOrderParams
+        );
+        console.log('orderPubKey: ', orderPubKey);
+    
+        // const trx = await sendAndConfirmTransaction(connection, tx, [Owner, base]);
+        const trx = await sendTransaction(tx, connection, {signers: [base]});
+
+        //Transaction Successful
+      messageApi.destroy();
+      messageApi.open({
+        type: 'success',
+        content: 'Transaction Successful',
+        duration: 2.5,
+      })
+
+        return console.log(`[✅] Order placed successfully TRX: ${trx}`);
+    } 
+    catch (err) {
+        //Transaction Failed
+      messageApi.destroy();
+      messageApi.open({
+        type: 'error',
+        content: 'Transaction Failed',
+        duration: 2.50,
+      })
+        console.error('Error signing or sending the transaction:', err);
+    }
   }
 
   const settings = (
@@ -767,6 +805,10 @@ const LimitC = () => {
         {/* <div className="text-center"> */}
         {/* <div className="w-full xl:w-2/3"> */}
         {/* <div className="flex justify-center mt-10 w-full md:w-9/12 xl:w-2/3"> */}
+
+        <div className='grid grid-flow-row-2 gap-1'>
+        <div className="flex flex-row gap-0">
+
         <div className="flex justify-center mt-10 w-full">
 
           <div className="grid grid-cols-1 gap-1 sm:grid-cols-2">
@@ -776,6 +818,7 @@ const LimitC = () => {
               {/* <div className="flex flex-col gap-0 xl:grid-cols-2"> */}
               {/* <div className="flex"> */}
               <div className="flex h-70 sm:h-125">
+              {/* <div className="flex h-70 sm:h-125 xl:w-125"> */}
                 <iframe
                   className='rounded-xl'
                   width="100%"
@@ -1009,12 +1052,41 @@ const LimitC = () => {
 
           {/* </div> */}
 
+        {/* <div className='flex w-full bg-black'></div> */}
+        
         </div>
         {/* </div> */}
 
         {/* </div> */}
 
         {/* </div> */}
+
+        </div>
+        <div className="flex flex-row gap-0">
+        <div className='flex justify-center mt-10 w-full h-16'>
+            <div className="grid grid-cols-1 gap-1 sm:grid-cols-2">
+                <div className="flex flex-col gap-0 w-70 bg-slate-500"></div>
+                <div className="flex flex-col gap-0 w-full bg-slate-500"></div>
+            </div> 
+        </div>
+
+        <div className='flex justify-center mt-10 w-full h-16'>
+        {/* </div><div className="mx-auto max-w-270"> */}
+            <div className="grid grid-cols-5 gap-8">
+                <div className="col-span-5 xl:col-span-3">
+                    {/* <div className="flex flex-col w-132.5 h-3 bg-slate-500"></div> */}
+                    <label className='w-full bg-slate-300'>Hhhh</label>
+                    <input type="text" className='w-full' />
+                </div>
+                <div className="col-span-5 xl:col-span-2">
+                    <div className="flex flex-col w-full h-3 bg-slate-500"></div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        </div>
+
       </div>
     </>
   )
