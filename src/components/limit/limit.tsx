@@ -5,20 +5,6 @@ import React, {
   useState,
 } from 'react';
 
-/*
-import {
-  CreateOrderParams,
-  LimitOrderProvider,
-  OrderHistoryItem,
-  ownerFilter,
-  TradeHistoryItem,
-} from '@jup-ag/limit-order-sdk';
-import {
-    CancelOrder,
-    OrderFields,
-    validateCancelOrderFields,
-} from './utils/validate';
-  */
 import {
   Input,
   message,
@@ -43,12 +29,26 @@ import {
 } from '@jup-ag/limit-order-sdk';
 import { useWallet } from '@solana/wallet-adapter-react';
 import {
-  Connection,
   Keypair,
   PublicKey,
   VersionedTransaction,
 } from '@solana/web3.js';
 
+/*
+import {
+  CreateOrderParams,
+  LimitOrderProvider,
+  OrderHistoryItem,
+  ownerFilter,
+  TradeHistoryItem,
+} from '@jup-ag/limit-order-sdk';
+import {
+    CancelOrder,
+    OrderFields,
+    validateCancelOrderFields,
+} from './utils/validate';
+  */
+import { connection2 as connection } from '../../config';
 import styles from './swap.module.css';
 // import tokenList from './tokenList.json';
 // import tokenList from './tokenList2.json';
@@ -71,7 +71,7 @@ const LimitC = () => {
   const { publicKey, sendTransaction } = useWallet();
   // const connection = useConnection();
   // const connection = new Connection('https://mainnet.helius-rpc.com/?api-key=YOUR_API_KEY_HERE');
-  const connection = new Connection('https://raydium-raydium-5ad5.mainnet.rpcpool.com/');
+//   const connection = new Connection('https://raydium-raydium-5ad5.mainnet.rpcpool.com/');
   const [messageApi, contextHolder] = message.useMessage();
   const limitOrder = new LimitOrderProvider(connection);
 
