@@ -401,3 +401,11 @@
     font-weight: 300;
     color: #51596f;
   }
+
+  .scroll {
+    display: flex;
+    overflow-x: auto;
+  }
+  .scroll::-webkit-scrollbar{
+    width: 0;
+  }

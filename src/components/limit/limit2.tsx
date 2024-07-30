@@ -796,7 +796,7 @@ const LimitC = () => {
   return (
     <>
       {/* <Breadcrumb pageName="Limit Order" /> */}
-      <div className='flex flex-wrap justify-center text-center'>
+      <div className='relative flex flex-wrap justify-center text-center'>
         {/* <div className="flex flex-wrap justify-center text-center rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"> */}
         {/* <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"> */}
 
@@ -807,11 +807,13 @@ const LimitC = () => {
         {/* <div className="flex justify-center mt-10 w-full md:w-9/12 xl:w-2/3"> */}
 
         {/* <div className='grid grid-flow-row-2 gap-1'> */}
-          {/* <div className="flex flex-row gap-0"> */}
+        {/* <div className="flex flex-row gap-0"> */}
         {/* <div className='flex-1 flex flex-col relative h-full'> */}
-          {/* <div> */}
+        {/* <div> */}
+        <div className='relative'>
+          {/* <div className='relative'> */}
+        {/* <div> */}
           <div>
-            <div>
 
             <div className="flex justify-center mt-10 w-full">
 
@@ -1069,7 +1071,10 @@ const LimitC = () => {
 
           {/* <div className="flex flex-row gap-0"> */}
           {/* <div className="gap-0"> */}
-          <div className='relative'>
+          {/* <div className='relative w-screen'> */}
+          {/* <div className='relative w-svw'> */}
+          {/* <div className='absolute w-dvw'> */}
+          <div className='absolute w-full pt-1'>
 
             {/* <div className='flex justify-center mt-10 w-full h-16'>
               <div className="grid grid-cols-1 gap-1 sm:grid-cols-2">
@@ -1250,7 +1255,8 @@ const LimitC = () => {
               </div>
             </div> */}
 
-            <div className='flex w-fit max-h-30 overflow-auto'>
+            {/* <div className='flex overflow-auto scroll'> */}
+            <div className={styles.scroll}>
               <div className='min-w-28 text-center bg-slate-300 mr-1'>box-1</div>
               <div className='min-w-28 text-center bg-slate-300 mr-1'>box-2</div>
               <div className='min-w-28 text-center bg-slate-300 mr-1'>box-3</div>
