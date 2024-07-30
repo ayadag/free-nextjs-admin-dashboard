@@ -1062,19 +1062,21 @@ const LimitC = () => {
         {/* </div> */}
 
         </div>
-        <div className="flex flex-row gap-0">
+
+        {/* <div className="flex flex-row gap-0"> */}
+        {/* <div className="gap-0">
+
         <div className='flex justify-center mt-10 w-full h-16'>
             <div className="grid grid-cols-1 gap-1 sm:grid-cols-2">
-                <div className="flex flex-col gap-0 w-70 bg-slate-500"></div>
+                <div className="flex flex-col justify-start gap-0 w-70 bg-slate-500"></div>
                 <div className="flex flex-col gap-0 w-full bg-slate-500"></div>
             </div> 
         </div>
 
         <div className='flex justify-center mt-10 w-full h-16'>
-        {/* </div><div className="mx-auto max-w-270"> */}
             <div className="grid grid-cols-5 gap-8">
                 <div className="col-span-5 xl:col-span-3">
-                    {/* <div className="flex flex-col w-132.5 h-3 bg-slate-500"></div> */}
+                    <div className="flex flex-col w-132.5 h-3 bg-slate-500"></div>
                     <label className='w-full bg-slate-300'>Hhhh</label>
                     <input type="text" className='w-full' />
                 </div>
@@ -1083,7 +1085,8 @@ const LimitC = () => {
                 </div>
             </div>
         </div>
-        </div>
+
+        </div> */}
 
         </div>
 
