@@ -26,6 +26,7 @@ import {
 import {
   CreateOrderParams,
   LimitOrderProvider,
+  OrderHistoryItem,
 } from '@jup-ag/limit-order-sdk';
 import { useWallet } from '@solana/wallet-adapter-react';
 import {
@@ -138,6 +139,8 @@ const LimitC = () => {
   // let [tokenList, setTokenList] = useState<any>(); //10 token list
   let [tokenList, setTokenList] = useState<any>(tList); //token list
   // let [tTokenList, setTTokenList] = useState<any>(); //Total token list
+  // const [orderHistory, setOrderHistory] = useState<OrderHistory | undefined>()
+  const [ordersHistory, setOrdersHistory] = useState<OrderHistoryItem[] | undefined>()//OrderHistoryItem
 
   useEffect(() => {
     async function getTokenList() {
@@ -174,6 +177,24 @@ const LimitC = () => {
       "decimals": 6
     }
   );
+
+  //Get orders
+  useEffect(() =>{
+    getOrderHistory()
+    async function getOrderHistory() {
+      if(!publicKey){return console.log('!publickey')}
+      const orderHistory: OrderHistoryItem[] = await limitOrder.getOrderHistory({
+        wallet: publicKey.toBase58(),
+        take: 20, // optional, default is 20, maximum is 100
+        // lastCursor: order.id // optional, for pagination
+      });
+      console.log('Order History: ', orderHistory);
+      setOrdersHistory(orderHistory)
+      console.log('Order History: ', ordersHistory);
+    }
+  })
+
+
 
   // const router = useRouter();
   // if(router.query.from){
