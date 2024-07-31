@@ -1349,6 +1349,375 @@ const LimitC = () => {
               </div>
             </div>
 
+            <div className="w-full flex justify-center xl:max-w-7xl lg:max-w-[90vw] lg:mx-auto">
+              <div className="w-full overflow-hidden">
+                <div className="flex flex-row flex-wrap">
+                  <div className="flex space-x-2 justify-start items-start overflow-y-auto">
+                    <button type="button" className="rounded-2xl px-4 py-2 text-xs text-white/20 border border-transparent whitespace-nowrap dark:hover:!text-v2-primary">Open Orders</button>
+                    <button type="button" className="rounded-2xl px-4 py-2 text-xs text-white/20 border whitespace-nowrap dark:hover:!text-v2-primary !text-v2-primary border-v2-primary/20 bg-v2-primary/5">Order History</button>
+                  </div>
+                  <div className="ml-auto flex justify-end space-x-2 text-xs dark:text-white-50">
+                    <button type="button" className="flex items-center border border-black-10 dark:border-white/10 px-3 py-1.5 rounded-lg dark:hover:!text-v2-primary dark:hover:!bg-v2-primary/5 dark:hover:!border-v2-primary/25">
+                      <div className="mr-2 fill-current">
+                        <svg width="8" height="8" viewBox="0 0 12 12" fill="inherit" xmlns="http://www.w3.org/2000/svg">
+                          <g clip-path="url(#clip0_841_4053)">
+                            <path d="M11.6466 4.23513V0.706082L10.4111 1.94156C9.3173 0.741165 7.72912 0 6 0C2.6827 0 0 2.6827 0 6C0 9.3173 2.68203 12 6 12C7.69405 12 9.21142 11.2939 10.3059 10.165L9.31797 9.14128C8.50601 10.0234 7.30561 10.5879 6 10.5879C3.45892 10.5879 1.41216 8.5411 1.41216 6.00002C1.41216 3.45894 3.45892 1.41218 6 1.41218C7.34135 1.41218 8.57615 2.01238 9.42317 2.92954L8.11757 4.23515L11.6466 4.23513Z" fill="inherit"></path>
+                          </g>
+                          <defs><clipPath id="clip0_841_4053"><rect width="12" height="12" fill="white"></rect></clipPath></defs></svg>
+                      </div>
+                      Refetch Data
+                    </button>
+
+                    <button type="button" className="flex items-center border border-black-10 dark:border-white/10 px-3 py-1.5 rounded-lg cursor-disabled opacity-50 !dark:hover:transparent">
+                      <div className="mr-2 fill-current">
+                        <svg width="9" height="10" viewBox="0 0 9 10" fill="inherit" xmlns="http://www.w3.org/2000/svg"><path d="M4.50199 9.2001C5.9011 9.19955 7.22 8.54806 8.07149 7.43792C8.92239 6.3272 9.20858 4.88472 8.84603 3.53331C8.48348 2.18189 7.51283 1.07615 6.2197 0.541774C4.92716 0.00728354 3.4588 0.103964 2.24759 0.80435C1.03634 1.50419 0.220046 2.72811 0.0382167 4.1151C-0.143612 5.50214 0.329903 6.89527 1.31978 7.88401C2.16299 8.72887 3.30837 9.20238 4.502 9.20019L4.50199 9.2001ZM6.89263 7.09072C6.32848 7.65377 5.58305 7.99874 4.78872 8.06521C3.99441 8.13113 3.20232 7.91415 2.55306 7.45217L7.25136 2.74669C7.71444 3.39653 7.93308 4.18923 7.86715 4.98461C7.80178 5.77947 7.45625 6.526 6.89265 7.09076L6.89263 7.09072ZM2.11135 2.30944C2.6755 1.74639 3.42093 1.40142 4.21525 1.33495C5.00956 1.26903 5.80165 1.48601 6.45092 1.94799L1.75261 6.65459C1.28898 6.0053 1.07035 5.21205 1.13628 4.41668C1.20165 3.6207 1.54717 2.87415 2.11132 2.30954L2.11135 2.30944Z" fill="inherit"></path>
+                        </svg>
+                      </div>Cancel All
+                    </button>
+                  </div>
+                </div>
+                <div className="w-full">
+                  <div className="w-full mt-3 text-xs overflow-x-auto border rounded-lg border-white/5">
+                    <div className="border-b border-b-white/5 bg-white/[.02] text-xs dark:text-white-50 flex justify-between min-w-[1200px] py-3 font-semibold dark:font-normal px-5 lg:px-0">
+                      <div className="basis-2/6 px-6">
+                        Price
+                      </div>
+                      <div className="basis-4/6 flex justify-between">
+                        <div className="basis-3/12 text-center">
+                          Limit Price
+                        </div>
+                        <div className="basis-3/12 text-center">
+                          Expiry
+                        </div>
+                        <div className="basis-3/12 text-center">
+                          Filled Size
+                        </div>
+                        <div className="basis-2/12 text-center">
+                          Status
+                        </div>
+                        <div className="basis-1/12">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="px-5 lg:px-0 relative overflow-y-auto min-w-[1200px] h-[372px] xs:h-[620px]">
+                      {/* <button className="flex justify-between items-center border-b border-white/5 dark:text-white/50 h-[62px] w-full"> */}
+                      <div className="flex justify-between items-center border-b border-white/5 dark:text-white/50 h-[62px] w-full">
+                        <div className="basis-2/6 min-w-[280px] flex items-center px-6">
+                          <div className="flex -space-x-2 cursor-pointer">
+                            <span className="relative">
+                              <img src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FMangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac%2Ftoken.png" alt="MNGO" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
+                            </span>
+                            <span className="relative">
+                              <img src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FSo11111111111111111111111111111111111111112%2Flogo.png" alt="SOL" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
+                            </span>
+                          </div>
+                          <div className="flex whitespace-nowrap items-center ml-5 font-semibold ">
+                            <span>1637 MNGO</span>
+                            <div className="h-2.5 w-4 mx-1">
+                              <svg width="16" height="10" viewBox="0 0 25 21" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.9339 9.08485L16.0326 1.18357C15.6735 0.80576 15.1766 0.589184 14.6554 0.581696C14.1341 0.575134 13.6326 0.779509 13.2632 1.14795C12.8948 1.5164 12.6904 2.01795 12.696 2.53921C12.7026 3.0614 12.9191 3.55734 13.2969 3.91734L17.9676 8.58054H2.43406C1.36626 8.58054 0.5 9.44679 0.5 10.5146C0.5 11.5833 1.36626 12.4496 2.43406 12.4496H17.9244L13.2969 17.0838C12.5741 17.845 12.5891 19.0431 13.3316 19.7847C14.0741 20.5263 15.2732 20.5413 16.0326 19.8175L23.9339 11.9163C24.2976 11.5544 24.502 11.0622 24.5001 10.5484C24.5011 10.5325 24.5011 10.5166 24.5001 10.5006C24.5011 10.4847 24.5011 10.4688 24.5001 10.4528C24.5001 9.94001 24.2967 9.44782 23.9339 9.08501L23.9339 9.08485Z" fill="currentColor"></path>
+                              </svg>
+                            </div>
+                            <span>0.180549641 SOL</span>
+                          </div>
+                        </div>
+                        <div className="basis-4/6 flex items-center justify-between">
+                          <div className="basis-3/12 text-center">
+                            <div className="flex items-center justify-center space-x-1">
+                              <span>0.0001103</span>
+                              <span>SOL per $MNGO</span>
+                            </div>
+                          </div>
+                          <div className="basis-3/12 text-center">
+                            Never
+                          </div>
+                          <div className="basis-3/12 text-center">
+                            <span className="dark:text-white">1637/1637 MNGO</span> (100.00%)
+                          </div>
+                          <div className="basis-2/12 flex items-center justify-center px-3 py-1.5">
+                            <span className="flex items-center font-semibold space-x-1 text-[#40C1C9]">
+                              <svg width="12" height="12" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 0C8.5204 0 0 8.5204 0 19C0 29.4796 8.5204 38 19 38C29.4796 38 38 29.4796 38 19C38 8.5204 29.4796 0 19 0ZM28.6 14.7592L18.4408 26.32C18.0814 26.72 17.6002 26.9606 17.0814 26.9606H17.0018C16.5221 26.9606 16.0424 26.7606 15.6814 26.4013L9.47983 20.1593C8.75951 19.439 8.75951 18.239 9.47983 17.5186C10.2002 16.7983 11.4002 16.7983 12.1205 17.5186L16.9613 22.3594L25.8005 12.2798C26.4802 11.4798 27.6802 11.4392 28.4411 12.1205C29.2411 12.8001 29.3203 13.9592 28.6 14.7592Z" fill="#40C1C9"></path>
+                              </svg>
+                              <span>Completed</span>
+                            </span>
+                          </div>
+                          <div className="basis-1/12 h-5 text-black/50 dark:text-white/50 flex items-center justify-center rotate-180">
+                            <svg width="12" height="12" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.292893 5.70711C0.683416 6.09763 1.31658 6.09763 1.7071 5.70711L4.99999 2.41421L8.29288 5.70711C8.6834 6.09763 9.31657 6.09763 9.70709 5.70711C10.0976 5.31658 10.0976 4.68342 9.70709 4.29289L5.7071 0.292893C5.31657 -0.097631 4.68341 -0.097631 4.29289 0.292893L0.292893 4.29289C-0.0976309 4.68342 -0.0976309 5.31658 0.292893 5.70711Z" fill="currentColor"></path>
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                      {/* </button> */}
+                      <div className="flex justify-between items-center border-b border-white/5 dark:text-white/50 h-[62px] w-full">
+                        <div className="basis-2/6 min-w-[280px] flex items-center px-6">
+                          <div className="flex -space-x-2 cursor-pointer">
+                            <span className="relative">
+                              <img src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FMangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac%2Ftoken.png" alt="MNGO" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
+                            </span>
+                            <span className="relative">
+                              <img src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FSo11111111111111111111111111111111111111112%2Flogo.png" alt="SOL" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
+                            </span>
+                          </div>
+                          <div className="flex whitespace-nowrap items-center ml-5 font-semibold ">
+                            <span>1637 MNGO</span>
+                            <div className="h-2.5 w-4 mx-1">
+                              <svg width="16" height="10" viewBox="0 0 25 21" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.9339 9.08485L16.0326 1.18357C15.6735 0.80576 15.1766 0.589184 14.6554 0.581696C14.1341 0.575134 13.6326 0.779509 13.2632 1.14795C12.8948 1.5164 12.6904 2.01795 12.696 2.53921C12.7026 3.0614 12.9191 3.55734 13.2969 3.91734L17.9676 8.58054H2.43406C1.36626 8.58054 0.5 9.44679 0.5 10.5146C0.5 11.5833 1.36626 12.4496 2.43406 12.4496H17.9244L13.2969 17.0838C12.5741 17.845 12.5891 19.0431 13.3316 19.7847C14.0741 20.5263 15.2732 20.5413 16.0326 19.8175L23.9339 11.9163C24.2976 11.5544 24.502 11.0622 24.5001 10.5484C24.5011 10.5325 24.5011 10.5166 24.5001 10.5006C24.5011 10.4847 24.5011 10.4688 24.5001 10.4528C24.5001 9.94001 24.2967 9.44782 23.9339 9.08501L23.9339 9.08485Z" fill="currentColor"></path>
+                              </svg>
+                            </div>
+                            <span>0.180549641 SOL</span>
+                          </div>
+                        </div>
+                        <div className="basis-4/6 flex items-center justify-between">
+                          <div className="basis-3/12 text-center">
+                            <div className="flex items-center justify-center space-x-1">
+                              <span>0.0001103</span>
+                              <span>SOL per $MNGO</span>
+                            </div>
+                          </div>
+                          <div className="basis-3/12 text-center">
+                            Never
+                          </div>
+                          <div className="basis-3/12 text-center">
+                            <span className="dark:text-white">0/1637 MNGO</span> (0.00%)
+                          </div>
+                          <div className="basis-2/12 flex items-center justify-center px-3 py-1.5">
+                            <span className="flex items-center font-semibold space-x-1 text-[#be431a]">
+                              <svg width="12" height="12" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.0336 16.2126L8.2336 10.0126L2.0336 3.81263C1.7961 3.57903 1.66172 3.25951 1.66016 2.92669C1.65938 2.59309 1.79141 2.27357 2.02734 2.03763C2.26328 1.80247 2.5828 1.67045 2.9164 1.67201C3.25 1.67357 3.56874 1.80795 3.80234 2.04623L9.99994 8.24623L16.1999 2.04623C16.4335 1.80795 16.7523 1.67357 17.0859 1.67201C17.4187 1.67045 17.739 1.80248 17.9749 2.03763C18.2109 2.27357 18.3429 2.59309 18.3413 2.92669C18.3406 3.25951 18.2062 3.57903 17.9687 3.81263L11.7663 10.0126L17.9663 16.2126C18.2038 16.4462 18.3382 16.7658 18.3397 17.0986C18.3405 17.4322 18.2085 17.7517 17.9725 17.9876C17.7366 18.2228 17.4171 18.3548 17.0835 18.3533C16.7499 18.3517 16.4311 18.2173 16.1975 17.979L9.99994 11.779L3.79994 17.979C3.31088 18.4611 2.52494 18.4579 2.039 17.9736C1.55384 17.4884 1.54994 16.7025 2.03119 16.2126L2.0336 16.2126Z" fill="currentColor"></path></svg>
+                              <span>Cancelled</span>
+                            </span>
+                          </div>
+                          <div className="basis-1/12 h-5 text-black/50 dark:text-white/50 flex items-center justify-center rotate-180">
+                            <svg width="12" height="12" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.292893 5.70711C0.683416 6.09763 1.31658 6.09763 1.7071 5.70711L4.99999 2.41421L8.29288 5.70711C8.6834 6.09763 9.31657 6.09763 9.70709 5.70711C10.0976 5.31658 10.0976 4.68342 9.70709 4.29289L5.7071 0.292893C5.31657 -0.097631 4.68341 -0.097631 4.29289 0.292893L0.292893 4.29289C-0.0976309 4.68342 -0.0976309 5.31658 0.292893 5.70711Z" fill="currentColor"></path>
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="w-full flex justify-center xl:max-w-7xl lg:max-w-[90vw] lg:mx-auto">
+              <div className="w-full overflow-hidden">
+                <div className="flex flex-row flex-wrap">
+                  <div className="flex space-x-2 justify-start items-start overflow-y-auto">
+                    <button type="button" className="rounded-2xl px-4 py-2 text-xs text-white/20 border border-transparent whitespace-nowrap dark:hover:!text-v2-primary">Open Orders</button>
+                    <button type="button" className="rounded-2xl px-4 py-2 text-xs text-white/20 border whitespace-nowrap dark:hover:!text-v2-primary !text-v2-primary border-v2-primary/20 bg-v2-primary/5">Order History</button>
+                  </div>
+                  <div className="ml-auto flex justify-end space-x-2 text-xs dark:text-white-50">
+                    <button type="button" className="flex items-center border border-black-10 dark:border-white/10 px-3 py-1.5 rounded-lg dark:hover:!text-v2-primary dark:hover:!bg-v2-primary/5 dark:hover:!border-v2-primary/25">
+                      <div className="mr-2 fill-current">
+                        <svg width="8" height="8" viewBox="0 0 12 12" fill="inherit" xmlns="http://www.w3.org/2000/svg">
+                          <g clip-path="url(#clip0_841_4053)">
+                            <path d="M11.6466 4.23513V0.706082L10.4111 1.94156C9.3173 0.741165 7.72912 0 6 0C2.6827 0 0 2.6827 0 6C0 9.3173 2.68203 12 6 12C7.69405 12 9.21142 11.2939 10.3059 10.165L9.31797 9.14128C8.50601 10.0234 7.30561 10.5879 6 10.5879C3.45892 10.5879 1.41216 8.5411 1.41216 6.00002C1.41216 3.45894 3.45892 1.41218 6 1.41218C7.34135 1.41218 8.57615 2.01238 9.42317 2.92954L8.11757 4.23515L11.6466 4.23513Z" fill="inherit"></path>
+                          </g>
+                          <defs><clipPath id="clip0_841_4053"><rect width="12" height="12" fill="white"></rect></clipPath></defs></svg>
+                      </div>
+                      Refetch Data
+                    </button>
+
+                    <button type="button" className="flex items-center border border-black-10 dark:border-white/10 px-3 py-1.5 rounded-lg cursor-disabled opacity-50 !dark:hover:transparent">
+                      <div className="mr-2 fill-current">
+                        <svg width="9" height="10" viewBox="0 0 9 10" fill="inherit" xmlns="http://www.w3.org/2000/svg"><path d="M4.50199 9.2001C5.9011 9.19955 7.22 8.54806 8.07149 7.43792C8.92239 6.3272 9.20858 4.88472 8.84603 3.53331C8.48348 2.18189 7.51283 1.07615 6.2197 0.541774C4.92716 0.00728354 3.4588 0.103964 2.24759 0.80435C1.03634 1.50419 0.220046 2.72811 0.0382167 4.1151C-0.143612 5.50214 0.329903 6.89527 1.31978 7.88401C2.16299 8.72887 3.30837 9.20238 4.502 9.20019L4.50199 9.2001ZM6.89263 7.09072C6.32848 7.65377 5.58305 7.99874 4.78872 8.06521C3.99441 8.13113 3.20232 7.91415 2.55306 7.45217L7.25136 2.74669C7.71444 3.39653 7.93308 4.18923 7.86715 4.98461C7.80178 5.77947 7.45625 6.526 6.89265 7.09076L6.89263 7.09072ZM2.11135 2.30944C2.6755 1.74639 3.42093 1.40142 4.21525 1.33495C5.00956 1.26903 5.80165 1.48601 6.45092 1.94799L1.75261 6.65459C1.28898 6.0053 1.07035 5.21205 1.13628 4.41668C1.20165 3.6207 1.54717 2.87415 2.11132 2.30954L2.11135 2.30944Z" fill="inherit"></path>
+                        </svg>
+                      </div>Cancel All
+                    </button>
+                  </div>
+                </div>
+                <div className="w-full">
+                  <div className="w-full mt-3 text-xs overflow-x-auto border rounded-lg border-white/5">
+                    <div className="border-b border-b-white/5 bg-white/[.02] text-xs dark:text-white-50 flex justify-between min-w-[1200px] py-3 font-semibold dark:font-normal px-5 lg:px-0">
+
+                      <div className="basis-2/6 px-6">Order Info</div>
+                      <div className="basis-4/6 flex justify-between">
+                        <div className="basis-2/6 text-center">Price</div>
+                        <div className="basis-1/6 text-center">Expiry</div>
+                        <div className="basis-2/6 text-center">Filled Size</div>
+                        <div className="w-[80px] pl-3">Action</div>
+                      </div>
+
+                    </div>
+                    <div className="px-5 lg:px-0 relative overflow-y-auto min-w-[1200px] h-[372px] xs:h-[620px]">
+                      <div
+                        className="flex justify-between items-center border-b border-white/5 h-[62px] dark:text-white/50"
+                      >
+                        <div className="basis-2/6 flex items-center px-6">
+                          <div className="flex -space-x-2 cursor-pointer">
+                            <span className="relative"
+                            ><img
+                                src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fbafkreiedys4rzjegrylgbpuj7homyzyh2t4xe36f27fjpza7qestscu5e4.ipfs.nftstorage.link"
+                                alt="PRIORA"
+                                width="20"
+                                height="20"
+                                className="object-cover rounded-full max-w-5 max-h-5" /><svg
+                                  width="16"
+                                  height="16"
+                                  viewBox="0 0 20 20"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  className="absolute -p-1 text-warning -bottom-[2px] -right-[5px] z-10"
+                                >
+                                <rect x="8" y="6" width="4" height="10" fill="white"></rect>
+                                <path
+                                  fill-rule="evenodd"
+                                  clip-rule="evenodd"
+                                  d="M17.8634 15.6962C17.5539 15.1565 11.3038 4.37041 10.7692 3.44957C10.4179 2.8452 9.58075 2.85511 9.22912 3.44957C8.83702 4.11227 2.55515 14.9396 2.11839 15.7235C1.7984 16.2978 2.15189 17.0509 2.88009 17.0509H17.0974C17.7586 17.0509 18.2502 16.3695 17.8635 15.696L17.8634 15.6962ZM10.0005 15.6277C9.50937 15.6277 9.11108 15.2297 9.11108 14.7383C9.11108 14.247 9.50937 13.8489 10.0005 13.8489C10.4918 13.8489 10.8899 14.247 10.8899 14.7383C10.8899 15.2297 10.4918 15.6277 10.0005 15.6277ZM10.5341 12.7817C10.5341 13.1374 10.3562 13.3154 10.0005 13.3154C9.64474 13.3154 9.46681 13.1375 9.46681 12.7817L8.93314 7.62324C8.93314 7.08957 9.28887 6.5559 10.0005 6.5559C10.7119 6.5559 11.0678 7.08957 11.0678 7.62324L10.5341 12.7817Z"
+                                  fill="currentColor"
+                                ></path></svg>
+                              </span>
+                              <span className="relative"
+                            ><img
+                                src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FSo11111111111111111111111111111111111111112%2Flogo.png"
+                                alt="SOL"
+                                width="20"
+                                height="20"
+                                className="object-cover rounded-full max-w-5 max-h-5"
+                              /></span>
+                          </div>
+                          <div
+                            className="flex whitespace-nowrap items-center ml-5 font-semibold"
+                          >
+                            <span>2261385.8592 PRIORA</span>
+                            <div className="h-2.5 w-4 mx-1">
+                              <svg
+                                width="16"
+                                height="10"
+                                viewBox="0 0 25 21"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M23.9339 9.08485L16.0326 1.18357C15.6735 0.80576 15.1766 0.589184 14.6554 0.581696C14.1341 0.575134 13.6326 0.779509 13.2632 1.14795C12.8948 1.5164 12.6904 2.01795 12.696 2.53921C12.7026 3.0614 12.9191 3.55734 13.2969 3.91734L17.9676 8.58054H2.43406C1.36626 8.58054 0.5 9.44679 0.5 10.5146C0.5 11.5833 1.36626 12.4496 2.43406 12.4496H17.9244L13.2969 17.0838C12.5741 17.845 12.5891 19.0431 13.3316 19.7847C14.0741 20.5263 15.2732 20.5413 16.0326 19.8175L23.9339 11.9163C24.2976 11.5544 24.502 11.0622 24.5001 10.5484C24.5011 10.5325 24.5011 10.5166 24.5001 10.5006C24.5011 10.4847 24.5011 10.4688 24.5001 10.4528C24.5001 9.94001 24.2967 9.44782 23.9339 9.08501L23.9339 9.08485Z"
+                                  fill="currentColor"
+                                ></path>
+                              </svg>
+                            </div>
+                            <span>0.0444 SOL</span>
+                          </div>
+                        </div>
+                        <div className="basis-4/6 flex items-center justify-between">
+                          <div className="basis-2/6 text-center">
+                            <div className="flex items-center justify-center space-x-1">
+                              <span className="flex items-center"
+                              >0.0<span className="text-sm mb-1">₇
+                              </span>19634</span>
+                              <span>SOL per $PRIORA</span>
+                            </div>
+                          </div>
+                          <div className="basis-1/6 text-center">Never</div>
+                          <div className="basis-2/6 text-center">
+                            <span className="dark:text-white"
+                            >376902.46749/2261385.8592 PRIORA</span
+                            >
+                            (16.67%)
+                          </div>
+                          <div className="w-[80px] flex items-center">
+                            <button
+                              type="button"
+                              className="border border-black-10 dark:border-white/10 px-3 py-1.5 rounded-lg dark:hover:!text-v2-primary dark:hover:!bg-v2-primary/5 dark:hover:!border-v2-primary/25"
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* <button className="flex justify-between items-center border-b border-white/5 dark:text-white/50 h-[62px] w-full">
+                        <div className="basis-2/6 min-w-[280px] flex items-center px-6">
+                          <div className="flex -space-x-2 cursor-pointer">
+                            <span className="relative">
+                              <img src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FMangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac%2Ftoken.png" alt="MNGO" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
+                            </span>
+                            <span className="relative">
+                              <img src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FSo11111111111111111111111111111111111111112%2Flogo.png" alt="SOL" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
+                            </span>
+                          </div>
+                          <div className="flex whitespace-nowrap items-center ml-5 font-semibold ">
+                            <span>1637 MNGO</span>
+                            <div className="h-2.5 w-4 mx-1">
+                              <svg width="16" height="10" viewBox="0 0 25 21" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.9339 9.08485L16.0326 1.18357C15.6735 0.80576 15.1766 0.589184 14.6554 0.581696C14.1341 0.575134 13.6326 0.779509 13.2632 1.14795C12.8948 1.5164 12.6904 2.01795 12.696 2.53921C12.7026 3.0614 12.9191 3.55734 13.2969 3.91734L17.9676 8.58054H2.43406C1.36626 8.58054 0.5 9.44679 0.5 10.5146C0.5 11.5833 1.36626 12.4496 2.43406 12.4496H17.9244L13.2969 17.0838C12.5741 17.845 12.5891 19.0431 13.3316 19.7847C14.0741 20.5263 15.2732 20.5413 16.0326 19.8175L23.9339 11.9163C24.2976 11.5544 24.502 11.0622 24.5001 10.5484C24.5011 10.5325 24.5011 10.5166 24.5001 10.5006C24.5011 10.4847 24.5011 10.4688 24.5001 10.4528C24.5001 9.94001 24.2967 9.44782 23.9339 9.08501L23.9339 9.08485Z" fill="currentColor"></path>
+                              </svg>
+                            </div>
+                            <span>0.180549641 SOL</span>
+                          </div>
+                        </div>
+                        <div className="basis-4/6 flex items-center justify-between">
+                          <div className="basis-3/12 text-center">
+                            <div className="flex items-center justify-center space-x-1">
+                              <span>0.0001103</span>
+                              <span>SOL per $MNGO</span>
+                            </div>
+                          </div>
+                          <div className="basis-3/12 text-center">
+                            Never
+                          </div>
+                          <div className="basis-3/12 text-center">
+                            <span className="dark:text-white">1637/1637 MNGO</span> (100.00%)
+                          </div>
+                          <div className="basis-2/12 flex items-center justify-center px-3 py-1.5">
+                            <span className="flex items-center font-semibold space-x-1 text-[#40C1C9]">
+                              <svg width="12" height="12" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 0C8.5204 0 0 8.5204 0 19C0 29.4796 8.5204 38 19 38C29.4796 38 38 29.4796 38 19C38 8.5204 29.4796 0 19 0ZM28.6 14.7592L18.4408 26.32C18.0814 26.72 17.6002 26.9606 17.0814 26.9606H17.0018C16.5221 26.9606 16.0424 26.7606 15.6814 26.4013L9.47983 20.1593C8.75951 19.439 8.75951 18.239 9.47983 17.5186C10.2002 16.7983 11.4002 16.7983 12.1205 17.5186L16.9613 22.3594L25.8005 12.2798C26.4802 11.4798 27.6802 11.4392 28.4411 12.1205C29.2411 12.8001 29.3203 13.9592 28.6 14.7592Z" fill="#40C1C9"></path>
+                              </svg>
+                              <span>Completed</span>
+                            </span>
+                          </div>
+                          <div className="basis-1/12 h-5 text-black/50 dark:text-white/50 flex items-center justify-center rotate-180">
+                            <svg width="12" height="12" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.292893 5.70711C0.683416 6.09763 1.31658 6.09763 1.7071 5.70711L4.99999 2.41421L8.29288 5.70711C8.6834 6.09763 9.31657 6.09763 9.70709 5.70711C10.0976 5.31658 10.0976 4.68342 9.70709 4.29289L5.7071 0.292893C5.31657 -0.097631 4.68341 -0.097631 4.29289 0.292893L0.292893 4.29289C-0.0976309 4.68342 -0.0976309 5.31658 0.292893 5.70711Z" fill="currentColor"></path>
+                            </svg>
+                          </div>
+                        </div>
+                      </button>
+                      <button className="flex justify-between items-center border-b border-white/5 dark:text-white/50 h-[62px] w-full">
+                        <div className="basis-2/6 min-w-[280px] flex items-center px-6">
+                          <div className="flex -space-x-2 cursor-pointer">
+                            <span className="relative">
+                              <img src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FMangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac%2Ftoken.png" alt="MNGO" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
+                            </span>
+                            <span className="relative">
+                              <img src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FSo11111111111111111111111111111111111111112%2Flogo.png" alt="SOL" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
+                            </span>
+                          </div>
+                          <div className="flex whitespace-nowrap items-center ml-5 font-semibold ">
+                            <span>1637 MNGO</span>
+                            <div className="h-2.5 w-4 mx-1">
+                              <svg width="16" height="10" viewBox="0 0 25 21" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.9339 9.08485L16.0326 1.18357C15.6735 0.80576 15.1766 0.589184 14.6554 0.581696C14.1341 0.575134 13.6326 0.779509 13.2632 1.14795C12.8948 1.5164 12.6904 2.01795 12.696 2.53921C12.7026 3.0614 12.9191 3.55734 13.2969 3.91734L17.9676 8.58054H2.43406C1.36626 8.58054 0.5 9.44679 0.5 10.5146C0.5 11.5833 1.36626 12.4496 2.43406 12.4496H17.9244L13.2969 17.0838C12.5741 17.845 12.5891 19.0431 13.3316 19.7847C14.0741 20.5263 15.2732 20.5413 16.0326 19.8175L23.9339 11.9163C24.2976 11.5544 24.502 11.0622 24.5001 10.5484C24.5011 10.5325 24.5011 10.5166 24.5001 10.5006C24.5011 10.4847 24.5011 10.4688 24.5001 10.4528C24.5001 9.94001 24.2967 9.44782 23.9339 9.08501L23.9339 9.08485Z" fill="currentColor"></path>
+                              </svg>
+                            </div>
+                            <span>0.180549641 SOL</span>
+                          </div>
+                        </div>
+                        <div className="basis-4/6 flex items-center justify-between">
+                          <div className="basis-3/12 text-center">
+                            <div className="flex items-center justify-center space-x-1">
+                              <span>0.0001103</span>
+                              <span>SOL per $MNGO</span>
+                            </div>
+                          </div>
+                          <div className="basis-3/12 text-center">
+                            Never
+                          </div>
+                          <div className="basis-3/12 text-center">
+                            <span className="dark:text-white">0/1637 MNGO</span> (0.00%)
+                          </div>
+                          <div className="basis-2/12 flex items-center justify-center px-3 py-1.5">
+                            <span className="flex items-center font-semibold space-x-1 text-[#be431a]">
+                              <svg width="12" height="12" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.0336 16.2126L8.2336 10.0126L2.0336 3.81263C1.7961 3.57903 1.66172 3.25951 1.66016 2.92669C1.65938 2.59309 1.79141 2.27357 2.02734 2.03763C2.26328 1.80247 2.5828 1.67045 2.9164 1.67201C3.25 1.67357 3.56874 1.80795 3.80234 2.04623L9.99994 8.24623L16.1999 2.04623C16.4335 1.80795 16.7523 1.67357 17.0859 1.67201C17.4187 1.67045 17.739 1.80248 17.9749 2.03763C18.2109 2.27357 18.3429 2.59309 18.3413 2.92669C18.3406 3.25951 18.2062 3.57903 17.9687 3.81263L11.7663 10.0126L17.9663 16.2126C18.2038 16.4462 18.3382 16.7658 18.3397 17.0986C18.3405 17.4322 18.2085 17.7517 17.9725 17.9876C17.7366 18.2228 17.4171 18.3548 17.0835 18.3533C16.7499 18.3517 16.4311 18.2173 16.1975 17.979L9.99994 11.779L3.79994 17.979C3.31088 18.4611 2.52494 18.4579 2.039 17.9736C1.55384 17.4884 1.54994 16.7025 2.03119 16.2126L2.0336 16.2126Z" fill="currentColor"></path></svg>
+                              <span>Cancelled</span>
+                            </span>
+                          </div>
+                          <div className="basis-1/12 h-5 text-black/50 dark:text-white/50 flex items-center justify-center rotate-180">
+                            <svg width="12" height="12" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.292893 5.70711C0.683416 6.09763 1.31658 6.09763 1.7071 5.70711L4.99999 2.41421L8.29288 5.70711C8.6834 6.09763 9.31657 6.09763 9.70709 5.70711C10.0976 5.31658 10.0976 4.68342 9.70709 4.29289L5.7071 0.292893C5.31657 -0.097631 4.68341 -0.097631 4.29289 0.292893L0.292893 4.29289C-0.0976309 4.68342 -0.0976309 5.31658 0.292893 5.70711Z" fill="currentColor"></path>
+                            </svg>
+                          </div>
+                        </div>
+                      </button> */}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* <div className='flex overflow-auto scroll'> */}
             {/* <div className={styles.scroll}>
               <div className='min-w-28 text-center bg-slate-300 mr-1'>box-1</div>
