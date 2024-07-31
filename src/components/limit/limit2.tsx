@@ -1329,7 +1329,7 @@ const LimitC = () => {
                             Never
                           </div>
                           <div className="basis-3/12 text-center">
-                            <span className="dark:text-white">1637/1637 MNGO</span> (100.00%)
+                            <span className="dark:text-white">0/1637 MNGO</span> (0.00%)
                           </div>
                           <div className="basis-2/12 flex items-center justify-center px-3 py-1.5">
                             <span className="flex items-center font-semibold space-x-1 text-[#be431a]">
