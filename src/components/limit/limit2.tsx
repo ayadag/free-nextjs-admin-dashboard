@@ -812,7 +812,7 @@ const LimitC = () => {
         {/* <div> */}
         <div className='relative'>
           {/* <div className='relative'> */}
-        {/* <div> */}
+          {/* <div> */}
           <div>
 
             <div className="flex justify-center mt-10 w-full">
@@ -1202,7 +1202,7 @@ const LimitC = () => {
               </div>
             </div>
 
-            {/* <div className="w-full flex justify-center xl:max-w-7xl lg:max-w-[90vw] lg:mx-auto">
+            <div className="w-full flex justify-center xl:max-w-7xl lg:max-w-[90vw] lg:mx-auto">
               <div className="w-full overflow-hidden">
                 <div className="flex flex-row flex-wrap">
                   <div className="flex space-x-2 justify-start items-start overflow-y-auto">
@@ -1248,15 +1248,65 @@ const LimitC = () => {
                         <div className="basis-2/12 text-center">
                           Status
                         </div>
+                        <div className="basis-1/12">
+                        </div>
                       </div>
+                    </div>
+
+                    <div className="px-5 lg:px-0 relative overflow-y-auto min-w-[1200px] h-[372px] xs:h-[620px]">
+                      <button className="flex justify-between items-center border-b border-white/5 dark:text-white/50 h-[62px] w-full">
+                        <div className="basis-2/6 min-w-[280px] flex items-center px-6">
+                          <div className="flex -space-x-2 cursor-pointer">
+                            <span className="relative">
+                              <img src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FMangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac%2Ftoken.png" alt="MNGO" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
+                            </span>
+                            <span className="relative">
+                              <img src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FSo11111111111111111111111111111111111111112%2Flogo.png" alt="SOL" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
+                            </span>
+                          </div>
+                          <div className="flex whitespace-nowrap items-center ml-5 font-semibold ">
+                            <span>1637 MNGO</span>
+                            <div className="h-2.5 w-4 mx-1">
+                              <svg width="16" height="10" viewBox="0 0 25 21" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.9339 9.08485L16.0326 1.18357C15.6735 0.80576 15.1766 0.589184 14.6554 0.581696C14.1341 0.575134 13.6326 0.779509 13.2632 1.14795C12.8948 1.5164 12.6904 2.01795 12.696 2.53921C12.7026 3.0614 12.9191 3.55734 13.2969 3.91734L17.9676 8.58054H2.43406C1.36626 8.58054 0.5 9.44679 0.5 10.5146C0.5 11.5833 1.36626 12.4496 2.43406 12.4496H17.9244L13.2969 17.0838C12.5741 17.845 12.5891 19.0431 13.3316 19.7847C14.0741 20.5263 15.2732 20.5413 16.0326 19.8175L23.9339 11.9163C24.2976 11.5544 24.502 11.0622 24.5001 10.5484C24.5011 10.5325 24.5011 10.5166 24.5001 10.5006C24.5011 10.4847 24.5011 10.4688 24.5001 10.4528C24.5001 9.94001 24.2967 9.44782 23.9339 9.08501L23.9339 9.08485Z" fill="currentColor"></path>
+                              </svg>
+                            </div>
+                            <span>0.180549641 SOL</span>
+                          </div>
+                        </div>
+                        <div className="basis-4/6 flex items-center justify-between">
+                          <div className="basis-3/12 text-center">
+                            <div className="flex items-center justify-center space-x-1">
+                              <span>0.0001103</span>
+                              <span>SOL per $MNGO</span>
+                            </div>
+                          </div>
+                          <div className="basis-3/12 text-center">
+                            Never
+                          </div>
+                          <div className="basis-3/12 text-center">
+                            <span className="dark:text-white">1637/1637 MNGO</span> (100.00%)
+                          </div>
+                          <div className="basis-2/12 flex items-center justify-center px-3 py-1.5">
+                            <span className="flex items-center font-semibold space-x-1 text-[#40C1C9]">
+                              <svg width="12" height="12" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 0C8.5204 0 0 8.5204 0 19C0 29.4796 8.5204 38 19 38C29.4796 38 38 29.4796 38 19C38 8.5204 29.4796 0 19 0ZM28.6 14.7592L18.4408 26.32C18.0814 26.72 17.6002 26.9606 17.0814 26.9606H17.0018C16.5221 26.9606 16.0424 26.7606 15.6814 26.4013L9.47983 20.1593C8.75951 19.439 8.75951 18.239 9.47983 17.5186C10.2002 16.7983 11.4002 16.7983 12.1205 17.5186L16.9613 22.3594L25.8005 12.2798C26.4802 11.4798 27.6802 11.4392 28.4411 12.1205C29.2411 12.8001 29.3203 13.9592 28.6 14.7592Z" fill="#40C1C9"></path>
+                              </svg>
+                              <span>Completed</span>
+                            </span>
+                          </div>
+                          <div className="basis-1/12 h-5 text-black/50 dark:text-white/50 flex items-center justify-center rotate-180">
+                            <svg width="12" height="12" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.292893 5.70711C0.683416 6.09763 1.31658 6.09763 1.7071 5.70711L4.99999 2.41421L8.29288 5.70711C8.6834 6.09763 9.31657 6.09763 9.70709 5.70711C10.0976 5.31658 10.0976 4.68342 9.70709 4.29289L5.7071 0.292893C5.31657 -0.097631 4.68341 -0.097631 4.29289 0.292893L0.292893 4.29289C-0.0976309 4.68342 -0.0976309 5.31658 0.292893 5.70711Z" fill="currentColor"></path>
+                            </svg>
+                          </div>
+                        </div>
+                      </button>
                     </div>
                   </div>
                 </div>
               </div>
-            </div> */}
+            </div>
 
             {/* <div className='flex overflow-auto scroll'> */}
-            <div className={styles.scroll}>
+            {/* <div className={styles.scroll}>
               <div className='min-w-28 text-center bg-slate-300 mr-1'>box-1</div>
               <div className='min-w-28 text-center bg-slate-300 mr-1'>box-2</div>
               <div className='min-w-28 text-center bg-slate-300 mr-1'>box-3</div>
@@ -1264,7 +1314,7 @@ const LimitC = () => {
               <div className='min-w-28 text-center bg-slate-300 mr-1'>box-1</div>
               <div className='min-w-28 text-center bg-slate-300 mr-1'>box-1</div>
               <div className='min-w-28 text-center bg-slate-300 mr-1'>box-1</div>
-            </div>
+            </div> */}
 
           </div>
 
