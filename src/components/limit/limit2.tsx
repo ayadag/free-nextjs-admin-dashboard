@@ -1096,113 +1096,7 @@ const LimitC = () => {
               </div>
             </div> */}
 
-            {/* <div className='flex justify-center mt-10 w-full h-16'> */}
-            <div className="flex flex-col">
-              <div className="grid grid-cols-2 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-3 xl:grid-cols-5">
-                <div className="p-2.5 xl:p-5">
-                  <h5 className="text-sm font-medium uppercase xsm:text-base">
-                    Pair
-                  </h5>
-                </div>
-                <div className="p-2.5 text-center xl:p-5">
-                  <h5 className="text-sm font-medium uppercase xsm:text-base">
-                    Pool
-                  </h5>
-                </div>
-                {/* <div className="p-2.5 text-center xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Mint A
-            </h5>
-          </div> */}
-                {/* <div className="hidden p-2.5 text-center sm:block xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Mint A
-            </h5>
-          </div> */}
-                <div className="hidden p-2.5 text-center xl:block xl:p-5">
-                  <h5 className="text-sm font-medium uppercase xsm:text-base">
-                    Mint A
-                  </h5>
-                </div>
-                {/* <div className="hidden p-2.5 text-center sm:block xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Mint B
-            </h5>
-          </div> */}
-                <div className="hidden p-2.5 text-center xl:block xl:p-5">
-                  <h5 className="text-sm font-medium uppercase xsm:text-base">
-                    Mint B
-                  </h5>
-                </div>
-                <div className="hidden p-2.5 text-center sm:block xl:p-5">
-                  <h5 className="text-sm font-medium uppercase xsm:text-base">
-                    Pool Price
-                  </h5>
-                </div>
-                {/* <div className="p-2.5 text-center xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Pool Price
-            </h5>
-          </div> */}
-              </div>
-            </div>
-
-
-            <div className="flex flex-col">
-              {/* <div className="grid grid-cols-2 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-3 xl:grid-cols-5"> */}
-              <div className="grid grid-cols-5 rounded-sm bg-gray-2 dark:bg-meta-4">
-                <div className="p-2.5 xl:p-5">
-                  <h5 className="text-sm font-medium uppercase xsm:text-base">
-                    Pair
-                  </h5>
-                </div>
-                <div className="p-2.5 text-center xl:p-5">
-                  <h5 className="text-sm font-medium uppercase xsm:text-base">
-                    Pool
-                  </h5>
-                </div>
-                {/* <div className="p-2.5 text-center xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Mint A
-            </h5>
-          </div> */}
-                {/* <div className="hidden p-2.5 text-center sm:block xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Mint A
-            </h5>
-          </div> */}
-                {/* <div className="hidden p-2.5 text-center xl:block xl:p-5"> */}
-                <div className="p-2.5 text-center xl:p-5">
-                  <h5 className="text-sm font-medium uppercase xsm:text-base">
-                    Mint A
-                  </h5>
-                </div>
-                {/* <div className="hidden p-2.5 text-center sm:block xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Mint B
-            </h5>
-          </div> */}
-                {/* <div className="hidden p-2.5 text-center xl:block xl:p-5"> */}
-                <div className="p-2.5 text-center xl:p-5">
-                  <h5 className="text-sm font-medium uppercase xsm:text-base">
-                    Mint B
-                  </h5>
-                </div>
-                {/* <div className="hidden p-2.5 text-center sm:block xl:p-5"> */}
-                <div className="p-2.5 text-center xl:p-5">
-                  <h5 className="text-sm font-medium uppercase xsm:text-base">
-                    Pool Price
-                  </h5>
-                </div>
-                {/* <div className="p-2.5 text-center xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
-              Pool Price
-            </h5>
-          </div> */}
-              </div>
-            </div>
-
-            <div className="w-full flex justify-center xl:max-w-7xl lg:max-w-[90vw] lg:mx-auto">
+            {/* <div className="w-full flex justify-center xl:max-w-7xl lg:max-w-[90vw] lg:mx-auto">
               <div className="w-full overflow-hidden">
                 <div className="flex flex-row flex-wrap">
                   <div className="flex space-x-2 justify-start items-start overflow-y-auto">
@@ -1347,7 +1241,7 @@ const LimitC = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div className="w-full flex justify-center xl:max-w-7xl lg:max-w-[90vw] lg:mx-auto">
               <div className="w-full overflow-hidden">
