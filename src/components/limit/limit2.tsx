@@ -65,6 +65,51 @@ type Order = {
   outputDecimal: number
 }
 
+type InputMetadata = {
+  address: string,
+  chainId: number,
+  decimals: number,
+  name: string,
+  symbol: string,
+  logoURI: string,
+  tags: any,
+  extensions: any,
+}
+type OutputMetadata = {
+  address: string,
+  chainId: number,
+  decimals: number,
+  name: string,
+  symbol: string,
+  logoURI: string,
+  tags: any,
+  extensions: any,
+}
+type OrderHistorys = OrderHistoryItem & InputMetadata & OutputMetadata;
+
+// type OrderHistorys = OrderHistoryItem & {
+//   inputMetadata: {
+//     address: string,
+//     chainId: number,
+//     decimals: number,
+//     name: string,
+//     symbol: string,
+//     logoURI: string,
+//     tags: any,
+//     extensions: any,
+//   }
+//   outputMetadata: {
+//     address: string,
+//     chainId: number,
+//     decimals: number,
+//     name: string,
+//     symbol: string,
+//     logoURI: string,
+//     tags: any,
+//     extensions: any,
+//   }
+// };
+
 type OrderHistory = {
   id: number,
   orderKey: string,
@@ -82,6 +127,26 @@ type OrderHistory = {
   updatedAt: any,
   createdAt: any,
   txid: string,
+  inputMetadata: {
+    address: string,
+    chainId: number,
+    decimals: number,
+    name: string,
+    symbol: string,
+    logoURI: string,
+    tags: any,
+    extensions: any,
+  }
+  outputMetadata: {
+    address: string,
+    chainId: number,
+    decimals: number,
+    name: string,
+    symbol: string,
+    logoURI: string,
+    tags: any,
+    extensions: any,
+  }
 
   // id: 48784712,
   // orderKey: 'AuXpoXwxnbsBHGfJBYaCKTRxhcfdCHdhdYFVHhwrqyH3',
@@ -141,6 +206,7 @@ const LimitC = () => {
   // let [tTokenList, setTTokenList] = useState<any>(); //Total token list
   // const [orderHistory, setOrderHistory] = useState<OrderHistory | undefined>()
   const [ordersHistory, setOrdersHistory] = useState<OrderHistoryItem[] | undefined>()//OrderHistoryItem
+  const [ordersHistory2, setOrdersHistory2] = useState<OrderHistorys[] | undefined>()//OrderHistoryItem
 
   useEffect(() => {
     async function getTokenList() {
@@ -181,20 +247,81 @@ const LimitC = () => {
   //Get orders
   useEffect(() => {
     getOrderHistory()
+    // let orderHistory2: OrderHistorys[];
+    let orderHistory2: any[];
     async function getOrderHistory() {
       if (!publicKey) { return console.log('!publickey') }
-      const orderHistory: OrderHistoryItem[] = await limitOrder.getOrderHistory({
-        wallet: publicKey.toBase58(),
-        take: 20, // optional, default is 20, maximum is 100
-        // lastCursor: order.id // optional, for pagination
-      });
-      console.log('Order History: ', orderHistory);
-      setOrdersHistory(orderHistory)
-      console.log('Order History: ', ordersHistory);
+      try {
+        const orderHistory: OrderHistoryItem[] = await limitOrder.getOrderHistory({
+          wallet: publicKey.toBase58(),
+          take: 20, // optional, default is 20, maximum is 100
+          // lastCursor: order.id // optional, for pagination
+        });
+        // console.log('Order History: ', orderHistory);
+        setOrdersHistory(orderHistory)
+        console.log('Order History: ', ordersHistory);
+
+        // try {
+        orderHistory.map(async(token) => {
+          const inputMD = await (await fetch(
+            `/api/juptoken?listType=all&address=${token.inputMint}`
+          )
+          ).json();
+          const outputMD = await (await fetch(
+            `/api/juptoken?listType=all&address=${token.outputMint}`
+          )
+          ).json();
+          console.log('inputMD', inputMD)
+          console.log('inputMD.data[0]', inputMD.data[0])
+          orderHistory2.push(...token, inputMD.data[0], outputMD.data[0])
+        })
+        console.log('orderHistory2', orderHistory2)
+        setOrdersHistory2(orderHistory2);
+        console.log('ordersHistory2', ordersHistory2)
+      } catch (err) {
+        return console.error('err getOrderHistory', err)
+      }
     }
   })
-
-
+  //Get orders2
+  // useEffect(() => {
+  //   getOrderHistory2()
+  //   // let orderHistory2: OrderHistorys[];
+  //   let orderHistory2: any[];
+  //   async function getOrderHistory2() {
+  //     if (!publicKey || !ordersHistory) { return console.log('!publickey || ordersHistory') }
+  //     try {
+  //       // const orderHistory: OrderHistoryItem[] = await limitOrder.getOrderHistory({
+  //       //   wallet: publicKey.toBase58(),
+  //       //   take: 20, // optional, default is 20, maximum is 100
+  //       //   // lastCursor: order.id // optional, for pagination
+  //       // });
+  //       // console.log('Order History: ', orderHistory);
+  //       // setOrdersHistory(orderHistory)
+  //       // console.log('Order History: ', ordersHistory);
+  //       // let orderHistory2: any[];
+  //       // try {
+  //         ordersHistory.map(async(token) => {
+  //         const inputMD = await (await fetch(
+  //           `/api/juptoken?listType=all&address=${token.inputMint}`
+  //         )
+  //         ).json();
+  //         const outputMD = await (await fetch(
+  //           `/api/juptoken?listType=all&address=${token.outputMint}`
+  //         )
+  //         ).json();
+  //         console.log('inputMD', inputMD)
+  //         console.log('inputMD.data[0]', inputMD.data[0])
+  //         orderHistory2.push(...token, inputMD.data[0], outputMD.data[0])
+  //       })
+  //       console.log('orderHistory2', orderHistory2)
+  //       setOrdersHistory2(orderHistory2);
+  //       console.log('ordersHistory2', ordersHistory2)
+  //     } catch (err) {
+  //       return console.error('err getOrderHistory2', err)
+  //     }
+  //   }
+  // })
 
   // const router = useRouter();
   // if(router.query.from){
