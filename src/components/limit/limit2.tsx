@@ -124,7 +124,7 @@ type OrderHistory2 = {
     expiredAt: any,
     state: 'Cancelled' | 'Completed',
     createTxid: string,
-    cancelTxid: string,
+    cancelTxid: string | null,
     updatedAt: any,
     createdAt: any,
     txid: string,
@@ -208,7 +208,46 @@ const LimitC = () => {
   // let [tTokenList, setTTokenList] = useState<any>(); //Total token list
   // const [orderHistory, setOrderHistory] = useState<OrderHistory | undefined>()
   const [ordersHistory, setOrdersHistory] = useState<OrderHistoryItem[] | undefined>()//OrderHistoryItem
-  const [ordersHistory2, setOrdersHistory2] = useState<OrderHistory2[] | undefined>()//OrderHistoryItem
+  const [ordersHistory2, setOrdersHistory2] = useState<OrderHistory2[]>(
+    [{order: {
+      id: 48799717,
+      orderKey: '"3gxZh5nLaqKFUmoUyHbRdofhQRfCkJZkXdQf1QjiZ6Lu"',
+      maker: '"Vf8vjzicHUxWRvVFTxU76PzdwWRgRrbRwan6JwF9RBB"',
+      inputMint: '"MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac"',
+      outputMint: '"So11111111111111111111111111111111111111112"',
+      inAmount: BigInt(0),
+      oriInAmount: BigInt(1637000000),
+      outAmount: BigInt(0),
+      oriOutAmount: BigInt(180549641),
+      expiredAt: new Date('2024-07-28T05:59:39.493Z'),
+      state: "Completed",
+      createTxid: "292gnJpvuoLn6imCMJPM4MumhwDTjXT5DX8BrrgvEtBNmfd7QzAbWrugKDiWehTSUbe39R96oSANEipyzmG9qd5q",
+      cancelTxid: null,
+      updatedAt: new Date("2024-07-28T11:50:53.427Z"), //Sun Jul 28 2024 14:50:53 GMT+0300 (Arabian Standard Time) {}
+      createdAt: new Date("2024-07-28T07:12:54.000Z"), //Sun Jul 28 2024 10:12:54 GMT+0300 (Arabian Standard Time) {}
+      txid: "292gnJpvuoLn6imCMJPM4MumhwDTjXT5DX8BrrgvEtBNmfd7QzAbWrugKDiWehTSUbe39R96oSANEipyzmG9qd5q",
+    },
+    inputMetadata: {
+      address: '"MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac"',
+      chainId: 101,
+      decimals: 6,
+      name: '"Mango"',
+      symbol: '"MNGO"',
+      logoURI: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac/token.png",
+      tags: ['old-registry', 'solana-fm'],
+      extensions: {coingeckoId: 'mango-markets'},
+    },
+    outputMetadata: {
+      address: '"So11111111111111111111111111111111111111112"',
+      chainId: 101,
+      decimals: 9,
+      name: 'Wrapped SOL',
+      symbol: 'SOL',
+      logoURI: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
+      tags: ['old-registry'],
+      extensions: {coingeckoId: 'wrapped-solana'},
+    }
+}])//OrderHistoryItem
 
   useEffect(() => {
     async function getTokenList() {
@@ -1549,7 +1588,7 @@ const LimitC = () => {
                               <div className="flex -space-x-2 cursor-pointer">
                                 <span className="relative">
                                   {/* <img src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FMangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac%2Ftoken.png" alt="MNGO" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img> */}
-                                  <img src={orderH.inputMetadata.logoURI || ''} alt="MNGO" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
+                                  <img src={`https://wsrv.nl/?w=48&amp;h=48&amp;url=${String(orderH.inputMetadata.logoURI)}`} alt={`${orderH.inputMetadata.symbol}`} width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
                                 </span>
                                 <span className="relative">
                                   <img src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FSo11111111111111111111111111111111111111112%2Flogo.png" alt="SOL" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
