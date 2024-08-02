@@ -110,23 +110,25 @@ type OrderHistorys = OrderHistoryItem & InputMetadata & OutputMetadata;
 //   }
 // };
 
-type OrderHistory = {
-  id: number,
-  orderKey: string,
-  maker: string,
-  inputMint: string,
-  outputMint: string,
-  inAmount: bigint,
-  oriInAmount: bigint,
-  outAmount: bigint,
-  oriOutAmount: bigint,
-  expiredAt: any,
-  state: 'Cancelled' | 'Completed',
-  createTxid: string,
-  cancelTxid: string,
-  updatedAt: any,
-  createdAt: any,
-  txid: string,
+type OrderHistory2 = {
+  order: {
+    id: number,
+    orderKey: string,
+    maker: string,
+    inputMint: string,
+    outputMint: string,
+    inAmount: bigint,
+    oriInAmount: bigint,
+    outAmount: bigint,
+    oriOutAmount: bigint,
+    expiredAt: any,
+    state: 'Cancelled' | 'Completed',
+    createTxid: string,
+    cancelTxid: string,
+    updatedAt: any,
+    createdAt: any,
+    txid: string,
+  }
   inputMetadata: {
     address: string,
     chainId: number,
@@ -206,7 +208,7 @@ const LimitC = () => {
   // let [tTokenList, setTTokenList] = useState<any>(); //Total token list
   // const [orderHistory, setOrderHistory] = useState<OrderHistory | undefined>()
   const [ordersHistory, setOrdersHistory] = useState<OrderHistoryItem[] | undefined>()//OrderHistoryItem
-  const [ordersHistory2, setOrdersHistory2] = useState<OrderHistorys[] | undefined>()//OrderHistoryItem
+  const [ordersHistory2, setOrdersHistory2] = useState<OrderHistory2[] | undefined>()//OrderHistoryItem
 
   useEffect(() => {
     async function getTokenList() {
@@ -244,63 +246,101 @@ const LimitC = () => {
     }
   );
 
+  const debounce = <T extends unknown[]>(
+    func: (...args: T) => void,
+    wait: number
+  ) => {
+    let timeout: NodeJS.Timeout | undefined;
+
+    return (...args: T) => {
+      const later = () => {
+        clearTimeout(timeout);
+        func(...args);
+      };
+
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+    };
+  };
+
+  const debounceOrdersCall = useCallback(debounce(getOrderHistory, 1000), []);
+
   //Get orders
   useEffect(() => {
-    getOrderHistory()
+    // getOrderHistory()
+    // get();
+    // async function get() {
+    //   await getOrderHistory();
+    // }
     // let orderHistory2: OrderHistorys[];
+    // let orderHistory2: any[] = [];
+    debounceOrdersCall();
+  }, [debounceOrdersCall]);
+
+  async function getOrderHistory() {
     let orderHistory2: any[] = [];
-    async function getOrderHistory() {
-      if (!publicKey) { return console.log('!publickey') }
-      try {
-        const orderHistory: OrderHistoryItem[] = await limitOrder.getOrderHistory({
-          wallet: publicKey.toBase58(),
-          take: 20, // optional, default is 20, maximum is 100
-          // lastCursor: order.id // optional, for pagination
-        });
-        console.log('OrderHistory: ', orderHistory);
-        setOrdersHistory(orderHistory)
-        console.log('OrdersHistory: ', ordersHistory);
+    if (!publicKey) { return console.log('!publickey') }
+    try {
+      const orderHistory: OrderHistoryItem[] = await limitOrder.getOrderHistory({
+        wallet: publicKey.toBase58(),
+        take: 20, // optional, default is 20, maximum is 100
+        // lastCursor: order.id // optional, for pagination
+      });
+      console.log('OrderHistory: ', orderHistory);
+      setOrdersHistory(orderHistory)
+      console.log('OrdersHistory: ', ordersHistory);
 
-        // try {
-        for (let index = 0; index < orderHistory.length; index++) {
-          const token = orderHistory[index];
-          console.log('token', token)
-          const inputMD = await (await fetch(
-            `/api/juptoken?listType=all&address=${token.inputMint}`
-          )
-          ).json();
-          const outputMD = await (await fetch(
-            `/api/juptoken?listType=all&address=${token.outputMint}`
-          )
-          ).json();
-          console.log('inputMD', inputMD)
-          console.log('inputMD.data[0]', inputMD.data[0])
-          // orderHistory2.push(...token, inputMD.data[0], outputMD.data[0])
-          orderHistory2.push(token, inputMD.data[0], outputMD.data[0])
-        }
-
-        // orderHistory.map(async(token) => {
-        //   console.log('token', token)
-        //   const inputMD = await (await fetch(
-        //     `/api/juptoken?listType=all&address=${token.inputMint}`
-        //   )
-        //   ).json();
-        //   const outputMD = await (await fetch(
-        //     `/api/juptoken?listType=all&address=${token.outputMint}`
-        //   )
-        //   ).json();
-        //   console.log('inputMD', inputMD)
-        //   console.log('inputMD.data[0]', inputMD.data[0])
-        //   orderHistory2.push(...token, inputMD.data[0], outputMD.data[0])
-        // })
-        console.log('orderHistory2', orderHistory2)
-        setOrdersHistory2(orderHistory2);
-        console.log('ordersHistory2', ordersHistory2)
-      } catch (err) {
-        return console.error('err getOrderHistory', err)
+      // try {
+      const inputMD1 = await (await fetch(
+        // `/api/juptoken?listType=all&address=${String(token.inputMint)}`
+        `/api/juptoken?listType=strict&address=MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac`//MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac
+      )
+      ).json();
+      console.log('inputMD1: ', inputMD1)
+      for (let index = 0; index < orderHistory.length; index++) {
+        const order = orderHistory[index];
+        console.log('order', order)
+        // console.log('...token', ...token)
+        const inputMD = await (await fetch(
+          `/api/juptoken?listType=strict&address=${String(order.inputMint)}`
+          // `/api/juptoken?listType=all&address=MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac`//MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac
+        )
+        ).json();
+        const outputMD = await (await fetch(
+          `/api/juptoken?listType=strict&address=${String(order.outputMint)}`
+          // `/api/juptoken?listType=all&address=So11111111111111111111111111111111111111112`//So11111111111111111111111111111111111111112
+        )
+        ).json();
+        console.log('inputMD', inputMD)
+        console.log('inputMD.data[0]', inputMD.data[0])
+        // orderHistory2.push(...token, inputMD.data[0], outputMD.data[0])
+        const inputMetadata = inputMD.data[0]
+        const outputMetadata = outputMD.data[0]
+        orderHistory2.push({order, inputMetadata, outputMetadata})
       }
+
+      // orderHistory.map(async(token) => {
+      //   console.log('token', token)
+      //   const inputMD = await (await fetch(
+      //     `/api/juptoken?listType=all&address=${token.inputMint}`
+      //   )
+      //   ).json();
+      //   const outputMD = await (await fetch(
+      //     `/api/juptoken?listType=all&address=${token.outputMint}`
+      //   )
+      //   ).json();
+      //   console.log('inputMD', inputMD)
+      //   console.log('inputMD.data[0]', inputMD.data[0])
+      //   orderHistory2.push(...token, inputMD.data[0], outputMD.data[0])
+      // })
+      console.log('orderHistory2', orderHistory2)
+      setOrdersHistory2(orderHistory2);
+      return console.log('ordersHistory2', ordersHistory2)
+    } catch (err) {
+      return console.error('err getOrderHistory', err)
     }
-  })
+  }
+  // }, []);
   //Get orders2
   // useEffect(() => {
   //   getOrderHistory2()
@@ -497,22 +537,22 @@ const LimitC = () => {
   //     setTokenOneAmount(Number(event.target.value));
   // };
 
-  const debounce = <T extends unknown[]>(
-    func: (...args: T) => void,
-    wait: number
-  ) => {
-    let timeout: NodeJS.Timeout | undefined;
+  // const debounce = <T extends unknown[]>(
+  //   func: (...args: T) => void,
+  //   wait: number
+  // ) => {
+  //   let timeout: NodeJS.Timeout | undefined;
 
-    return (...args: T) => {
-      const later = () => {
-        clearTimeout(timeout);
-        func(...args);
-      };
+  //   return (...args: T) => {
+  //     const later = () => {
+  //       clearTimeout(timeout);
+  //       func(...args);
+  //     };
 
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-    };
-  };
+  //     clearTimeout(timeout);
+  //     timeout = setTimeout(later, wait);
+  //   };
+  // };
 
   // //Handle token one Amunt change
   // const debounceTokenOneCall = useCallback(debounce(getTokenTwoAmount, 500), [tokenOne, tokenTwo, tokenRate]);
@@ -1500,7 +1540,7 @@ const LimitC = () => {
                     </div>
 
                     <div className="px-5 lg:px-0 relative overflow-y-auto min-w-[1200px] h-[372px] xs:h-[620px]">
-                      {ordersHistory?.map((orderH, index) => {
+                      {ordersHistory2?.map((orderH, index) => { //{ordersHistory?.map((orderH, index) => {
                         return (
                           <div
                             key={index}
@@ -1508,7 +1548,8 @@ const LimitC = () => {
                             <div className="basis-2/6 min-w-[280px] flex items-center px-6">
                               <div className="flex -space-x-2 cursor-pointer">
                                 <span className="relative">
-                                  <img src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FMangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac%2Ftoken.png" alt="MNGO" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
+                                  {/* <img src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FMangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac%2Ftoken.png" alt="MNGO" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img> */}
+                                  <img src={orderH.inputMetadata.logoURI || ''} alt="MNGO" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
                                 </span>
                                 <span className="relative">
                                   <img src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FSo11111111111111111111111111111111111111112%2Flogo.png" alt="SOL" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
@@ -1537,14 +1578,14 @@ const LimitC = () => {
                                 <span className="dark:text-white">1637/1637 MNGO</span> (100.00%)
                               </div>
                               <div className="basis-2/12 flex items-center justify-center px-3 py-1.5">
-                                {orderH.state == "Completed" &&
+                                {orderH.order.state == "Completed" && //orderH.state
                                   <span className="flex items-center font-semibold space-x-1 text-[#40C1C9]">
                                     <svg width="12" height="12" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 0C8.5204 0 0 8.5204 0 19C0 29.4796 8.5204 38 19 38C29.4796 38 38 29.4796 38 19C38 8.5204 29.4796 0 19 0ZM28.6 14.7592L18.4408 26.32C18.0814 26.72 17.6002 26.9606 17.0814 26.9606H17.0018C16.5221 26.9606 16.0424 26.7606 15.6814 26.4013L9.47983 20.1593C8.75951 19.439 8.75951 18.239 9.47983 17.5186C10.2002 16.7983 11.4002 16.7983 12.1205 17.5186L16.9613 22.3594L25.8005 12.2798C26.4802 11.4798 27.6802 11.4392 28.4411 12.1205C29.2411 12.8001 29.3203 13.9592 28.6 14.7592Z" fill="#40C1C9"></path>
                                     </svg>
                                     <span>Completed</span>
                                   </span>
                                 }
-                                {orderH.state == "Cancelled" &&
+                                {orderH.order.state == "Cancelled" && //orderH.state
                                   <span className="flex items-center font-semibold space-x-1 text-[#be431a]">
                                     <svg width="12" height="12" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.0336 16.2126L8.2336 10.0126L2.0336 3.81263C1.7961 3.57903 1.66172 3.25951 1.66016 2.92669C1.65938 2.59309 1.79141 2.27357 2.02734 2.03763C2.26328 1.80247 2.5828 1.67045 2.9164 1.67201C3.25 1.67357 3.56874 1.80795 3.80234 2.04623L9.99994 8.24623L16.1999 2.04623C16.4335 1.80795 16.7523 1.67357 17.0859 1.67201C17.4187 1.67045 17.739 1.80248 17.9749 2.03763C18.2109 2.27357 18.3429 2.59309 18.3413 2.92669C18.3406 3.25951 18.2062 3.57903 17.9687 3.81263L11.7663 10.0126L17.9663 16.2126C18.2038 16.4462 18.3382 16.7658 18.3397 17.0986C18.3405 17.4322 18.2085 17.7517 17.9725 17.9876C17.7366 18.2228 17.4171 18.3548 17.0835 18.3533C16.7499 18.3517 16.4311 18.2173 16.1975 17.979L9.99994 11.779L3.79994 17.979C3.31088 18.4611 2.52494 18.4579 2.039 17.9736C1.55384 17.4884 1.54994 16.7025 2.03119 16.2126L2.0336 16.2126Z" fill="currentColor"></path></svg>
                                     <span>Cancelled</span>
