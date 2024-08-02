@@ -248,7 +248,7 @@ const LimitC = () => {
   useEffect(() => {
     getOrderHistory()
     // let orderHistory2: OrderHistorys[];
-    let orderHistory2: any[];
+    let orderHistory2: any[] = [];
     async function getOrderHistory() {
       if (!publicKey) { return console.log('!publickey') }
       try {
@@ -257,12 +257,14 @@ const LimitC = () => {
           take: 20, // optional, default is 20, maximum is 100
           // lastCursor: order.id // optional, for pagination
         });
-        // console.log('Order History: ', orderHistory);
+        console.log('OrderHistory: ', orderHistory);
         setOrdersHistory(orderHistory)
-        console.log('Order History: ', ordersHistory);
+        console.log('OrdersHistory: ', ordersHistory);
 
         // try {
-        orderHistory.map(async(token) => {
+        for (let index = 0; index < orderHistory.length; index++) {
+          const token = orderHistory[index];
+          console.log('token', token)
           const inputMD = await (await fetch(
             `/api/juptoken?listType=all&address=${token.inputMint}`
           )
@@ -273,8 +275,24 @@ const LimitC = () => {
           ).json();
           console.log('inputMD', inputMD)
           console.log('inputMD.data[0]', inputMD.data[0])
-          orderHistory2.push(...token, inputMD.data[0], outputMD.data[0])
-        })
+          // orderHistory2.push(...token, inputMD.data[0], outputMD.data[0])
+          orderHistory2.push(token, inputMD.data[0], outputMD.data[0])
+        }
+
+        // orderHistory.map(async(token) => {
+        //   console.log('token', token)
+        //   const inputMD = await (await fetch(
+        //     `/api/juptoken?listType=all&address=${token.inputMint}`
+        //   )
+        //   ).json();
+        //   const outputMD = await (await fetch(
+        //     `/api/juptoken?listType=all&address=${token.outputMint}`
+        //   )
+        //   ).json();
+        //   console.log('inputMD', inputMD)
+        //   console.log('inputMD.data[0]', inputMD.data[0])
+        //   orderHistory2.push(...token, inputMD.data[0], outputMD.data[0])
+        // })
         console.log('orderHistory2', orderHistory2)
         setOrdersHistory2(orderHistory2);
         console.log('ordersHistory2', ordersHistory2)
