@@ -209,45 +209,46 @@ const LimitC = () => {
   // const [orderHistory, setOrderHistory] = useState<OrderHistory | undefined>()
   const [ordersHistory, setOrdersHistory] = useState<OrderHistoryItem[] | undefined>()//OrderHistoryItem
   const [ordersHistory2, setOrdersHistory2] = useState<OrderHistory2[]>(
-    [{order: {
-      id: 48799717,
-      orderKey: '"3gxZh5nLaqKFUmoUyHbRdofhQRfCkJZkXdQf1QjiZ6Lu"',
-      maker: '"Vf8vjzicHUxWRvVFTxU76PzdwWRgRrbRwan6JwF9RBB"',
-      inputMint: '"MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac"',
-      outputMint: '"So11111111111111111111111111111111111111112"',
-      inAmount: BigInt(0),
-      oriInAmount: BigInt(1637000000),
-      outAmount: BigInt(0),
-      oriOutAmount: BigInt(180549641),
-      expiredAt: new Date('2024-07-28T05:59:39.493Z'),
-      state: "Completed",
-      createTxid: "292gnJpvuoLn6imCMJPM4MumhwDTjXT5DX8BrrgvEtBNmfd7QzAbWrugKDiWehTSUbe39R96oSANEipyzmG9qd5q",
-      cancelTxid: null,
-      updatedAt: new Date("2024-07-28T11:50:53.427Z"), //Sun Jul 28 2024 14:50:53 GMT+0300 (Arabian Standard Time) {}
-      createdAt: new Date("2024-07-28T07:12:54.000Z"), //Sun Jul 28 2024 10:12:54 GMT+0300 (Arabian Standard Time) {}
-      txid: "292gnJpvuoLn6imCMJPM4MumhwDTjXT5DX8BrrgvEtBNmfd7QzAbWrugKDiWehTSUbe39R96oSANEipyzmG9qd5q",
-    },
-    inputMetadata: {
-      address: '"MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac"',
-      chainId: 101,
-      decimals: 6,
-      name: '"Mango"',
-      symbol: '"MNGO"',
-      logoURI: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac/token.png",
-      tags: ['old-registry', 'solana-fm'],
-      extensions: {coingeckoId: 'mango-markets'},
-    },
-    outputMetadata: {
-      address: '"So11111111111111111111111111111111111111112"',
-      chainId: 101,
-      decimals: 9,
-      name: 'Wrapped SOL',
-      symbol: 'SOL',
-      logoURI: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-      tags: ['old-registry'],
-      extensions: {coingeckoId: 'wrapped-solana'},
-    }
-}])//OrderHistoryItem
+    [{
+      order: {
+        id: 48799717,
+        orderKey: '"3gxZh5nLaqKFUmoUyHbRdofhQRfCkJZkXdQf1QjiZ6Lu"',
+        maker: '"Vf8vjzicHUxWRvVFTxU76PzdwWRgRrbRwan6JwF9RBB"',
+        inputMint: '"MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac"',
+        outputMint: '"So11111111111111111111111111111111111111112"',
+        inAmount: BigInt(0),
+        oriInAmount: BigInt(1637000000),
+        outAmount: BigInt(0),
+        oriOutAmount: BigInt(180549641),
+        expiredAt: new Date('2024-07-28T05:59:39.493Z'),
+        state: "Completed",
+        createTxid: "292gnJpvuoLn6imCMJPM4MumhwDTjXT5DX8BrrgvEtBNmfd7QzAbWrugKDiWehTSUbe39R96oSANEipyzmG9qd5q",
+        cancelTxid: null,
+        updatedAt: new Date("2024-07-28T11:50:53.427Z"), //Sun Jul 28 2024 14:50:53 GMT+0300 (Arabian Standard Time) {}
+        createdAt: new Date("2024-07-28T07:12:54.000Z"), //Sun Jul 28 2024 10:12:54 GMT+0300 (Arabian Standard Time) {}
+        txid: "292gnJpvuoLn6imCMJPM4MumhwDTjXT5DX8BrrgvEtBNmfd7QzAbWrugKDiWehTSUbe39R96oSANEipyzmG9qd5q",
+      },
+      inputMetadata: {
+        address: '"MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac"',
+        chainId: 101,
+        decimals: 6,
+        name: '"Mango"',
+        symbol: '"MNGO"',
+        logoURI: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac/token.png",
+        tags: ['old-registry', 'solana-fm'],
+        extensions: { coingeckoId: 'mango-markets' },
+      },
+      outputMetadata: {
+        address: '"So11111111111111111111111111111111111111112"',
+        chainId: 101,
+        decimals: 9,
+        name: 'Wrapped SOL',
+        symbol: 'SOL',
+        logoURI: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
+        tags: ['old-registry'],
+        extensions: { coingeckoId: 'wrapped-solana' },
+      }
+    }])//OrderHistoryItem
 
   useEffect(() => {
     async function getTokenList() {
@@ -355,7 +356,7 @@ const LimitC = () => {
         // orderHistory2.push(...token, inputMD.data[0], outputMD.data[0])
         const inputMetadata = inputMD.data[0]
         const outputMetadata = outputMD.data[0]
-        orderHistory2.push({order, inputMetadata, outputMetadata})
+        orderHistory2.push({ order, inputMetadata, outputMetadata })
       }
 
       // orderHistory.map(async(token) => {
@@ -373,7 +374,10 @@ const LimitC = () => {
       //   orderHistory2.push(...token, inputMD.data[0], outputMD.data[0])
       // })
       console.log('orderHistory2', orderHistory2)
-      setOrdersHistory2(orderHistory2);
+      setTimeout(() => {
+        setOrdersHistory2(orderHistory2);
+      }, 1000)
+      // setOrdersHistory2(orderHistory2);
       return console.log('ordersHistory2', ordersHistory2)
     } catch (err) {
       return console.error('err getOrderHistory', err)
@@ -1581,62 +1585,66 @@ const LimitC = () => {
                     <div className="px-5 lg:px-0 relative overflow-y-auto min-w-[1200px] h-[372px] xs:h-[620px]">
                       {ordersHistory2?.map((orderH, index) => { //{ordersHistory?.map((orderH, index) => {
                         return (
-                          <div
-                            key={index}
-                            className="flex justify-between items-center border-b border-white/5 dark:text-white/50 h-[62px] w-full">
-                            <div className="basis-2/6 min-w-[280px] flex items-center px-6">
-                              <div className="flex -space-x-2 cursor-pointer">
-                                <span className="relative">
-                                  {/* <img src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FMangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac%2Ftoken.png" alt="MNGO" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img> */}
-                                  <img src={`https://wsrv.nl/?w=48&amp;h=48&amp;url=${String(orderH.inputMetadata.logoURI)}`} alt={`${orderH.inputMetadata.symbol}`} width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
-                                </span>
-                                <span className="relative">
-                                  <img src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FSo11111111111111111111111111111111111111112%2Flogo.png" alt="SOL" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
-                                </span>
+                          <>
+                            {/* <div>`${orderH.inputMetadata.logoURI}`</div> */}
+                            <div>{ordersHistory2[index].inputMetadata.logoURI}</div>
+                            <div
+                              key={index}
+                              className="flex justify-between items-center border-b border-white/5 dark:text-white/50 h-[62px] w-full">
+                              <div className="basis-2/6 min-w-[280px] flex items-center px-6">
+                                <div className="flex -space-x-2 cursor-pointer">
+                                  <span className="relative">
+                                    <img src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FMangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac%2Ftoken.png" alt="MNGO" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
+                                    {/* <img src={orderH.inputMetadata.logoURI? `https://wsrv.nl/?w=48&amp;h=48&amp;url=${orderH.inputMetadata.logoURI}`: ''} alt={orderH.inputMetadata.symbol? `${orderH.inputMetadata.symbol}`: ''} width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img> */}
+                                  </span>
+                                  <span className="relative">
+                                    <img src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FSo11111111111111111111111111111111111111112%2Flogo.png" alt="SOL" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
+                                  </span>
+                                </div>
+                                <div className="flex whitespace-nowrap items-center ml-5 font-semibold ">
+                                  <span>1637 MNGO</span>
+                                  <div className="h-2.5 w-4 mx-1">
+                                    <svg width="16" height="10" viewBox="0 0 25 21" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.9339 9.08485L16.0326 1.18357C15.6735 0.80576 15.1766 0.589184 14.6554 0.581696C14.1341 0.575134 13.6326 0.779509 13.2632 1.14795C12.8948 1.5164 12.6904 2.01795 12.696 2.53921C12.7026 3.0614 12.9191 3.55734 13.2969 3.91734L17.9676 8.58054H2.43406C1.36626 8.58054 0.5 9.44679 0.5 10.5146C0.5 11.5833 1.36626 12.4496 2.43406 12.4496H17.9244L13.2969 17.0838C12.5741 17.845 12.5891 19.0431 13.3316 19.7847C14.0741 20.5263 15.2732 20.5413 16.0326 19.8175L23.9339 11.9163C24.2976 11.5544 24.502 11.0622 24.5001 10.5484C24.5011 10.5325 24.5011 10.5166 24.5001 10.5006C24.5011 10.4847 24.5011 10.4688 24.5001 10.4528C24.5001 9.94001 24.2967 9.44782 23.9339 9.08501L23.9339 9.08485Z" fill="currentColor"></path>
+                                    </svg>
+                                  </div>
+                                  <span>0.180549641 SOL</span>
+                                </div>
                               </div>
-                              <div className="flex whitespace-nowrap items-center ml-5 font-semibold ">
-                                <span>1637 MNGO</span>
-                                <div className="h-2.5 w-4 mx-1">
-                                  <svg width="16" height="10" viewBox="0 0 25 21" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.9339 9.08485L16.0326 1.18357C15.6735 0.80576 15.1766 0.589184 14.6554 0.581696C14.1341 0.575134 13.6326 0.779509 13.2632 1.14795C12.8948 1.5164 12.6904 2.01795 12.696 2.53921C12.7026 3.0614 12.9191 3.55734 13.2969 3.91734L17.9676 8.58054H2.43406C1.36626 8.58054 0.5 9.44679 0.5 10.5146C0.5 11.5833 1.36626 12.4496 2.43406 12.4496H17.9244L13.2969 17.0838C12.5741 17.845 12.5891 19.0431 13.3316 19.7847C14.0741 20.5263 15.2732 20.5413 16.0326 19.8175L23.9339 11.9163C24.2976 11.5544 24.502 11.0622 24.5001 10.5484C24.5011 10.5325 24.5011 10.5166 24.5001 10.5006C24.5011 10.4847 24.5011 10.4688 24.5001 10.4528C24.5001 9.94001 24.2967 9.44782 23.9339 9.08501L23.9339 9.08485Z" fill="currentColor"></path>
+                              <div className="basis-4/6 flex items-center justify-between">
+                                <div className="basis-3/12 text-center">
+                                  <div className="flex items-center justify-center space-x-1">
+                                    <span>0.0001103</span>
+                                    <span>SOL per $MNGO</span>
+                                  </div>
+                                </div>
+                                <div className="basis-3/12 text-center">
+                                  Never
+                                </div>
+                                <div className="basis-3/12 text-center">
+                                  <span className="dark:text-white">1637/1637 MNGO</span> (100.00%)
+                                </div>
+                                <div className="basis-2/12 flex items-center justify-center px-3 py-1.5">
+                                  {orderH.order.state == "Completed" && //orderH.state
+                                    <span className="flex items-center font-semibold space-x-1 text-[#40C1C9]">
+                                      <svg width="12" height="12" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 0C8.5204 0 0 8.5204 0 19C0 29.4796 8.5204 38 19 38C29.4796 38 38 29.4796 38 19C38 8.5204 29.4796 0 19 0ZM28.6 14.7592L18.4408 26.32C18.0814 26.72 17.6002 26.9606 17.0814 26.9606H17.0018C16.5221 26.9606 16.0424 26.7606 15.6814 26.4013L9.47983 20.1593C8.75951 19.439 8.75951 18.239 9.47983 17.5186C10.2002 16.7983 11.4002 16.7983 12.1205 17.5186L16.9613 22.3594L25.8005 12.2798C26.4802 11.4798 27.6802 11.4392 28.4411 12.1205C29.2411 12.8001 29.3203 13.9592 28.6 14.7592Z" fill="#40C1C9"></path>
+                                      </svg>
+                                      <span>Completed</span>
+                                    </span>
+                                  }
+                                  {orderH.order.state == "Cancelled" && //orderH.state
+                                    <span className="flex items-center font-semibold space-x-1 text-[#be431a]">
+                                      <svg width="12" height="12" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.0336 16.2126L8.2336 10.0126L2.0336 3.81263C1.7961 3.57903 1.66172 3.25951 1.66016 2.92669C1.65938 2.59309 1.79141 2.27357 2.02734 2.03763C2.26328 1.80247 2.5828 1.67045 2.9164 1.67201C3.25 1.67357 3.56874 1.80795 3.80234 2.04623L9.99994 8.24623L16.1999 2.04623C16.4335 1.80795 16.7523 1.67357 17.0859 1.67201C17.4187 1.67045 17.739 1.80248 17.9749 2.03763C18.2109 2.27357 18.3429 2.59309 18.3413 2.92669C18.3406 3.25951 18.2062 3.57903 17.9687 3.81263L11.7663 10.0126L17.9663 16.2126C18.2038 16.4462 18.3382 16.7658 18.3397 17.0986C18.3405 17.4322 18.2085 17.7517 17.9725 17.9876C17.7366 18.2228 17.4171 18.3548 17.0835 18.3533C16.7499 18.3517 16.4311 18.2173 16.1975 17.979L9.99994 11.779L3.79994 17.979C3.31088 18.4611 2.52494 18.4579 2.039 17.9736C1.55384 17.4884 1.54994 16.7025 2.03119 16.2126L2.0336 16.2126Z" fill="currentColor"></path></svg>
+                                      <span>Cancelled</span>
+                                    </span>
+                                  }
+                                </div>
+                                <div className="basis-1/12 h-5 text-black/50 dark:text-white/50 flex items-center justify-center rotate-180">
+                                  <svg width="12" height="12" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.292893 5.70711C0.683416 6.09763 1.31658 6.09763 1.7071 5.70711L4.99999 2.41421L8.29288 5.70711C8.6834 6.09763 9.31657 6.09763 9.70709 5.70711C10.0976 5.31658 10.0976 4.68342 9.70709 4.29289L5.7071 0.292893C5.31657 -0.097631 4.68341 -0.097631 4.29289 0.292893L0.292893 4.29289C-0.0976309 4.68342 -0.0976309 5.31658 0.292893 5.70711Z" fill="currentColor"></path>
                                   </svg>
                                 </div>
-                                <span>0.180549641 SOL</span>
                               </div>
                             </div>
-                            <div className="basis-4/6 flex items-center justify-between">
-                              <div className="basis-3/12 text-center">
-                                <div className="flex items-center justify-center space-x-1">
-                                  <span>0.0001103</span>
-                                  <span>SOL per $MNGO</span>
-                                </div>
-                              </div>
-                              <div className="basis-3/12 text-center">
-                                Never
-                              </div>
-                              <div className="basis-3/12 text-center">
-                                <span className="dark:text-white">1637/1637 MNGO</span> (100.00%)
-                              </div>
-                              <div className="basis-2/12 flex items-center justify-center px-3 py-1.5">
-                                {orderH.order.state == "Completed" && //orderH.state
-                                  <span className="flex items-center font-semibold space-x-1 text-[#40C1C9]">
-                                    <svg width="12" height="12" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 0C8.5204 0 0 8.5204 0 19C0 29.4796 8.5204 38 19 38C29.4796 38 38 29.4796 38 19C38 8.5204 29.4796 0 19 0ZM28.6 14.7592L18.4408 26.32C18.0814 26.72 17.6002 26.9606 17.0814 26.9606H17.0018C16.5221 26.9606 16.0424 26.7606 15.6814 26.4013L9.47983 20.1593C8.75951 19.439 8.75951 18.239 9.47983 17.5186C10.2002 16.7983 11.4002 16.7983 12.1205 17.5186L16.9613 22.3594L25.8005 12.2798C26.4802 11.4798 27.6802 11.4392 28.4411 12.1205C29.2411 12.8001 29.3203 13.9592 28.6 14.7592Z" fill="#40C1C9"></path>
-                                    </svg>
-                                    <span>Completed</span>
-                                  </span>
-                                }
-                                {orderH.order.state == "Cancelled" && //orderH.state
-                                  <span className="flex items-center font-semibold space-x-1 text-[#be431a]">
-                                    <svg width="12" height="12" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.0336 16.2126L8.2336 10.0126L2.0336 3.81263C1.7961 3.57903 1.66172 3.25951 1.66016 2.92669C1.65938 2.59309 1.79141 2.27357 2.02734 2.03763C2.26328 1.80247 2.5828 1.67045 2.9164 1.67201C3.25 1.67357 3.56874 1.80795 3.80234 2.04623L9.99994 8.24623L16.1999 2.04623C16.4335 1.80795 16.7523 1.67357 17.0859 1.67201C17.4187 1.67045 17.739 1.80248 17.9749 2.03763C18.2109 2.27357 18.3429 2.59309 18.3413 2.92669C18.3406 3.25951 18.2062 3.57903 17.9687 3.81263L11.7663 10.0126L17.9663 16.2126C18.2038 16.4462 18.3382 16.7658 18.3397 17.0986C18.3405 17.4322 18.2085 17.7517 17.9725 17.9876C17.7366 18.2228 17.4171 18.3548 17.0835 18.3533C16.7499 18.3517 16.4311 18.2173 16.1975 17.979L9.99994 11.779L3.79994 17.979C3.31088 18.4611 2.52494 18.4579 2.039 17.9736C1.55384 17.4884 1.54994 16.7025 2.03119 16.2126L2.0336 16.2126Z" fill="currentColor"></path></svg>
-                                    <span>Cancelled</span>
-                                  </span>
-                                }
-                              </div>
-                              <div className="basis-1/12 h-5 text-black/50 dark:text-white/50 flex items-center justify-center rotate-180">
-                                <svg width="12" height="12" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.292893 5.70711C0.683416 6.09763 1.31658 6.09763 1.7071 5.70711L4.99999 2.41421L8.29288 5.70711C8.6834 6.09763 9.31657 6.09763 9.70709 5.70711C10.0976 5.31658 10.0976 4.68342 9.70709 4.29289L5.7071 0.292893C5.31657 -0.097631 4.68341 -0.097631 4.29289 0.292893L0.292893 4.29289C-0.0976309 4.68342 -0.0976309 5.31658 0.292893 5.70711Z" fill="currentColor"></path>
-                                </svg>
-                              </div>
-                            </div>
-                          </div>
+                          </>
                         )
                       })}
                     </div>
