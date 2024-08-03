@@ -1628,7 +1628,9 @@ const LimitC = () => {
                                   Never
                                 </div>
                                 <div className="basis-3/12 text-center">
-                                  <span className="dark:text-white">1637/1637 MNGO</span> (100.00%)
+                                  {/* <span className="dark:text-white">1637/1637 MNGO</span> (100.00%) */}
+                                  <span className="dark:text-white">{Number(orderH.order.oriInAmount)/ Math.pow(10, orderH.inputMetadata.decimals)}/{(Number(orderH.order.oriInAmount)/ Math.pow(10, orderH.inputMetadata.decimals)) - (Number(orderH.order.inAmount)/ Math.pow(10, orderH.inputMetadata.decimals))} {orderH.inputMetadata.symbol}</span> 
+                                  ({(((Number(orderH.order.oriInAmount)/ Math.pow(10, orderH.inputMetadata.decimals)) - (Number(orderH.order.inAmount)/ Math.pow(10, orderH.inputMetadata.decimals))) / (Number(orderH.order.oriInAmount)/ Math.pow(10, orderH.inputMetadata.decimals))) * 100}%)
                                 </div>
                                 <div className="basis-2/12 flex items-center justify-center px-3 py-1.5">
                                   {orderH.order.state == "Completed" && //orderH.state
