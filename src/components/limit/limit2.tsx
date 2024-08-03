@@ -1596,7 +1596,8 @@ const LimitC = () => {
                                 <div className="flex -space-x-2 cursor-pointer">
                                   <span className="relative">
                                     {/* <img src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FMangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac%2Ftoken.png" alt="MNGO" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img> */}
-                                    <img src={orderH.inputMetadata.logoURI? `https://wsrv.nl/?w=48&amp;h=48&amp;url=${orderH.inputMetadata.logoURI}`: ''} alt={orderH.inputMetadata.symbol? `${orderH.inputMetadata.symbol}`: ''} width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
+                                    {/* <img src={orderH.inputMetadata.logoURI? `https://wsrv.nl/?w=48&amp;h=48&amp;url=${orderH.inputMetadata.logoURI}`: ''} alt={orderH.inputMetadata.symbol? `${orderH.inputMetadata.symbol}`: ''} width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img> */}
+                                    <img src={`https://wsrv.nl/?w=48&amp;h=48&amp;url=${orderH.inputMetadata.logoURI}`} alt={`${orderH.inputMetadata.symbol}`} width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
                                   </span>
                                   <span className="relative">
                                     <img src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FSo11111111111111111111111111111111111111112%2Flogo.png" alt="SOL" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
