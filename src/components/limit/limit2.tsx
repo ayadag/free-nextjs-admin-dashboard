@@ -342,7 +342,8 @@ const LimitC = () => {
         console.log('order', order)
         // console.log('...token', ...token)
         const inputMD = await (await fetch(
-          `/api/juptoken?listType=strict&address=${String(order.inputMint)}`
+          // `/api/juptoken?listType=strict&address=${String(order.inputMint)}`
+          `/api/juptoken?listType=all&address=${String(order.inputMint)}`
           // `/api/juptoken?listType=all&address=MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac`//MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac
         )
         ).json();
@@ -1586,8 +1587,8 @@ const LimitC = () => {
                       {ordersHistory2?.map((orderH, index) => { //{ordersHistory?.map((orderH, index) => {
                         return (
                           <>
-                            {/* <div>`${orderH.inputMetadata.logoURI}`</div> */}
-                            <div>{ordersHistory2[index].inputMetadata.logoURI}</div>
+                            <div>`${orderH.inputMetadata.logoURI}`</div>
+                            <div>{ordersHistory2[index].outputMetadata.symbol}</div>
                             <div
                               key={index}
                               className="flex justify-between items-center border-b border-white/5 dark:text-white/50 h-[62px] w-full">
