@@ -212,10 +212,10 @@ const LimitC = () => {
     [{
       order: {
         id: 48799717,
-        orderKey: '"3gxZh5nLaqKFUmoUyHbRdofhQRfCkJZkXdQf1QjiZ6Lu"',
-        maker: '"Vf8vjzicHUxWRvVFTxU76PzdwWRgRrbRwan6JwF9RBB"',
-        inputMint: '"MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac"',
-        outputMint: '"So11111111111111111111111111111111111111112"',
+        orderKey: "3gxZh5nLaqKFUmoUyHbRdofhQRfCkJZkXdQf1QjiZ6Lu",
+        maker: "Vf8vjzicHUxWRvVFTxU76PzdwWRgRrbRwan6JwF9RBB",
+        inputMint: "MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac",
+        outputMint: "So11111111111111111111111111111111111111112",
         inAmount: BigInt(0),
         oriInAmount: BigInt(1637000000),
         outAmount: BigInt(0),
@@ -229,17 +229,17 @@ const LimitC = () => {
         txid: "292gnJpvuoLn6imCMJPM4MumhwDTjXT5DX8BrrgvEtBNmfd7QzAbWrugKDiWehTSUbe39R96oSANEipyzmG9qd5q",
       },
       inputMetadata: {
-        address: '"MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac"',
+        address: "MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac",
         chainId: 101,
         decimals: 6,
-        name: '"Mango"',
-        symbol: '"MNGO"',
+        name: "Mango",
+        symbol: "MNGO",
         logoURI: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac/token.png",
         tags: ['old-registry', 'solana-fm'],
         extensions: { coingeckoId: 'mango-markets' },
       },
       outputMetadata: {
-        address: '"So11111111111111111111111111111111111111112"',
+        address: "So11111111111111111111111111111111111111112",
         chainId: 101,
         decimals: 9,
         name: 'Wrapped SOL',
@@ -1597,26 +1597,31 @@ const LimitC = () => {
                                   <span className="relative">
                                     {/* <img src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FMangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac%2Ftoken.png" alt="MNGO" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img> */}
                                     {/* <img src={orderH.inputMetadata.logoURI? `https://wsrv.nl/?w=48&amp;h=48&amp;url=${orderH.inputMetadata.logoURI}`: ''} alt={orderH.inputMetadata.symbol? `${orderH.inputMetadata.symbol}`: ''} width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img> */}
-                                    <img src={`https://wsrv.nl/?w=48&amp;h=48&amp;url=${orderH.inputMetadata.logoURI}`} alt={`${orderH.inputMetadata.symbol}`} width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
+                                    <img src={`https://wsrv.nl/?w=48&h=48&url=${orderH.inputMetadata.logoURI}`} alt={`${orderH.inputMetadata.symbol}`} width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
                                   </span>
                                   <span className="relative">
-                                    <img src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FSo11111111111111111111111111111111111111112%2Flogo.png" alt="SOL" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
+                                    {/* <img src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FSo11111111111111111111111111111111111111112%2Flogo.png" alt="SOL" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img> */}
+                                    <img src={`https://wsrv.nl/?w=48&h=48&url=${orderH.outputMetadata.logoURI}`} alt={`${orderH.outputMetadata.symbol}`} width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
                                   </span>
                                 </div>
                                 <div className="flex whitespace-nowrap items-center ml-5 font-semibold ">
-                                  <span>1637 MNGO</span>
+                                  {/* <span>1637 MNGO</span> */}
+                                  <span>{Number(orderH.order.oriInAmount)/ Math.pow(10, orderH.inputMetadata.decimals)} { orderH.inputMetadata.symbol}</span>
                                   <div className="h-2.5 w-4 mx-1">
                                     <svg width="16" height="10" viewBox="0 0 25 21" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.9339 9.08485L16.0326 1.18357C15.6735 0.80576 15.1766 0.589184 14.6554 0.581696C14.1341 0.575134 13.6326 0.779509 13.2632 1.14795C12.8948 1.5164 12.6904 2.01795 12.696 2.53921C12.7026 3.0614 12.9191 3.55734 13.2969 3.91734L17.9676 8.58054H2.43406C1.36626 8.58054 0.5 9.44679 0.5 10.5146C0.5 11.5833 1.36626 12.4496 2.43406 12.4496H17.9244L13.2969 17.0838C12.5741 17.845 12.5891 19.0431 13.3316 19.7847C14.0741 20.5263 15.2732 20.5413 16.0326 19.8175L23.9339 11.9163C24.2976 11.5544 24.502 11.0622 24.5001 10.5484C24.5011 10.5325 24.5011 10.5166 24.5001 10.5006C24.5011 10.4847 24.5011 10.4688 24.5001 10.4528C24.5001 9.94001 24.2967 9.44782 23.9339 9.08501L23.9339 9.08485Z" fill="currentColor"></path>
                                     </svg>
                                   </div>
-                                  <span>0.180549641 SOL</span>
+                                  {/* <span>0.180549641 SOL</span> */}
+                                  <span>{Number(orderH.order.oriOutAmount)/ Math.pow(10, orderH.outputMetadata.decimals)} { orderH.outputMetadata.symbol}</span>
                                 </div>
                               </div>
                               <div className="basis-4/6 flex items-center justify-between">
                                 <div className="basis-3/12 text-center">
                                   <div className="flex items-center justify-center space-x-1">
-                                    <span>0.0001103</span>
-                                    <span>SOL per $MNGO</span>
+                                    {/* <span>0.0001103</span> */}
+                                    <span>{(Number(orderH.order.oriOutAmount)/ Math.pow(10, orderH.outputMetadata.decimals))/(Number(orderH.order.oriInAmount)/ Math.pow(10, orderH.inputMetadata.decimals))}</span>
+                                    {/* <span>SOL per $MNGO</span> */}
+                                    <span>{`${orderH.outputMetadata.symbol} per $`}{orderH.inputMetadata.symbol}</span>
                                   </div>
                                 </div>
                                 <div className="basis-3/12 text-center">
