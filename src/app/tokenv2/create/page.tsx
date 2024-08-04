@@ -21,7 +21,7 @@ import CreateToken from '../../../components/tokenv2/create3';
 export default function Token() {
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Create Token V1" />
+      <Breadcrumb pageName="Create Token V2" />
 
       <div className="flex flex-col gap-5">
         <CreateToken />
