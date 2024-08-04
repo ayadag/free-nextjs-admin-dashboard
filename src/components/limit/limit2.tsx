@@ -56,7 +56,11 @@ import styles from './swap.module.css';
 // import tokenList from './tokenList.json';
 // import tokenList from './tokenList2.json';
 import tList from './tokenList2.json';
-import { OrderFields } from './utils/validate';
+import {
+  CancelOrder,
+  OrderFields,
+  validateCancelOrderFields,
+} from './utils/validate';
 
 type Order = {
   inAmount: number,
@@ -264,6 +268,7 @@ const LimitC = () => {
   )//OrderHistoryItem
 
   const [openOrders, setOpenOrders] = useState<OpenOrder[] | undefined>()
+  const [refresh, setRefresh] = useState<number>(0)
 
   useEffect(() => {
     async function getTokenList() {
@@ -330,7 +335,7 @@ const LimitC = () => {
     // let orderHistory2: OrderHistorys[];
     // let orderHistory2: any[] = [];
     debounceOrdersCall();
-  }, [debounceOrdersCall]);
+  }, [debounceOrdersCall, refresh]);
 
   async function getOrderHistory() {
     let orderHistory2: any[] = [];
@@ -406,7 +411,7 @@ const LimitC = () => {
 
   useEffect(() => {
     debounceOpenOrdersCall();
-  }, [debounceOpenOrdersCall])
+  }, [debounceOpenOrdersCall, refresh])
 
   async function getOpenOrders() {
     let openOrders1: OpenOrder[] = [];
@@ -503,6 +508,34 @@ const LimitC = () => {
       return console.error('err getOpenOrders', err)
     }
   }
+
+  //Cancel Order
+  async function cancelOrder(orderKey: PublicKey) {
+    if (!publicKey) { return console.log('!publickey') }
+    const order: CancelOrder = {
+      owner: publicKey.toBase58(),
+      // orderPubKey: 'AuXpoXwxnbsBHGfJBYaCKTRxhcfdCHdhdYFVHhwrqyH3' //Order Publickey
+      orderPubKey: orderKey.toBase58() //Order Publickey
+    };
+
+    validateCancelOrderFields(order);
+
+    const { owner, orderPubKey } = order;
+
+    const txid = await limitOrder.cancelOrder({
+      //   owner: new PublicKey(owner),
+      owner: publicKey,
+      orderPubKey: new PublicKey(orderPubKey),
+    });
+
+    console.log('txid: ', txid)
+
+    // const trx = await sendAndConfirmTransaction(connection, txid, [Owner]); //ayad
+    const trx = await sendTransaction(txid, connection);
+
+    console.log(`[✅] Order canceld successfully TRX: ${trx}`); //ayad
+  }
+
   // }, []);
   //Get orders2
   // useEffect(() => {
@@ -1669,7 +1702,10 @@ const LimitC = () => {
                     </button>
                   </div>
                   <div className="ml-auto flex justify-end space-x-2 text-xs dark:text-white-50">
-                    <button type="button" className="flex items-center border border-black-10 dark:border-white/10 px-3 py-1.5 rounded-lg dark:hover:!text-v2-primary dark:hover:!bg-v2-primary/5 dark:hover:!border-v2-primary/25">
+                    <button 
+                      type="button" 
+                      onClick={() => setRefresh(refresh + 1)}
+                      className="flex items-center border border-black-10 dark:border-white/10 px-3 py-1.5 rounded-lg dark:hover:!text-v2-primary dark:hover:!bg-v2-primary/5 dark:hover:!border-v2-primary/25">
                       <div className="mr-2 fill-current">
                         <svg width="8" height="8" viewBox="0 0 12 12" fill="inherit" xmlns="http://www.w3.org/2000/svg">
                           <g clip-path="url(#clip0_841_4053)">
@@ -1862,7 +1898,8 @@ const LimitC = () => {
                                   <div
                                     className="flex whitespace-nowrap items-center ml-5 font-semibold"
                                   >
-                                    <span>2261385.8592 PRIORA</span>
+                                    {/* <span>2261385.8592 PRIORA</span> */}
+                                    <span>{Number(openO.account.oriMakingAmount) / Math.pow(10, openO.inputMetadata.decimals)} {openO.inputMetadata.symbol}</span>
                                     <div className="h-2.5 w-4 mx-1">
                                       <svg
                                         width="16"
@@ -1877,27 +1914,40 @@ const LimitC = () => {
                                         ></path>
                                       </svg>
                                     </div>
-                                    <span>0.0444 SOL</span>
+                                    {/* <span>0.0444 SOL</span> */}
+                                    <span>{Number(openO.account.oriTakingAmount) / Math.pow(10, openO.outputMetadata.decimals)} {openO.outputMetadata.symbol}</span>
                                   </div>
                                 </div>
                                 <div className="basis-4/6 flex items-center justify-between">
                                   <div className="basis-2/6 text-center">
                                     <div className="flex items-center justify-center space-x-1">
-                                      <span className="flex items-center"
+                                      {/* <span className="flex items-center"
                                       >0.0<span className="text-sm mb-1">₇
                                         </span>19634</span>
-                                      <span>SOL per $PRIORA</span>
+                                      <span>SOL per $PRIORA</span> */}
+                                      <span>{Math.round(((Number(openO.account.oriTakingAmount) / Math.pow(10, openO.outputMetadata.decimals)) / (Number(openO.account.oriMakingAmount) / Math.pow(10, openO.inputMetadata.decimals))) * 1000000000) / 1000000000}</span> {/* Math.round(num * 100) / 100 */}
+                                      {/* <span>SOL per $MNGO</span> */}
+                                      <span>{`${openO.outputMetadata.symbol} per $`}{openO.inputMetadata.symbol}</span>
                                     </div>
                                   </div>
                                   <div className="basis-1/6 text-center">Never</div>
                                   <div className="basis-2/6 text-center">
-                                    <span className="dark:text-white"
+                                    {/* <span className="dark:text-white"
                                     >376902.46749/2261385.8592 PRIORA</span>
-                                    (16.67%)
+                                    (16.67%) */}
+                                    {/* <span className="dark:text-white">{Number(openO.account.oriMakingAmount) / Math.pow(10, openO.inputMetadata.decimals)} / {(Number(openO.account.oriMakingAmount) / Math.pow(10, openO.inputMetadata.decimals)) - (Number(openO.account.makingAmount) / Math.pow(10, openO.inputMetadata.decimals))} {openO.inputMetadata.symbol}</span>
+                                    ({(((Number(openO.account.oriMakingAmount) / Math.pow(10, openO.inputMetadata.decimals)) - (Number(openO.account.makingAmount) / Math.pow(10, openO.inputMetadata.decimals))) / (Number(openO.account.oriMakingAmount) / Math.pow(10, openO.inputMetadata.decimals))) * 100}%) */}
+                                    <span className="dark:text-white">
+                                      {Math.round(((Number(openO.account.oriMakingAmount) / Math.pow(10, openO.inputMetadata.decimals)) - (Number(openO.account.makingAmount) / Math.pow(10, openO.inputMetadata.decimals))) * 1000000000) * 0.000000001}
+                                      /{Math.round((Number(openO.account.oriMakingAmount) / Math.pow(10, openO.inputMetadata.decimals)) * 1000000000) * 0.000000001}
+                                      {openO.inputMetadata.symbol}
+                                    </span>
+                                    ({Math.round((((Number(openO.account.oriMakingAmount) / Math.pow(10, openO.inputMetadata.decimals)) - (Number(openO.account.makingAmount) / Math.pow(10, openO.inputMetadata.decimals))) / (Number(openO.account.oriMakingAmount) / Math.pow(10, openO.inputMetadata.decimals))) * 10000) * 0.0001 * 100}%)
                                   </div>
                                   <div className="w-[80px] flex items-center">
                                     <button
                                       type="button"
+                                      onClick={() => cancelOrder(openO.publicKey)}
                                       className="border border-black-10 dark:border-white/10 px-3 py-1.5 rounded-lg dark:hover:!text-v2-primary dark:hover:!bg-v2-primary/5 dark:hover:!border-v2-primary/25"
                                     >
                                       Cancel
