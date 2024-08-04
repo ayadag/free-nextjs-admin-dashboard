@@ -19,7 +19,7 @@ import {
   Transaction,
 } from '@solana/web3.js';
 
-import styles from '../token2.module.css';
+import styles from './token2.module.css';
 
 const WithDrawTokenFee: FC = () => {
 

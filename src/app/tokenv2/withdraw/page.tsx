@@ -15,7 +15,7 @@ const Withdraw = () => {
     <DefaultLayout>
       <Breadcrumb pageName="Withdraw" />
 
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-5">
         <WithdrawC />
       </div>
     </DefaultLayout>
