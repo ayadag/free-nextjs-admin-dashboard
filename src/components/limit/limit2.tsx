@@ -224,51 +224,52 @@ const LimitC = () => {
   // const [orderHistory, setOrderHistory] = useState<OrderHistory | undefined>()
   const [openOrdersButton, setOpenOrdersButton] = useState<boolean>(true)
   const [ordersHistory, setOrdersHistory] = useState<OrderHistoryItem[] | undefined>()//OrderHistoryItem
-  const [ordersHistory2, setOrdersHistory2] = useState<OrderHistory2[]>(
-    [{
-      order: {
-        id: 48799717,
-        orderKey: "3gxZh5nLaqKFUmoUyHbRdofhQRfCkJZkXdQf1QjiZ6Lu",
-        maker: "Vf8vjzicHUxWRvVFTxU76PzdwWRgRrbRwan6JwF9RBB",
-        inputMint: "MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac",
-        outputMint: "So11111111111111111111111111111111111111112",
-        inAmount: BigInt(0),
-        oriInAmount: BigInt(1637000000),
-        outAmount: BigInt(0),
-        oriOutAmount: BigInt(180549641),
-        expiredAt: new Date('2024-07-28T05:59:39.493Z'),
-        state: "Completed",
-        createTxid: "292gnJpvuoLn6imCMJPM4MumhwDTjXT5DX8BrrgvEtBNmfd7QzAbWrugKDiWehTSUbe39R96oSANEipyzmG9qd5q",
-        cancelTxid: null,
-        updatedAt: new Date("2024-07-28T11:50:53.427Z"), //Sun Jul 28 2024 14:50:53 GMT+0300 (Arabian Standard Time) {}
-        createdAt: new Date("2024-07-28T07:12:54.000Z"), //Sun Jul 28 2024 10:12:54 GMT+0300 (Arabian Standard Time) {}
-        txid: "292gnJpvuoLn6imCMJPM4MumhwDTjXT5DX8BrrgvEtBNmfd7QzAbWrugKDiWehTSUbe39R96oSANEipyzmG9qd5q",
-      },
-      inputMetadata: {
-        address: "MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac",
-        chainId: 101,
-        decimals: 6,
-        name: "Mango",
-        symbol: "MNGO",
-        logoURI: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac/token.png",
-        tags: ['old-registry', 'solana-fm'],
-        extensions: { coingeckoId: 'mango-markets' },
-      },
-      outputMetadata: {
-        address: "So11111111111111111111111111111111111111112",
-        chainId: 101,
-        decimals: 9,
-        name: 'Wrapped SOL',
-        symbol: 'SOL',
-        logoURI: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-        tags: ['old-registry'],
-        extensions: { coingeckoId: 'wrapped-solana' },
-      }
-    }]
-  )//OrderHistoryItem
+  const [ordersHistory2, setOrdersHistory2] = useState<OrderHistory2[]>();
+  // const [ordersHistory2, setOrdersHistory2] = useState<OrderHistory2[]>(
+  //   [{
+  //     order: {
+  //       id: 48799717,
+  //       orderKey: "3gxZh5nLaqKFUmoUyHbRdofhQRfCkJZkXdQf1QjiZ6Lu",
+  //       maker: "Vf8vjzicHUxWRvVFTxU76PzdwWRgRrbRwan6JwF9RBB",
+  //       inputMint: "MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac",
+  //       outputMint: "So11111111111111111111111111111111111111112",
+  //       inAmount: BigInt(0),
+  //       oriInAmount: BigInt(1637000000),
+  //       outAmount: BigInt(0),
+  //       oriOutAmount: BigInt(180549641),
+  //       expiredAt: new Date('2024-07-28T05:59:39.493Z'),
+  //       state: "Completed",
+  //       createTxid: "292gnJpvuoLn6imCMJPM4MumhwDTjXT5DX8BrrgvEtBNmfd7QzAbWrugKDiWehTSUbe39R96oSANEipyzmG9qd5q",
+  //       cancelTxid: null,
+  //       updatedAt: new Date("2024-07-28T11:50:53.427Z"), //Sun Jul 28 2024 14:50:53 GMT+0300 (Arabian Standard Time) {}
+  //       createdAt: new Date("2024-07-28T07:12:54.000Z"), //Sun Jul 28 2024 10:12:54 GMT+0300 (Arabian Standard Time) {}
+  //       txid: "292gnJpvuoLn6imCMJPM4MumhwDTjXT5DX8BrrgvEtBNmfd7QzAbWrugKDiWehTSUbe39R96oSANEipyzmG9qd5q",
+  //     },
+  //     inputMetadata: {
+  //       address: "MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac",
+  //       chainId: 101,
+  //       decimals: 6,
+  //       name: "Mango",
+  //       symbol: "MNGO",
+  //       logoURI: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac/token.png",
+  //       tags: ['old-registry', 'solana-fm'],
+  //       extensions: { coingeckoId: 'mango-markets' },
+  //     },
+  //     outputMetadata: {
+  //       address: "So11111111111111111111111111111111111111112",
+  //       chainId: 101,
+  //       decimals: 9,
+  //       name: 'Wrapped SOL',
+  //       symbol: 'SOL',
+  //       logoURI: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
+  //       tags: ['old-registry'],
+  //       extensions: { coingeckoId: 'wrapped-solana' },
+  //     }
+  //   }]
+  // );
 
-  const [openOrders, setOpenOrders] = useState<OpenOrder[] | undefined>()
-  const [refresh, setRefresh] = useState<number>(0)
+  const [openOrders, setOpenOrders] = useState<OpenOrder[] | undefined>();
+  const [refresh, setRefresh] = useState<number>(0);
 
   useEffect(() => {
     async function getTokenList() {
@@ -1716,12 +1717,12 @@ const LimitC = () => {
                       Refetch Data
                     </button>
 
-                    <button type="button" className="flex items-center border border-black-10 dark:border-white/10 px-3 py-1.5 rounded-lg cursor-disabled opacity-50 !dark:hover:transparent">
+                    {/* <button type="button" className="flex items-center border border-black-10 dark:border-white/10 px-3 py-1.5 rounded-lg cursor-disabled opacity-50 !dark:hover:transparent">
                       <div className="mr-2 fill-current">
                         <svg width="9" height="10" viewBox="0 0 9 10" fill="inherit" xmlns="http://www.w3.org/2000/svg"><path d="M4.50199 9.2001C5.9011 9.19955 7.22 8.54806 8.07149 7.43792C8.92239 6.3272 9.20858 4.88472 8.84603 3.53331C8.48348 2.18189 7.51283 1.07615 6.2197 0.541774C4.92716 0.00728354 3.4588 0.103964 2.24759 0.80435C1.03634 1.50419 0.220046 2.72811 0.0382167 4.1151C-0.143612 5.50214 0.329903 6.89527 1.31978 7.88401C2.16299 8.72887 3.30837 9.20238 4.502 9.20019L4.50199 9.2001ZM6.89263 7.09072C6.32848 7.65377 5.58305 7.99874 4.78872 8.06521C3.99441 8.13113 3.20232 7.91415 2.55306 7.45217L7.25136 2.74669C7.71444 3.39653 7.93308 4.18923 7.86715 4.98461C7.80178 5.77947 7.45625 6.526 6.89265 7.09076L6.89263 7.09072ZM2.11135 2.30944C2.6755 1.74639 3.42093 1.40142 4.21525 1.33495C5.00956 1.26903 5.80165 1.48601 6.45092 1.94799L1.75261 6.65459C1.28898 6.0053 1.07035 5.21205 1.13628 4.41668C1.20165 3.6207 1.54717 2.87415 2.11132 2.30954L2.11135 2.30944Z" fill="inherit"></path>
                         </svg>
                       </div>Cancel All
-                    </button>
+                    </button> */}
                   </div>
                 </div>
                 {!openOrdersButton &&
