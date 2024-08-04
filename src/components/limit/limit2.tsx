@@ -1691,13 +1691,13 @@ const LimitC = () => {
                   <div className="flex space-x-2 justify-start items-start overflow-y-auto">
                     <button
                       type="button"
-                      className={openOrdersButton ? "rounded-2xl px-4 py-2 text-xs text-white/20 border whitespace-nowrap dark:hover:!text-v2-primary !text-v2-primary border-v2-primary/20 bg-v2-primary/5" : "rounded-2xl px-4 py-2 text-xs text-white/20 border border-transparent whitespace-nowrap dark:hover:!text-v2-primary"}
+                      className={openOrdersButton ? "rounded-2xl px-4 py-2 text-xs text-white/20 border whitespace-nowrap dark:hover:!text-v2-primary !text-v2-primary border-v2-primary/20 bg-v2-primary/5 hover:border-meta-5" : "rounded-2xl px-4 py-2 text-xs text-white/20 border border-transparent whitespace-nowrap dark:hover:!text-v2-primary hover:border-meta-5"}
                       onClick={() => setOpenOrdersButton(true)}
                     >Open Orders
                     </button>
                     <button
                       type="button"
-                      className={!openOrdersButton ? "rounded-2xl px-4 py-2 text-xs text-white/20 border whitespace-nowrap dark:hover:!text-v2-primary !text-v2-primary border-v2-primary/20 bg-v2-primary/5" : "rounded-2xl px-4 py-2 text-xs text-white/20 border border-transparent whitespace-nowrap dark:hover:!text-v2-primary"}
+                      className={!openOrdersButton ? "rounded-2xl px-4 py-2 text-xs text-white/20 border whitespace-nowrap dark:hover:!text-v2-primary !text-v2-primary border-v2-primary/20 bg-v2-primary/5 hover:border-meta-5" : "rounded-2xl px-4 py-2 text-xs text-white/20 border border-transparent whitespace-nowrap dark:hover:!text-v2-primary hover:border-meta-5"}
                       onClick={() => setOpenOrdersButton(false)}
                     >Order History
                     </button>
@@ -1706,7 +1706,7 @@ const LimitC = () => {
                     <button 
                       type="button" 
                       onClick={() => setRefresh(refresh + 1)}
-                      className="flex items-center border border-black-10 dark:border-white/10 px-3 py-1.5 rounded-lg dark:hover:!text-v2-primary dark:hover:!bg-v2-primary/5 dark:hover:!border-v2-primary/25">
+                      className="flex items-center border border-black-10 hover:border-meta-5 dark:border-white/10 px-3 py-1.5 rounded-lg dark:hover:!text-v2-primary dark:hover:!bg-v2-primary/5 dark:hover:!border-v2-primary/25">
                       <div className="mr-2 fill-current">
                         <svg width="8" height="8" viewBox="0 0 12 12" fill="inherit" xmlns="http://www.w3.org/2000/svg">
                           <g clip-path="url(#clip0_841_4053)">
