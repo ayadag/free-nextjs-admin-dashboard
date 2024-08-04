@@ -377,7 +377,7 @@ const LimitC = () => {
       console.log('orderHistory2', orderHistory2)
       setTimeout(() => {
         setOrdersHistory2(orderHistory2);
-      }, 1000)
+      }, 100)
       // setOrdersHistory2(orderHistory2);
       return console.log('ordersHistory2', ordersHistory2)
     } catch (err) {
@@ -1619,7 +1619,7 @@ const LimitC = () => {
                                 <div className="basis-3/12 text-center">
                                   <div className="flex items-center justify-center space-x-1">
                                     {/* <span>0.0001103</span> */}
-                                    <span>{(Number(orderH.order.oriOutAmount)/ Math.pow(10, orderH.outputMetadata.decimals))/(Number(orderH.order.oriInAmount)/ Math.pow(10, orderH.inputMetadata.decimals))}</span>
+                                    <span>{Math.round(((Number(orderH.order.oriOutAmount)/ Math.pow(10, orderH.outputMetadata.decimals))/(Number(orderH.order.oriInAmount)/ Math.pow(10, orderH.inputMetadata.decimals))) * 1000000000) / 1000000000}</span> {/* Math.round(num * 100) / 100 */}
                                     {/* <span>SOL per $MNGO</span> */}
                                     <span>{`${orderH.outputMetadata.symbol} per $`}{orderH.inputMetadata.symbol}</span>
                                   </div>
