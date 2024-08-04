@@ -369,7 +369,7 @@ const LimitC = () => {
         )
         ).json();
         const outputMD = await (await fetch(
-          `/api/juptoken?listType=strict&address=${String(order.outputMint)}`
+          `/api/juptoken?listType=all&address=${String(order.outputMint)}`
           // `/api/juptoken?listType=all&address=So11111111111111111111111111111111111111112`//So11111111111111111111111111111111111111112
         )
         ).json();
@@ -433,7 +433,7 @@ const LimitC = () => {
         )
         ).json();
         const outputMD = await (await fetch(
-          `/api/juptoken?listType=strict&address=${String(order.account.outputMint)}`
+          `/api/juptoken?listType=all&address=${String(order.account.outputMint)}`
           // `/api/juptoken?listType=all&address=So11111111111111111111111111111111111111112`//So11111111111111111111111111111111111111112
         )
         ).json();
