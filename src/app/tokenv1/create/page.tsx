@@ -1,4 +1,5 @@
 "use client";
+import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
 // import { Metadata } from "next";
 import DefaultLayout from '@/components/Layouts/DefaultLayout';
 
@@ -19,11 +20,12 @@ import { Create as CreateToken } from '../../../components/tokenv1/create';
 
 export default function Token() {
   return (
-    <>
-      <DefaultLayout>
+    <DefaultLayout>
+      <Breadcrumb pageName="Create Token V1" />
+
+      <div className="flex flex-col gap-5">
         <CreateToken />
-        {/* <CreateToken2 /> */}
-      </DefaultLayout>
-    </>
+      </div>
+    </DefaultLayout>
   );
 }

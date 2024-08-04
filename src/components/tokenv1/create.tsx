@@ -9,8 +9,6 @@ import React, {
 import axios from 'axios';
 import Image from 'next/image';
 
-// import { useRouter } from 'next/navigation';
-import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
 import {
   createCreateMetadataAccountV3Instruction,
   PROGRAM_ID,
@@ -83,13 +81,13 @@ export const Create: FC = () => {
   //scroll effect whenever the message change
   useEffect(() => {
     messageRef.current?.scrollIntoView();
-  }, [error,txid]);
+  }, [error, txid]);
 
   const handleFormFieldChange = (fieldName: any, e: any) => {
     setToken({ ...token, [fieldName]: e.target.value });
   };
 
-  const showSuccessfulMessage= () => {
+  const showSuccessfulMessage = () => {
     // window.scroll({
     //   top:0, //scroll to the top of page
     //   behavior: 'smooth'
@@ -101,7 +99,7 @@ export const Create: FC = () => {
     }, 15000);
   };
 
-  const showErrorMessage= () => {
+  const showErrorMessage = () => {
     // window.scrollTo({
     //   top:0, //scroll to the top of page
     //   behavior: 'smooth'
@@ -130,7 +128,7 @@ export const Create: FC = () => {
 
       try {
         console.log('token: ', token)
-        
+
         const metadataUrl = await uploadMetadata(token);
         if (!metadataUrl) { return console.error('!metadataUrl') }
         console.log(metadataUrl);
@@ -212,22 +210,22 @@ export const Create: FC = () => {
         );
 
         setTokenMintAddress(mintKeypair.publicKey.toString());
-          // notify({
-          //     type: "success",
-          //     message: "Token create successfully",
-          //     txid: signature,
-          // });
-        
+        // notify({
+        //     type: "success",
+        //     message: "Token create successfully",
+        //     txid: signature,
+        // });
+
         setMessage('Token create successfully');
         setTxid(`${signature}`);
         showSuccessfulMessage(); //show successful message for 10 seccond
         console.log('Token create successfully txid: ', signature); //ayad
       } catch (error: any) {
-          // notify({ type: "error", message: "Token Creation failed, try later" });
-          setMessage('Token Creation failed, try later')
-          setDetails(String(error))
-          showErrorMessage()
-          console.error('Token Creation failed, try later') //ayad
+        // notify({ type: "error", message: "Token Creation failed, try later" });
+        setMessage('Token Creation failed, try later')
+        setDetails(String(error))
+        showErrorMessage()
+        console.error('Token Creation failed, try later') //ayad
       }
       setIsLoading(false);
     },
@@ -330,15 +328,15 @@ export const Create: FC = () => {
   return (
     <>
       <div ref={messageRef}></div> {/*scroll to this emty dev*/}
-      <Breadcrumb pageName="CreateTokenV1" />
+      {/* <Breadcrumb pageName="CreateTokenV1" /> */}
       {/* <div ref={messageRef}></div>  */}
       {successful && Successful(message, txid)} {/*sccessful message*/}
       {/* {error && Error(message, details, messageRef)} error message */}
-      {error && Error(message, details)} 
-      
+      {error && Error(message, details)}
+
 
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
-      {/* <Successful/> */}
+        {/* <Successful/> */}
         <div className="flex flex-col gap-9">
           {/* <!-- Main Input Details --> */}
           {/* {mainInput && */}
@@ -359,6 +357,7 @@ export const Create: FC = () => {
                   type="file"
                   className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:px-5 file:py-3 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
                   onChange={handleImageChange}
+                  required
                 />
               </div>
 
@@ -385,9 +384,9 @@ export const Create: FC = () => {
                   type="text"
                   placeholder="Symbol"
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                  onChange={(e) =>
-                    handleFormFieldChange
-                      ("symbol", e)}
+                  onChange={(e) => handleFormFieldChange("symbol", e)
+                  }
+                  required
                 />
               </div>
 
@@ -414,6 +413,7 @@ export const Create: FC = () => {
                   onChange={(e) =>
                     handleFormFieldChange
                       ("amount", e)}
+                  required
                 />
               </div>
 
@@ -428,6 +428,7 @@ export const Create: FC = () => {
                   onChange={(e) =>
                     handleFormFieldChange
                       ("decimals", e)}
+                  required
                 />
               </div>
 
@@ -561,7 +562,7 @@ export const Create: FC = () => {
                 </button>
               </div> */}
               <div className='mb-5'>
-                <input 
+                <input
                   type="submit"
                   value="Crete Token"
                   onClick={() => createToken(token)}
