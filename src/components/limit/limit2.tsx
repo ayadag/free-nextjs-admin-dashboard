@@ -347,8 +347,8 @@ const LimitC = () => {
         take: 20, // optional, default is 20, maximum is 100
         // lastCursor: order.id // optional, for pagination
       });
-      console.log('OrderHistory: ', orderHistory);
-      setOrdersHistory(orderHistory)
+      // console.log('OrderHistory: ', orderHistory);
+      // setOrdersHistory(orderHistory)
       // console.log('OrdersHistory: ', ordersHistory);
 
       // try {
@@ -1420,7 +1420,7 @@ const LimitC = () => {
                         value={!wallet.publicKey ? "Connect wallet" : "Place Limit Order"}
                         disabled={!tokenOneAmount || tokenOneAmount == 0 || !wallet.publicKey}
                         onClick={signAndSendTransaction2}
-                        className="w-full mt-7 text-xl font-bold cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90 
+                        className="w-full mt-7 text-xl font-bold cursor-pointer rounded-lg border border-primary bg-primary p-3 text-white transition hover:bg-opacity-90 
                                         disabled:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50 disabled:border-y-green-950"
                       />
                     </div>
@@ -1483,7 +1483,7 @@ const LimitC = () => {
                     <button
                       type="button"
                       onClick={() => setRefresh(refresh + 1)}
-                      className="flex items-center border border-black-10 hover:border-meta-5 dark:border-white/10 px-3 py-1.5 rounded-lg dark:hover:!text-v2-primary dark:hover:!bg-v2-primary/5 dark:hover:!border-v2-primary/25">
+                      className="flex items-center border border-black-10 hover:border-meta-5 dark:border-white/10 px-3 py-1.5 rounded-lg dark:hover:!text-v2-primary dark:hover:!bg-v2-primary/5 dark:hover:border-meta-5">
                       <div className="mr-2 fill-current">
                         <svg width="8" height="8" viewBox="0 0 12 12" fill="inherit" xmlns="http://www.w3.org/2000/svg">
                           <g clip-path="url(#clip0_841_4053)">
@@ -1591,10 +1591,10 @@ const LimitC = () => {
                                       </span>
                                     }
                                   </div>
-                                  <div className="basis-1/12 h-5 text-black/50 dark:text-white/50 flex items-center justify-center rotate-180">
+                                  {/* <div className="basis-1/12 h-5 text-black/50 dark:text-white/50 flex items-center justify-center rotate-180">
                                     <svg width="12" height="12" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.292893 5.70711C0.683416 6.09763 1.31658 6.09763 1.7071 5.70711L4.99999 2.41421L8.29288 5.70711C8.6834 6.09763 9.31657 6.09763 9.70709 5.70711C10.0976 5.31658 10.0976 4.68342 9.70709 4.29289L5.7071 0.292893C5.31657 -0.097631 4.68341 -0.097631 4.29289 0.292893L0.292893 4.29289C-0.0976309 4.68342 -0.0976309 5.31658 0.292893 5.70711Z" fill="currentColor"></path>
                                     </svg>
-                                  </div>
+                                  </div> */}
                                 </div>
                               </div>
                             </>
