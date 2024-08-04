@@ -15,7 +15,7 @@ const Limit = () => {
     <DefaultLayout>
       <Breadcrumb pageName="Swap" />
 
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-5">
         <Swap4 />
       </div>
     </DefaultLayout>

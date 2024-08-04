@@ -15,7 +15,7 @@ const Limit = () => {
     <DefaultLayout>
       <Breadcrumb pageName="Limit Order" />
 
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-5">
         <LimitC />
       </div>
     </DefaultLayout>
