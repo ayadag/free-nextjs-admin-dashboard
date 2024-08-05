@@ -77,11 +77,11 @@ const DesktopNavigation = (props: React.ComponentPropsWithRef<"nav">) => {
     <nav {...props}>
       <ul className="flex rounded-md bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10">
         <NavItem href="/blog">Blog</NavItem>
-        <NavItem href="/about">About</NavItem>
+        <NavItem href="/blog/about">About</NavItem>
         <NavItem href="/swap">App</NavItem>
-        <NavItem href="/projects">Projects</NavItem>
-        <NavItem href="/speaking">Speaking</NavItem>
-        <NavItem href="/uses">Uses</NavItem>
+        {/* <NavItem href="/projects">Projects</NavItem> */}
+        {/* <NavItem href="/speaking">Speaking</NavItem> */}
+        {/* <NavItem href="/uses">Uses</NavItem> */}
       </ul>
     </nav>
   );
@@ -151,15 +151,17 @@ const MobileNavigation = (
             </div>
             <nav className="mt-6">
               <ul className="-my-2 text-base text-zinc-800 dark:divide-zinc-100/5 dark:text-zinc-300">
-                <MobileNavItem href="/about">About</MobileNavItem>
-                <MobileNavItem href="/articles">Articles</MobileNavItem>
+                <MobileNavItem href="/blog">Blog</MobileNavItem>
+                <MobileNavItem href="/blog/about">About</MobileNavItem>
+                <MobileNavItem href="/swap">App</MobileNavItem>
+                {/* <MobileNavItem href="/articles">Articles</MobileNavItem>
                 <MobileNavItem href="/projects">Projects</MobileNavItem>
                 <MobileNavItem href="/speaking">Speaking</MobileNavItem>
-                <MobileNavItem href="/uses">Uses</MobileNavItem>
+                <MobileNavItem href="/uses">Uses</MobileNavItem> */}
               </ul>
-              <button className="text-teal-500 w-full py-2 rounded-md dark:bg-black text-sm uppercase border border-teal-800 hover:text-teal-600 dark:hover:text-teal-200 hover:border-teal-700 duration-300 mt-6">
+              {/* <button className="text-teal-500 w-full py-2 rounded-md dark:bg-black text-sm uppercase border border-teal-800 hover:text-teal-600 dark:hover:text-teal-200 hover:border-teal-700 duration-300 mt-6">
                 Login
-              </button>
+              </button> */}
             </nav>
           </Popover.Panel>
         </Transition.Child>
@@ -183,9 +185,9 @@ const Header = () => {
         <DesktopNavigation className="pointer-events-auto hidden md:block" />
       </div>
       <div className="flex items-center gap-5">
-        <button className="hidden md:inline-flex text-teal-500 px-8 py-2 rounded-full dark:bg-black text-sm uppercase border border-teal-800 hover:text-teal-800 dark:hover:text-teal-200 hover:border-teal-700 duration-300">
+        {/* <button className="hidden md:inline-flex text-teal-500 px-8 py-2 rounded-full dark:bg-black text-sm uppercase border border-teal-800 hover:text-teal-800 dark:hover:text-teal-200 hover:border-teal-700 duration-300">
           Login
-        </button>
+        </button> */}
         {/* MobileNavigation */}
         <MobileNavigation className="pointer-events-auto md:hidden" />
         <ThemeToggle />
