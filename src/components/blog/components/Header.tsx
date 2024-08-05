@@ -1,15 +1,27 @@
 "use client";
-import Image from "next/image";
-import React, { Fragment, useEffect, useState } from "react";
-import profile from "@/img/profile.jpg";
-import Link from "next/link";
-import { useTheme } from "next-themes";
-import { IoCloseCircleOutline, IoSunnyOutline } from "react-icons/io5";
-import { BsMoonStarsFill } from "react-icons/bs";
-import { usePathname } from "next/navigation";
-import clsx from "clsx";
-import { Popover, Transition } from "@headlessui/react";
-import { FaChevronDown } from "react-icons/fa";
+import React, {
+  Fragment,
+  useEffect,
+  useState,
+} from 'react';
+
+import clsx from 'clsx';
+import { useTheme } from 'next-themes';
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { BsMoonStarsFill } from 'react-icons/bs';
+import { FaChevronDown } from 'react-icons/fa';
+import {
+  IoCloseCircleOutline,
+  IoSunnyOutline,
+} from 'react-icons/io5';
+
+import profile from '@/blog/img/profile.jpg';
+import {
+  Popover,
+  Transition,
+} from '@headlessui/react';
 
 const ThemeToggle = () => {
   let { resolvedTheme, setTheme } = useTheme();
