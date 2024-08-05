@@ -419,7 +419,7 @@ const Swap4 = () => {
     // const from = searchParm.get('from');
     // const to = searchParm.get('to');
 
-    router.push(`/swap2?from=${tokenTwo.address}&to=${tokenOne.address}`)
+    router.push(`/swap?from=${tokenTwo.address}&to=${tokenOne.address}`)
   }
 
   function openModal(asset: any) {
@@ -465,10 +465,10 @@ const Swap4 = () => {
     setTokenTwoAmount(0);
 
     if (changeToken === 1) {
-      router.push(`/swap2?from=${i.address}&to=${tokenTwo.address}`)
+      router.push(`/swap?from=${i.address}&to=${tokenTwo.address}`)
     }
     else {
-      router.push(`/swap2?from=${tokenOne.address}&to=${i.address}`)
+      router.push(`/swap?from=${tokenOne.address}&to=${i.address}`)
     }
 
     setIsOpen(false);
