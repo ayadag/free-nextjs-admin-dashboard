@@ -1,3 +1,8 @@
+import remarkGfm from 'remark-gfm';
+
+import rehypePrism from '@mapbox/rehype-prism';
+import nextMDX from '@next/mdx';
+
 /** @type {import('next').NextConfig} */
 // const nextConfig = {};
 
@@ -5,7 +10,8 @@
 
 // module.exports = {
 const nextConfig = {
-    async headers() {
+  pageExtensions: ["js", "jsx", "ts", "tsx", "mdx"],
+  async headers() {
       return [
         {
           // matching all API routes
@@ -18,7 +24,16 @@ const nextConfig = {
           ]
         }
       ]
-    }
+  }
 };
 
-export default nextConfig;
+const withMDX = nextMDX({
+  extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [rehypePrism],
+  },
+});
+
+// export default nextConfig;
+export default withMDX(nextConfig);
