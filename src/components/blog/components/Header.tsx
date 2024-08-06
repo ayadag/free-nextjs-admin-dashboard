@@ -17,7 +17,8 @@ import {
   IoSunnyOutline,
 } from 'react-icons/io5';
 
-import profile from '@/blog/img/profile.jpg';
+// import profile from '@/blog/img/profile.jpg';
+import gluon from '@/blog/img/gluon3.png';
 import {
   Popover,
   Transition,
@@ -173,11 +174,16 @@ const MobileNavigation = (
 const Header = () => {
   return (
     <header className="top-0 -mb-3 py-5 w-full mx-auto px-4 md:px-10 flex gap-10 justify-between items-center">
-      <Link href={"/"}>
-        <Image
+      <Link href={"/blog"}>
+        {/* <Image
           src={profile}
           alt="Profile logo"
           className="w-12 h-12 rounded-full object-cover"
+        /> */}
+        <Image
+          src={gluon}
+          alt="Profile logo"
+          className="w-24 h-24 object-cover"
         />
       </Link>
       <div className="flex md:flex-1 justify-end md:justify-center">
