@@ -2,10 +2,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { WalletButton } from '../solana/solana-provider';
-import DarkModeSwitcher from './DarkModeSwitcher';
-import DropdownMessage from './DropdownMessage';
-import DropdownNotification from './DropdownNotification';
-import DropdownUser from './DropdownUser';
+// import DarkModeSwitcher from './DarkModeSwitcher';
+// import DropdownMessage from './DropdownMessage';
+// import DropdownNotification from './DropdownNotification';
+// import DropdownUser from './DropdownUser';
 
 // import {
 //   // ClusterChecker,
@@ -75,7 +75,8 @@ const Header = (props: {
           </Link>
         </div>
 
-        <div className="hidden sm:block">
+        {/* search component */}
+        {/* <div className="hidden sm:block">
           <form action="https://formbold.com/s/unique_form_id" method="POST">
             <div className="relative">
               <button className="absolute left-0 top-1/2 -translate-y-1/2">
@@ -109,25 +110,25 @@ const Header = (props: {
               />
             </div>
           </form>
-        </div>
+        </div> */}
 
         <div className="flex items-center gap-3 2xsm:gap-7">
           <ul className="flex items-center gap-2 2xsm:gap-4">
             {/* <!-- Dark Mode Toggler --> */}
-            <DarkModeSwitcher />
+            {/* <DarkModeSwitcher /> */}
             {/* <!-- Dark Mode Toggler --> */}
 
             {/* <!-- Notification Menu Area --> */}
-            <DropdownNotification />
+            {/* <DropdownNotification /> */}
             {/* <!-- Notification Menu Area --> */}
 
             {/* <!-- Chat Notification Area --> */}
-            <DropdownMessage />
+            {/* <DropdownMessage /> */}
             {/* <!-- Chat Notification Area --> */}
           </ul>
 
           {/* <!-- User Area --> */}
-          <DropdownUser />
+          {/* <DropdownUser /> */}
           {/* <!-- User Area --> */}
 
           <WalletButton />
