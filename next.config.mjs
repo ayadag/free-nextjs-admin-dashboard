@@ -11,6 +11,7 @@ import nextMDX from '@next/mdx';
 // module.exports = {
 const nextConfig = {
   pageExtensions: ["js", "jsx", "ts", "tsx", "mdx"],
+
   async headers() {
       return [
         {
@@ -24,6 +25,17 @@ const nextConfig = {
           ]
         }
       ]
+  },
+
+  async redirects() {
+    return [
+      // Basic redirect
+      {
+        source: '/',
+        destination: '/swap',
+        permanent: true,
+      },
+    ]
   }
 };
 
