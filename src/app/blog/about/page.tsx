@@ -3,7 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 
 // import portraitImage from '@/blog/img/portrait.jpg';
-import atom from '@/blog/img/atom-science-biotechnology-blue-neon-graphic.jpg';
+import image from '@/blog/img/pexels-sagui-andrea-200115-618833.jpg';
 import Container from '@/components/blog/components/Container';
 
 const AboutPage = () => {
@@ -13,7 +13,7 @@ const AboutPage = () => {
         <div className="hidden lg:pl-20 lg:block">
           <div className="max-w-xs px-2.5 lg:max-w-none">
             <Image
-              src={atom}
+              src={image}
               alt="image"
               sizes="(min-width: 1024px) 32rem, 20rem"
               className="aspect-square rotate-3 rounded-2xl bg-zinc-100 object-cover dark:bg-zinc-800"
