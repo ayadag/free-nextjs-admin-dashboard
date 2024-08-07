@@ -3,17 +3,17 @@ import React from 'react';
 import Image from 'next/image';
 
 // import portraitImage from '@/blog/img/portrait.jpg';
-import gluon from '@/blog/img/Gluon5.png';
+import atom from '@/blog/img/atom-science-biotechnology-blue-neon-graphic.jpg';
 import Container from '@/components/blog/components/Container';
 
 const AboutPage = () => {
   return (
     <Container className="mt-16 sm:mt-32">
       <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-y-12">
-        <div className="lg:pl-20">
+        <div className="hidden lg:pl-20 lg:block">
           <div className="max-w-xs px-2.5 lg:max-w-none">
             <Image
-              src={gluon}
+              src={atom}
               alt="image"
               sizes="(min-width: 1024px) 32rem, 20rem"
               className="aspect-square rotate-3 rounded-2xl bg-zinc-100 object-cover dark:bg-zinc-800"
