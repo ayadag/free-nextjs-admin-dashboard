@@ -18,14 +18,14 @@
             "openTime": 1720292630,
             "poolPrice": "0.0001",
             "tokenAMetadata": {
-                "name": "String",
-                "symbol": "String",
-                "logoURI": "/images/brand/brand-01.svg"
+                "name": "SALD3",
+                "symbol": "SALD3",
+                "logoURI": ""
             },
             "tokenBMetadata": {
-                "name": "String",
-                "symbol": "String",
-                "logoURI": "/images/brand/brand-01.svg"
+                "name": "SALD",
+                "symbol": "SALD",
+                "logoURI": ""
             }
         }
     ]

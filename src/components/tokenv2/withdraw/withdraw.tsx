@@ -142,19 +142,21 @@ const WithdrawC: React.FC = () => {
         getATADetails();
 
         async function getATADetails() {
-            if (!mint || !tokenOwner) { return console.log('!mint || !tokenOwner') }
-            const ATAdress = await getAssociatedTokenAddress(
-                new PublicKey(mint),
-                // payer.publicKey,
-                // owner,
-                new PublicKey(tokenOwner),
-                false,
-                TOKEN_2022_PROGRAM_ID
-            );
+            try {
+                if (!mint || !tokenOwner) { return console.log('!mint || !tokenOwner') }
+                const ATAdress = await getAssociatedTokenAddress(
+                    new PublicKey(mint),
+                    // payer.publicKey,
+                    // owner,
+                    new PublicKey(tokenOwner),
+                    false,
+                    TOKEN_2022_PROGRAM_ID
+                );
 
-            setAta(ATAdress.toBase58())
-            console.log('ATAdress.toBase58(): ', ATAdress.toBase58())
-            console.log('setAta: ', ata)
+                setAta(ATAdress.toBase58())
+                console.log('ATAdress.toBase58(): ', ATAdress.toBase58())
+                console.log('setAta: ', ata)
+            } catch (err) { console.error('err i getATADetails', err) }
         }
     }, [mint])
 
@@ -317,10 +319,10 @@ const WithdrawC: React.FC = () => {
             TOKEN_2022_PROGRAM_ID // SPL token program id
         );
         const transaction = new Transaction()
-        .add(instruction);
-            // .add(feeVaultAccountInstruction, instruction);
+            .add(instruction);
+        // .add(feeVaultAccountInstruction, instruction);
 
-        const {blockhash, lastValidBlockHeight} = await connection.getLatestBlockhash();
+        const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash();
         transaction.recentBlockhash = blockhash;
         transaction.lastValidBlockHeight = lastValidBlockHeight;
         transaction.feePayer = publicKey;
@@ -450,12 +452,12 @@ const WithdrawC: React.FC = () => {
                                         </Link> */}
                                     </p>
                                 </div>}
-                                <div>
+                                {/* <div>
                                     <p>{mint}</p>
                                     <p>{tokenOwner}</p>
                                     <p>{ata}</p>
                                     <p>{withheld}</p>
-                                </div>
+                                </div> */}
                             </form>
                         </div>
                     </div>

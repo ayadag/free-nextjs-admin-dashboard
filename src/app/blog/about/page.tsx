@@ -2,7 +2,8 @@ import React from 'react';
 
 import Image from 'next/image';
 
-import portraitImage from '@/blog/img/portrait.jpg';
+// import portraitImage from '@/blog/img/portrait.jpg';
+import gluon from '@/blog/img/Gluon5.png';
 import Container from '@/components/blog/components/Container';
 
 const AboutPage = () => {
@@ -12,7 +13,7 @@ const AboutPage = () => {
         <div className="lg:pl-20">
           <div className="max-w-xs px-2.5 lg:max-w-none">
             <Image
-              src={portraitImage}
+              src={gluon}
               alt="image"
               sizes="(min-width: 1024px) 32rem, 20rem"
               className="aspect-square rotate-3 rounded-2xl bg-zinc-100 object-cover dark:bg-zinc-800"

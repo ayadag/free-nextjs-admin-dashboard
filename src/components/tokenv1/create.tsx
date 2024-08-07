@@ -115,7 +115,9 @@ export const Create: FC = () => {
 
   //CREATE TOKEN FUNCION
   const createToken = useCallback(
-    async (token: Token) => {
+    async (token: Token, event: any) => {
+      event.preventDefault(); //to cancell page reload
+
       if (!connection || !publicKey) { return console.log('!connection || !publicKey') }
 
       const lamports = await getMinimumBalanceForRentExemptMint(connection);
@@ -334,110 +336,113 @@ export const Create: FC = () => {
       {/* {error && Error(message, details, messageRef)} error message */}
       {error && Error(message, details)}
 
-
-      <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
-        {/* <Successful/> */}
-        <div className="flex flex-col gap-9">
-          {/* <!-- Main Input Details --> */}
-          {/* {mainInput && */}
+      <form
+        onSubmit={(event: any) => createToken(token, event)}
+      >
+        <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
           {/* <Successful/> */}
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-              <h3 className="font-medium text-black dark:text-white">
-                Main Details
-              </h3>
+          <div className="flex flex-col gap-9">
+            {/* <!-- Main Input Details --> */}
+            {/* {mainInput && */}
+            {/* <Successful/> */}
+            <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+              <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                <h3 className="font-medium text-black dark:text-white">
+                  Main Details
+                </h3>
+              </div>
+              <div className="flex flex-col gap-5.5 p-6.5">
+
+                <div>
+                  <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                    Image
+                  </label>
+                  <input
+                    type="file"
+                    className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:px-5 file:py-3 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
+                    onChange={handleImageChange}
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Name"
+                    className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    onChange={(e) =>
+                      handleFormFieldChange
+                        ("name", e)}
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                    Symbol
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Symbol"
+                    className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    onChange={(e) => handleFormFieldChange("symbol", e)
+                    }
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                    Description
+                  </label>
+                  <textarea
+                    rows={3}
+                    placeholder="Description"
+                    className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    onChange={(e) => handleFormFieldChange("description", e)}
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                    Supply
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="Supply"
+                    className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    onChange={(e) =>
+                      handleFormFieldChange
+                        ("amount", e)}
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                    Descimals
+                  </label>
+                  <input
+                    type="number"
+                    placeholder="Descimals"
+                    className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    onChange={(e) =>
+                      handleFormFieldChange
+                        ("decimals", e)}
+                    required
+                  />
+                </div>
+
+              </div>
             </div>
-            <div className="flex flex-col gap-5.5 p-6.5">
 
-              <div>
-                <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                  Image
-                </label>
-                <input
-                  type="file"
-                  className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:px-5 file:py-3 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
-                  onChange={handleImageChange}
-                  required
-                />
-              </div>
+            {/* } */}
 
-              <div>
-                <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  placeholder="Name"
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                  onChange={(e) =>
-                    handleFormFieldChange
-                      ("name", e)}
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                  Symbol
-                </label>
-                <input
-                  type="text"
-                  placeholder="Symbol"
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                  onChange={(e) => handleFormFieldChange("symbol", e)
-                  }
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                  Description
-                </label>
-                <textarea
-                  rows={3}
-                  placeholder="Description"
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                  onChange={(e) => handleFormFieldChange("description", e)}
-                />
-              </div>
-
-              <div>
-                <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                  Supply
-                </label>
-                <input
-                  type="number"
-                  placeholder="Supply"
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                  onChange={(e) =>
-                    handleFormFieldChange
-                      ("amount", e)}
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                  Descimals
-                </label>
-                <input
-                  type="number"
-                  placeholder="Descimals"
-                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                  onChange={(e) =>
-                    handleFormFieldChange
-                      ("decimals", e)}
-                  required
-                />
-              </div>
-
-            </div>
-          </div>
-          {/* } */}
-
-          {/* <!-- Extensions switch --> */}
-          {/* <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+            {/* <!-- Extensions switch --> */}
+            {/* <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
               <h3 className="font-medium text-black dark:text-white">
                 Extensions
@@ -503,55 +508,55 @@ export const Create: FC = () => {
             </div>
           </div> */}
 
-        </div>
+          </div>
 
-        <div className="flex flex-col gap-9">
-          {/* <!-- Textarea Fields --> */}
-          <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-              <h3 className="font-medium text-black dark:text-white">
-                Overview
-              </h3>
-            </div>
-            <div className="flex flex-col gap-5.5 p-6.5">
-
-              <div className='self-center'>
-                {image && <span className="h-12 w-12 rounded-full">
-                  <Image
-                    width={112}
-                    height={112}
-                    // src={"/images/user/user-01.png"}
-                    src={URL.createObjectURL(image)}
-                    style={{
-                      width: "auto",
-                      height: "auto",
-                    }}
-                    alt="User"
-                  />
-                </span>}
+          <div className="flex flex-col gap-9">
+            {/* <!-- Textarea Fields --> */}
+            <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+              <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
+                <h3 className="font-medium text-black dark:text-white">
+                  Overview
+                </h3>
               </div>
+              <div className="flex flex-col gap-5.5 p-6.5">
 
-              <div>
+                <div className='self-center'>
+                  {image && <span className="h-12 w-12 rounded-full">
+                    <Image
+                      width={112}
+                      height={112}
+                      // src={"/images/user/user-01.png"}
+                      src={URL.createObjectURL(image)}
+                      style={{
+                        width: "auto",
+                        height: "auto",
+                      }}
+                      alt="User"
+                    />
+                  </span>}
+                </div>
 
-                <label className="mb-2 block text-sm font-medium text-black dark:text-white">
-                  {`Name : ${token.name}`}
-                </label>
-                <label className="mb-2 block text-sm font-medium text-black dark:text-white">
-                  {`Symbol : ${token.symbol}`}
-                </label>
-                <label className="mb-2 block text-sm font-medium text-black dark:text-white">
-                  {`Description : ${token.description}`}
-                </label>
-                <label className="mb-0 block text-sm font-medium text-black dark:text-white">
-                  {`Supply : ${token.amount}`}
-                </label>
-                <label className="mb-2 block text-sm font-medium text-black dark:text-white">
-                  {`Decimals : ${token.decimals}`}
-                </label>
+                <div>
 
-              </div>
+                  <label className="mb-2 block text-sm font-medium text-black dark:text-white">
+                    {`Name : ${token.name}`}
+                  </label>
+                  <label className="mb-2 block text-sm font-medium text-black dark:text-white">
+                    {`Symbol : ${token.symbol}`}
+                  </label>
+                  <label className="mb-2 block text-sm font-medium text-black dark:text-white">
+                    {`Description : ${token.description}`}
+                  </label>
+                  <label className="mb-0 block text-sm font-medium text-black dark:text-white">
+                    {`Supply : ${token.amount}`}
+                  </label>
+                  <label className="mb-2 block text-sm font-medium text-black dark:text-white">
+                    {`Decimals : ${token.decimals}`}
+                  </label>
 
-              {/* <div className='self-center'>
+                </div>
+
+                {/* <div className='self-center'>
                 <button
                   className="flex justify-center rounded bg-primary px-25 py-2 font-medium text-gray hover:bg-opacity-90"
                   type="submit"
@@ -561,20 +566,21 @@ export const Create: FC = () => {
                   Create
                 </button>
               </div> */}
-              <div className='mb-5'>
-                <input
-                  type="submit"
-                  value="Crete Token"
-                  onClick={() => createToken(token)}
-                  className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
-                />
+                <div className='mb-5'>
+                  <input
+                    type="submit"
+                    value="Crete Token"
+                    // onClick={() => createToken(token)}
+                    className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                  />
+                </div>
+
               </div>
-
             </div>
-          </div>
 
+          </div>
         </div>
-      </div>
+      </form>
     </>
   )
 }  
