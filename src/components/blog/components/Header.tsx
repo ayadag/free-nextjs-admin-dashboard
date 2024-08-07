@@ -18,7 +18,7 @@ import {
 } from 'react-icons/io5';
 
 // import profile from '@/blog/img/profile.jpg';
-import gluon from '@/blog/img/gluon3.png';
+import gluon from '@/blog/img/Gluon3.png';
 import {
   Popover,
   Transition,
