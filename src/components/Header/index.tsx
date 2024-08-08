@@ -1,3 +1,5 @@
+import './wallet.css';
+
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -20,7 +22,8 @@ const Header = (props: {
 }) => {
   return (
     <header className="sticky top-0 z-999 flex w-full bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none">
-      <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11">
+      {/* <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11"> */}
+      <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11 lg:justify-end">
         <div className="flex items-center gap-2 sm:gap-4 lg:hidden">
           {/* <!-- Hamburger Toggle BTN --> */}
           <button
@@ -136,9 +139,10 @@ const Header = (props: {
           {/* <ClusterUiSelect /> */}
         </div>
 
-        <div></div> {/*  To make the wallet button apper on the right side */}
+        {/* <div></div>  To make the wallet button apper on the right side */}
         <div className="flex items-center gap-3 2xsm:gap-7">
           {/* <DarkModeSwitcher /> */}
+          {/* <WalletButton className="wallet-button"/> */}
           <WalletButton />
         </div>
 

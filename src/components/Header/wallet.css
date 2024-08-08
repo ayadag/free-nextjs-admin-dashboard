@@ -1,0 +1,10 @@
+.wallet-button{
+    border: 2px solid black;
+    color: rgb(167, 34, 34);
+    background-color: blue;
+}
+  
+.wallet-button:hover {
+   border: 2px solid grey;
+   color: white;
+}

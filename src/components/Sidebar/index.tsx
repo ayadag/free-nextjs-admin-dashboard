@@ -554,7 +554,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               // width={176}
               // height={32}
               // src={"/images/logo/logo.svg"}
-              className='w-30 h-12'
+              className='w-26 h-10'
               width={176}
               height={32}
               src={"/images/logo/Gluon32.png"} 
