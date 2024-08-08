@@ -1,10 +1,19 @@
 import React from 'react';
 
+import { Metadata } from 'next';
 import Image from 'next/image';
 
 // import portraitImage from '@/blog/img/portrait.jpg';
 import image from '@/blog/img/pexels-sagui-andrea-200115-618833.jpg';
 import Container from '@/components/blog/components/Container';
+
+export const metadata: Metadata = {
+  title: "Blog | Gluon",
+  description: "This is Gluon About page",
+  icons: {
+    icon: '/images/logo/Gluon4.png', // /public path
+  },
+}
 
 const AboutPage = () => {
   return (

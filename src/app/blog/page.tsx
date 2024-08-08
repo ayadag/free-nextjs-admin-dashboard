@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Metadata } from 'next';
+
 import { Card } from '@/components/blog/components/Card';
 import SimpleLayout from '@/components/blog/components/SimpleLayout';
 import {
@@ -7,6 +9,14 @@ import {
   getAllArticles,
 } from '@/lib/article';
 import { formatDate } from '@/lib/formateDate';
+
+export const metadata: Metadata = {
+  title: "Blog | Gluon",
+  description: "This is Gluon Blog",
+  icons: {
+    icon: '/images/logo/Gluon4.png', // /public path
+  },
+}
 
 const Article = ({ article }: { article: ArticleWithSlug }) => {
   return (

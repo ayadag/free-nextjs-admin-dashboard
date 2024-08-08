@@ -14,10 +14,12 @@ import CreateToken from '../../../components/tokenv2/create3';
 
 //zzll
 export const metadata: Metadata = {
-  title:
-    "Next.js E-commerce Dashboard | TailAdmin - Next.js Dashboard Template",
-  description: "This is Next.js Home for TailAdmin Dashboard Template",
-};
+  title: "Create spl-2022 token | Gluon",
+  description: "This is Gluon Admin Dashboard",
+  icons: {
+    icon: '/images/logo/Gluon4.png', // /public path
+  },
+}
 
 export default function Token() {
   return (

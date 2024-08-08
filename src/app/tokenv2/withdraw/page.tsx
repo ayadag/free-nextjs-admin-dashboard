@@ -5,10 +5,12 @@ import DefaultLayout from '@/components/Layouts/DefaultLayout';
 import WithdrawC from '@/components/tokenv2/withdraw/withdraw';
 
 export const metadata: Metadata = {
-  title: "Next.js Tables | TailAdmin - Next.js Dashboard Template",
-  description:
-    "This is Next.js Tables page for TailAdmin - Next.js Tailwind CSS Admin Dashboard Template",
-};
+  title: "Withdraw token fees | Gluon",
+  description: "This is Gluon Admin Dashboard",
+  icons: {
+    icon: '/images/logo/Gluon4.png', // /public path
+  },
+}
 
 const Withdraw = () => {
   return (
