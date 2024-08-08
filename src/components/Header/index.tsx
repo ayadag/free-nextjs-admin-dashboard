@@ -2,7 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { WalletButton } from '../solana/solana-provider';
-// import DarkModeSwitcher from './DarkModeSwitcher';
+import DarkModeSwitcher from './DarkModeSwitcher';
+
 // import DropdownMessage from './DropdownMessage';
 // import DropdownNotification from './DropdownNotification';
 // import DropdownUser from './DropdownUser';
@@ -112,10 +113,10 @@ const Header = (props: {
           </form>
         </div> */}
 
-        <div className="flex items-center gap-3 2xsm:gap-7">
+        <div className="flex hidden items-center gap-3 2xsm:gap-7">
           <ul className="flex items-center gap-2 2xsm:gap-4">
             {/* <!-- Dark Mode Toggler --> */}
-            {/* <DarkModeSwitcher /> */}
+            <DarkModeSwitcher />
             {/* <!-- Dark Mode Toggler --> */}
 
             {/* <!-- Notification Menu Area --> */}
@@ -131,13 +132,20 @@ const Header = (props: {
           {/* <DropdownUser /> */}
           {/* <!-- User Area --> */}
 
-          <WalletButton />
+          {/* <WalletButton /> */}
           {/* <ClusterUiSelect /> */}
-
         </div>
+
+        <div></div> {/*  To make the wallet button apper on the right side */}
+        <div className="flex items-center gap-3 2xsm:gap-7">
+          {/* <DarkModeSwitcher /> */}
+          <WalletButton />
+        </div>
+
       </div>
     </header>
   );
 };
 
 export default Header;
+// export default Header;
