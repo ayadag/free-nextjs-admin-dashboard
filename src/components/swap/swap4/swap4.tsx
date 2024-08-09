@@ -277,7 +277,7 @@ const Swap4 = () => {
     try {
       quote = await (
         await fetch(
-          `https://quote-api.jup.ag/v6/quote?inputMint=${tokenOne.address}&outputMint=${tokenTwo.address}&amount=${currentAmount * Math.pow(10, tokenOne.decimals)}&slippage=${slippage}`
+          `https://quote-api.jup.ag/v6/quote?inputMint=${tokenOne.address}&outputMint=${tokenTwo.address}&amount=${currentAmount * Math.pow(10, tokenOne.decimals)}&slippage=${slippage}&platformFeeBps=100` //&platformFeeBps=100 fee=1%
         )
       ).json();
     } catch (e) { console.log('Error: ', e) }
@@ -495,6 +495,7 @@ const Swap4 = () => {
           wrapAndUnwrapSol: true,
           // feeAccount is optional. Use if you want to charge a fee.  feeBps must have been passed in /quote API.
           // feeAccount: "fee_account_public_key"
+          feeAccount: "5AimNpb5keMXZnryLL7Y5NdjZw3786uMqhGzCgL3Gf1W"
         }),
       })
     ).json();
