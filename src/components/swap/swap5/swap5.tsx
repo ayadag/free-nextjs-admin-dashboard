@@ -25,6 +25,7 @@ import {
 import { useWallet } from '@solana/wallet-adapter-react';
 import {
   Connection,
+  PublicKey,
   VersionedTransaction,
 } from '@solana/web3.js';
 
@@ -281,8 +282,8 @@ const Swap4 = () => {
     try {
       quote = await (
         await fetch(
-          `https://quote-api.jup.ag/v6/quote?inputMint=${tokenOne.address}&outputMint=${tokenTwo.address}&amount=${currentAmount * Math.pow(10, tokenOne.decimals)}&slippage=${slippage}`
-          // `https://quote-api.jup.ag/v6/quote?inputMint=${tokenOne.address}&outputMint=${tokenTwo.address}&amount=${currentAmount * Math.pow(10, tokenOne.decimals)}&slippage=${slippage}&platformFeeBps=100` //&platformFeeBps=100 fee=1%
+          // `https://quote-api.jup.ag/v6/quote?inputMint=${tokenOne.address}&outputMint=${tokenTwo.address}&amount=${currentAmount * Math.pow(10, tokenOne.decimals)}&slippage=${slippage}`
+          `https://quote-api.jup.ag/v6/quote?inputMint=${tokenOne.address}&outputMint=${tokenTwo.address}&amount=${currentAmount * Math.pow(10, tokenOne.decimals)}&slippage=${slippage}&platformFeeBps=100` //&platformFeeBps=100 fee=1%
         )
       ).json();
     } catch (e) { console.log('Error: ', e) }
@@ -487,8 +488,18 @@ const Swap4 = () => {
       return;
     }
 
-    if(!process.env.NEXT_PUBLIC_RPC) {return console.error('!process.env.RPC')}
+    if (!process.env.NEXT_PUBLIC_RPC) { return console.error('!process.env.RPC') }
     const connection = new Connection(process.env.NEXT_PUBLIC_RPC);
+
+    const referralAccountPubkey = new PublicKey('5AimNpb5keMXZnryLL7Y5NdjZw3786uMqhGzCgL3Gf1W')
+    const [feeAccount] = await PublicKey.findProgramAddressSync(
+      [
+        Buffer.from("referral_ata"),
+        referralAccountPubkey.toBuffer(),
+        new PublicKey(tokenOne.address).toBuffer(),
+      ],
+      new PublicKey("REFER4ZgmyYx9c6He5XfaTMiGfdLwRnkV4RPp9t9iF3")
+    );
 
     // get serialized transactions for the swap
     const { swapTransaction } = await (
@@ -504,6 +515,7 @@ const Swap4 = () => {
           // feeAccount is optional. Use if you want to charge a fee.  feeBps must have been passed in /quote API.
           // feeAccount: "fee_account_public_key"
           // feeAccount: "5AimNpb5keMXZnryLL7Y5NdjZw3786uMqhGzCgL3Gf1W"
+          feeAccount
         }),
       })
     ).json();

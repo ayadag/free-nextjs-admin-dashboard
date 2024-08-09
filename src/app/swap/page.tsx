@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 
 import Breadcrumb from '@/components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '@/components/Layouts/DefaultLayout';
-import Swap4 from '@/components/swap/swap4/swap4';
+import Swap4 from '@/components/swap/swap5/swap5';
 
 export const metadata: Metadata = {
   title: "Swap | Gluon",
