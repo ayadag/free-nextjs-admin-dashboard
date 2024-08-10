@@ -30,6 +30,7 @@ import {
 } from '@solana/wallet-adapter-react';
 import { PublicKey } from '@solana/web3.js';
 
+import { Attention } from '../../alert/attention';
 import Error from '../../alert/error';
 // import { notify } from '../../utils/notifications';
 import { Successful } from '../../alert/successful';
@@ -50,7 +51,7 @@ import { getTokensList } from './walletTokens';
 const CreatePool: React.FC = () => {
     const wallet = useWallet();
     const { publicKey, signAllTransactions } = useWallet();
-    
+
     // const connection = new Connection('https://mainnet.helius-rpc.com/?api-key=YOUR_API_KEY_HERE');
     // const connection = new Connection('https://api.devnet.solana.com/');
     const { connection } = useConnection()
@@ -125,7 +126,7 @@ const CreatePool: React.FC = () => {
             "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
         }
     );
-    
+
     const searchParm = useSearchParams();
     const router = useRouter();
 
@@ -135,7 +136,7 @@ const CreatePool: React.FC = () => {
     }, [error, txDetails]);
 
     //Show Successful message
-    const showSuccessfulMessage= () => {
+    const showSuccessfulMessage = () => {
         // window.scroll({
         //   top:0, //scroll to the top of page
         //   behavior: 'smooth'
@@ -144,12 +145,12 @@ const CreatePool: React.FC = () => {
         setShowPoolId(true) //show pool id
         // messageRef.current?.scrollIntoView({ behavior: 'smooth' });
         setTimeout(() => {
-          setSuccessful(false); //hide successful message after 10s
+            setSuccessful(false); //hide successful message after 10s
         }, 10000);
     };
-    
+
     //Show Error message
-    const showErrorMessage= () => {
+    const showErrorMessage = () => {
         // window.scrollTo({
         //   top:0, //scroll to the top of page
         //   behavior: 'smooth'
@@ -159,7 +160,7 @@ const CreatePool: React.FC = () => {
         // window.scrollTo(0,0) //scroll to x=0 y=0
         // router.push(`/tokenv1/create`)
         setTimeout(() => {
-          setError(false); //hide Error message after 10s
+            setError(false); //hide Error message after 10s
         }, 10000);
     };
 
@@ -168,94 +169,94 @@ const CreatePool: React.FC = () => {
         let tList: any[] = [];
         let walletTokens: any[] = [];
         async function getTokenList() {
-          try{
-            // let tList: any[];
-            // const walletTokens: any[] = await ( await fetch (
-            //     // `https://token.jup.ag/strict` //strict
-            //     // `https://token.jup.ag/all` //all
-            //     `https://serverless-278sktyk2-ayads-projects.vercel.app/api/wallet?walletKey=${wallet.publicKey}`
-            //   )
-            // ).json();
-            // setTokenList(tList);
-            walletTokens = await getTokensL.getUri(String(wallet.publicKey))
-            setTokenListU(walletTokens); 
-            // console.log('String(wallet.publicKey)', String(wallet.publicKey))
-            // console.log('walletTokens: ', walletTokens)
-            // setTokenList(tList.splice(0,10));  //splice(0,10) to take gest the first ten idems.
-            // console.log('tokenList: ',tokenList);
+            try {
+                // let tList: any[];
+                // const walletTokens: any[] = await ( await fetch (
+                //     // `https://token.jup.ag/strict` //strict
+                //     // `https://token.jup.ag/all` //all
+                //     `https://serverless-278sktyk2-ayads-projects.vercel.app/api/wallet?walletKey=${wallet.publicKey}`
+                //   )
+                // ).json();
+                // setTokenList(tList);
+                walletTokens = await getTokensL.getUri(String(wallet.publicKey))
+                setTokenListU(walletTokens);
+                // console.log('String(wallet.publicKey)', String(wallet.publicKey))
+                // console.log('walletTokens: ', walletTokens)
+                // setTokenList(tList.splice(0,10));  //splice(0,10) to take gest the first ten idems.
+                // console.log('tokenList: ',tokenList);
 
-            // for (let index = 0; index < walletTokens.length; index++) {
-            //     const logoURI = getLogoURI(walletTokens[index].uri);
-            //     tList.push
-            // }
+                // for (let index = 0; index < walletTokens.length; index++) {
+                //     const logoURI = getLogoURI(walletTokens[index].uri);
+                //     tList.push
+                // }
 
-            // walletTokens.map((token: any)=> {
-            //     const logoURI = await getLogoURI(token.uri);
-            //     console.log('logoURI: ', logoURI)
-            //     tList.push({
-            //         symbol: token.symbol,
-            //         logoURI: logoURI,
-            //         name: token.name,
-            //         address: token.mint,
-            //         decimals: 9,
-            //         uri: token.uri,
-            //     })
-            // })
+                // walletTokens.map((token: any)=> {
+                //     const logoURI = await getLogoURI(token.uri);
+                //     console.log('logoURI: ', logoURI)
+                //     tList.push({
+                //         symbol: token.symbol,
+                //         logoURI: logoURI,
+                //         name: token.name,
+                //         address: token.mint,
+                //         decimals: 9,
+                //         uri: token.uri,
+                //     })
+                // })
 
-            for (let index = 0; index < walletTokens.length; index++) {
-                const token = walletTokens[index];
-                const logoURI = await getLogoURI(token.uri);
-                // console.log('logoURI: ', logoURI)
-                tList.push({
-                    symbol: token.symbol,
-                    logoURI: logoURI,
-                    name: token.name,
-                    address: token.mint,
-                    uri: token.uri,
-                    decimals: token.decimals,
-                    programId: token.programId,
-                })  
-            }
+                for (let index = 0; index < walletTokens.length; index++) {
+                    const token = walletTokens[index];
+                    const logoURI = await getLogoURI(token.uri);
+                    // console.log('logoURI: ', logoURI)
+                    tList.push({
+                        symbol: token.symbol,
+                        logoURI: logoURI,
+                        name: token.name,
+                        address: token.mint,
+                        uri: token.uri,
+                        decimals: token.decimals,
+                        programId: token.programId,
+                    })
+                }
 
-            // console.log('tList: ', tList)
+                // console.log('tList: ', tList)
 
-            // walletTokens.forEach((token: any)=> {
-            //     const logoURI = getLogoURI(token.uri);
-            //     tList.push({
-            //         symbol: token.symbol,
-            //         logoURI: logoURI,
-            //         name: token.name,
-            //         address: token.mint,
-            //         decimals: 9,
-            //         uri: token.uri,
-            //     })
-            // })
-            setTokenList(tList);
-            // tList = []; //to remove elemants
-            // walletTokens = [];
+                // walletTokens.forEach((token: any)=> {
+                //     const logoURI = getLogoURI(token.uri);
+                //     tList.push({
+                //         symbol: token.symbol,
+                //         logoURI: logoURI,
+                //         name: token.name,
+                //         address: token.mint,
+                //         decimals: 9,
+                //         uri: token.uri,
+                //     })
+                // })
+                setTokenList(tList);
+                // tList = []; //to remove elemants
+                // walletTokens = [];
 
-          } catch(e) {console.log('can not get wallet tokens', e)}
+            } catch (e) { console.log('can not get wallet tokens', e) }
         }
         getTokenList(); //get token list
-    },[wallet, connection]);
+    }, [wallet, connection]);
 
     //Get Logo url from uri
-    async function getLogoURI(uri:string) {
-        if(uri == ''){return '';}
-        try{
+    async function getLogoURI(uri: string) {
+        if (uri == '') { return ''; }
+        try {
             // console.log("`${uri}`: ", `${uri}`)
-            const meta = await ( await fetch (
+            const meta = await (await fetch(
                 `${uri}`
-                )
+            )
             ).json();
-            const logU:string = meta.image;
+            const logU: string = meta.image;
             // console.log('logU: ', logU)
             return logU
         } catch (error) {
             console.error('Error in getLogoURI: ', error)
-            const logU:string = '';
+            const logU: string = '';
             return logU
-        }      
+        }
     }
 
     //open Modal
@@ -293,26 +294,26 @@ const CreatePool: React.FC = () => {
     //Handle change of token one or token two or searchParam
     useEffect(() => {
         let from = searchParm.get('from');
-        if(from){
-        //   console.log(`searchParm.get('from'): `,from)
-          for (let index = 0; index < tokenList.length; index++) {
-            if(tokenList[index].address == from){
-              setTokenOne(tokenList[index]);
-            //   console.log('tokenOne: ',tokenOne)
+        if (from) {
+            //   console.log(`searchParm.get('from'): `,from)
+            for (let index = 0; index < tokenList.length; index++) {
+                if (tokenList[index].address == from) {
+                    setTokenOne(tokenList[index]);
+                    //   console.log('tokenOne: ',tokenOne)
+                }
             }
-          }
         }
         let to = searchParm.get('to');
-        if(to){
-        //   console.log(`searchParm.get('to'): `,to)
-          for (let index = 0; index < tokenList.length; index++) {
-            if(tokenList[index].address == to){
-              setTokenTwo(tokenList[index]);
-            //   console.log('tokenTwo: ',tokenTwo)
+        if (to) {
+            //   console.log(`searchParm.get('to'): `,to)
+            for (let index = 0; index < tokenList.length; index++) {
+                if (tokenList[index].address == to) {
+                    setTokenTwo(tokenList[index]);
+                    //   console.log('tokenTwo: ',tokenTwo)
+                }
             }
-          }
         }
-        
+
         // debouncePriceCall();
         // getPrice(); //ayad
         // console.log('getttttttttttttttttttttttttttt');
@@ -325,40 +326,40 @@ const CreatePool: React.FC = () => {
     }
 
     //Handle txId changes
-    useEffect( ()=> {
+    useEffect(() => {
         // try {
-           if(!txId){return console.log('!txId')}
+        if (!txId) { return console.log('!txId') }
         //    get();
-           setTimeout(get, 500) //call get function after 0.5 second
-            // } catch (err) {console.log(err)}
-    },[txId])
+        setTimeout(get, 500) //call get function after 0.5 second
+        // } catch (err) {console.log(err)}
+    }, [txId])
 
     //Handle txDetails changes
     useEffect(() => {
-        if(!txDetails) {return console.log('!txDetails')}
+        if (!txDetails) { return console.log('!txDetails') }
         console.log('txDetails: ', txDetails);
         setMessage(txDetails.message) //transaction message
-        if(txDetails.state == 'success'){
+        if (txDetails.state == 'success') {
             showSuccessfulMessage(); //show successful message for 10 seccond
         }
-        else if(txDetails.state == 'error'){
+        else if (txDetails.state == 'error') {
             showErrorMessage(); //show successful message for 10 seccond
         }
-    },[txDetails])
+    }, [txDetails])
 
     //Create Pool
     const createPool = async () => {
         // event.preventDefault(); //to cancell page reload
         // const raydium = await initSdk({ loadToken: true })
         const raydium = await initSdk({ loadToken: false }) //ayad
-      
+
         // check token list here: https://api-v3.raydium.io/mint/list
         // RAY
         // const mintA = await raydium.token.getTokenInfo('Duqm5K5U1H8KfsSqwyWwWNWY5TLB9WseqNEAQMhS78hb')
         // USDC
         // const mintB = await raydium.token.getTokenInfo('So11111111111111111111111111111111111111112')
-      
-      
+
+
         /**
          * you also can provide mint info directly like below, then don't have to call token info api
          *  {
@@ -372,8 +373,8 @@ const CreatePool: React.FC = () => {
         // const SALD3 = 'AZDzcSuVg69kjoSCM97BoL8wUkMKTzu3XwVgxzW8RTr8';
         // const SALD4 = 'uBAsEVJJh8GKj6m5jXqLzWkB4PuysMpxmwFxDDk5Qdz';
         // const SALD5 = '9Psbfd6mLzFZmCfqZm1HFTx56TyzJx5SeMRhGJosmig1';
-        
-      
+
+
         // const mintA = {
         //   // address: 'So11111111111111111111111111111111111111112',
         //   address: SALD,
@@ -381,7 +382,7 @@ const CreatePool: React.FC = () => {
         //   decimals: 9,
         //   // uri:'jj'
         // } 
-        
+
         // const mintB = {
         //   // address: 'Duqm5K5U1H8KfsSqwyWwWNWY5TLB9WseqNEAQMhS78hb',
         //   // address: SALD2,
@@ -407,12 +408,12 @@ const CreatePool: React.FC = () => {
         const mintBAmount = new BN(tokenTwoAmount)
 
         const startTime = new BN(0)
-      
+
         // const token0 = new PublicKey('715ogP3WbNGSk5QanRTPq9eKXHbsUXaCCv3yrTqoCfR3');
         // const token0Program = new PublicKey('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA');
         // const token1 = new PublicKey('974UHNCzEitqC39ituERbMR8EawL5pLZYFyfHXZUs33q');
         // const token1Program = new PublicKey('TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb');
-      
+
         // const mintA = {
         //   address: '715ogP3WbNGSk5QanRTPq9eKXHbsUXaCCv3yrTqoCfR3',
         //   programId: 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA',
@@ -423,42 +424,42 @@ const CreatePool: React.FC = () => {
         //   programId: 'TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb',
         //   decimals: 9,
         // } 
-      
+
         // let createPoolFunction = raydium.cpmm.createPool
         const { execute, extInfo } = await raydium.cpmm.createPool({
-        // const { execute, extInfo } = await createPoolFunction({
-          // programId: CREATE_CPMM_POOL_PROGRAM, // devnet: DEVNET_PROGRAM_ID.CREATE_CPMM_POOL_PROGRAM
-          // poolFeeAccount: CREATE_CPMM_POOL_FEE_ACC, // devnet: CREATE_CPMM_POOL_FEE_ACC.CREATE_CPMM_POOL_PROGRAM
-          // programId: new PublicKey('y14apbXKQPC257fK2r6mf6X1m6uYXtXjRyKmiU8rJJe'), // devnet: DEVNET_PROGRAM_ID.CREATE_CPMM_POOL_PROGRAM
-          // poolFeeAccount: new PublicKey('HGt6hRAEmpTdkTdMnshmcjZYN1JVRrhHPtVGbk4Br8Zx'),  // devnet HGt6hRAEmpTdkTdMnshmcjZYN1JVRrhHPtVGbk4Br8Zx
-          programId: new PublicKey('97MQhx2fniaNsQgC4G2M6tLUQBah1etEnhsKe1aMCXbo'), // devnet: DEVNET_PROGRAM_ID.CREATE_CPMM_POOL_PROGRAM
-          // poolFeeAccount: new PublicKey('8niFqtDg5vk6ANcw8pQEq6MB8gKMqRsRy8gM41QkxJhQ'),  // devnet HGt6hRAEmpTdkTdMnshmcjZYN1JVRrhHPtVGbk4Br8Zx
-          poolFeeAccount: new PublicKey('DWSb1UKCzFBAu9rNccuUqheEG46VdrLHNhBVGKA4xyqh'),  // devnet HxKiEkhNNcifMj3Jz22QbXcD7mNg3PCm1cNe3WYjYeR9
-      
-          
-          // poolFeeAccount: new PublicKey('G11FKBRaAkHAKuLCgLM6K6NUc9rTjPAznRCjZifrTQe2'), // Ayad you shold change that!
-          mintA,
-          mintB,
-        //   mintAAmount: new BN(1),
-          mintAAmount,
-          // mintBAmount: new BN(1000),
-        //   mintBAmount: new BN(10000),
-          mintBAmount,
-        //   startTime: new BN(0),
-          startTime,
-          associatedOnly: false,
-          ownerInfo: {
-            // feePayer: owner.publicKey, //ayad
-            useSOLBalance: true,
-          },
-          txVersion,
-          // optional: set up priority fee here
-          // computeBudgetConfig: {
-          //   units: 600000,
-          //   microLamports: 100000000,
-          // },
+            // const { execute, extInfo } = await createPoolFunction({
+            // programId: CREATE_CPMM_POOL_PROGRAM, // devnet: DEVNET_PROGRAM_ID.CREATE_CPMM_POOL_PROGRAM
+            // poolFeeAccount: CREATE_CPMM_POOL_FEE_ACC, // devnet: CREATE_CPMM_POOL_FEE_ACC.CREATE_CPMM_POOL_PROGRAM
+            // programId: new PublicKey('y14apbXKQPC257fK2r6mf6X1m6uYXtXjRyKmiU8rJJe'), // devnet: DEVNET_PROGRAM_ID.CREATE_CPMM_POOL_PROGRAM
+            // poolFeeAccount: new PublicKey('HGt6hRAEmpTdkTdMnshmcjZYN1JVRrhHPtVGbk4Br8Zx'),  // devnet HGt6hRAEmpTdkTdMnshmcjZYN1JVRrhHPtVGbk4Br8Zx
+            programId: new PublicKey('97MQhx2fniaNsQgC4G2M6tLUQBah1etEnhsKe1aMCXbo'), // devnet: DEVNET_PROGRAM_ID.CREATE_CPMM_POOL_PROGRAM
+            // poolFeeAccount: new PublicKey('8niFqtDg5vk6ANcw8pQEq6MB8gKMqRsRy8gM41QkxJhQ'),  // devnet HGt6hRAEmpTdkTdMnshmcjZYN1JVRrhHPtVGbk4Br8Zx
+            poolFeeAccount: new PublicKey('DWSb1UKCzFBAu9rNccuUqheEG46VdrLHNhBVGKA4xyqh'),  // devnet HxKiEkhNNcifMj3Jz22QbXcD7mNg3PCm1cNe3WYjYeR9
+
+
+            // poolFeeAccount: new PublicKey('G11FKBRaAkHAKuLCgLM6K6NUc9rTjPAznRCjZifrTQe2'), // Ayad you shold change that!
+            mintA,
+            mintB,
+            //   mintAAmount: new BN(1),
+            mintAAmount,
+            // mintBAmount: new BN(1000),
+            //   mintBAmount: new BN(10000),
+            mintBAmount,
+            //   startTime: new BN(0),
+            startTime,
+            associatedOnly: false,
+            ownerInfo: {
+                // feePayer: owner.publicKey, //ayad
+                useSOLBalance: true,
+            },
+            txVersion,
+            // optional: set up priority fee here
+            // computeBudgetConfig: {
+            //   units: 600000,
+            //   microLamports: 100000000,
+            // },
         })
-      
+
         const { txId } = await execute()
         // console.log('txId: ', txId)
         setTxId(txId)
@@ -491,8 +492,8 @@ const CreatePool: React.FC = () => {
         // } catch (err) {console.log(err)}
         // const txDetail = await getTransaction(connection, txId);
 
-        
-        
+
+
 
         // console.log('txId: ', txId);
         // console.log('txDetail: ', txDetails)
@@ -536,7 +537,7 @@ const CreatePool: React.FC = () => {
     //Get transaction details
     async function get() {
         const txD = await getTransaction(connection, txId)
-        if(!txD) {return console.log('!txD')}
+        if (!txD) { return console.log('!txD') }
         setTxDetails(txD)
     }
 
@@ -546,43 +547,44 @@ const CreatePool: React.FC = () => {
         if (raydium) return raydium
         // if (!owner) return console.log('wallet not connected')
         raydium = await Raydium.load({
-          owner,
-          signAllTransactions, //ayad
-          connection,
-          cluster: 'devnet', // 'mainnet' | 'devnet'
-          disableFeatureCheck: true,
-          disableLoadToken: !params?.loadToken,
-          blockhashCommitment: 'finalized',
-          // urlConfigs: {
-          //   BASE_HOST: '<API_HOST>', // api url configs, currently api doesn't support devnet
-          // },
+            owner,
+            signAllTransactions, //ayad
+            connection,
+            cluster: 'devnet', // 'mainnet' | 'devnet'
+            disableFeatureCheck: true,
+            disableLoadToken: !params?.loadToken,
+            blockhashCommitment: 'finalized',
+            // urlConfigs: {
+            //   BASE_HOST: '<API_HOST>', // api url configs, currently api doesn't support devnet
+            // },
         })
-      
+
         /**
          * By default: sdk will automatically fetch token account data when need it or any sol balace changed.
          * if you want to handle token account by yourself, set token account data after init sdk
          * code below shows how to do it.
          * note: after call raydium.account.updateTokenAccount, raydium will not automatically fetch token account
          */
-      
+
         /*  
         raydium.account.updateTokenAccount(await fetchTokenAccountData())
         connection.onAccountChange(owner.publicKey, async () => {
           raydium!.account.updateTokenAccount(await fetchTokenAccountData())
         })
         */
-      
+
         return raydium
     }
 
     return (
         <>
+            <div><Attention /></div>
             <div ref={messageRef}></div> {/*scroll to this emty dev*/}
             {/* <Breadcrumb pageName="Create Pool" /> */}
             {/* <div ref={messageRef}></div>  */}
             {successful && Successful(message, txId)} {/*sccessful message*/}
             {/* {error && Error(message, details, messageRef)} error message */}
-            {error && Error(message, undefined, txId)} 
+            {error && Error(message, undefined, txId)}
 
             {contextHolder}
             <Modal
@@ -789,8 +791,7 @@ const CreatePool: React.FC = () => {
                             {/* <span className="mb-1.5 block font-medium">Start for free</span> */}
                             <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
                                 {/* Sign In to TailAdmin */}
-                                Create Pool on SIN
-                            </h2>
+                                Create Pool on Gluon                            </h2>
 
                             <form onSubmit={(event) => cretePool(event)}>
                                 <div className="mb-4">
@@ -893,7 +894,7 @@ const CreatePool: React.FC = () => {
                                     />
                                 </div>
 
-                                {showPoolId &&<div className="mt-6 text-center">
+                                {showPoolId && <div className="mt-6 text-center">
                                     {/* <p className='text-white'>Created Pool Id:</p> */}
                                     <p className='text-white'>
                                         {`Created pool id: ${poolId}`}

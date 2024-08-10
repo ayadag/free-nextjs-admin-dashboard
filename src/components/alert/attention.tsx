@@ -22,9 +22,10 @@ export const Attention = () => {
                         Attention needed
                     </h5>
                     <p className="leading-relaxed text-[#D0915C]">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting
+                        {/* Lorem Ipsum is simply dummy text of the printing and typesetting
                         industry. Lorem Ipsum has been the industry&apos;s standard
-                        dummy text ever since the 1500s, when
+                        dummy text ever since the 1500s, when */}
+                        You can use this feture only on devnet.
                     </p>
                 </div>
             </div>
