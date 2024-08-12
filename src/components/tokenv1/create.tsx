@@ -25,11 +25,9 @@ import {
   MINT_SIZE,
   TOKEN_PROGRAM_ID,
 } from '@solana/spl-token';
+import { useWallet } from '@solana/wallet-adapter-react';
 import {
-  useConnection,
-  useWallet,
-} from '@solana/wallet-adapter-react';
-import {
+  Connection,
   Keypair,
   PublicKey,
   SystemProgram,
@@ -49,7 +47,8 @@ type Token = {
   description: string,
 }
 export const Create: FC = () => {
-  const { connection } = useConnection();
+  // const { connection } = useConnection();
+  const connection = new Connection(process.env.NEXT_PUBLIC_RPC? process.env.NEXT_PUBLIC_RPC: '');
   const { publicKey, sendTransaction } = useWallet();
   // const { networkConfiguration } = useNetworkConfiguration();
 

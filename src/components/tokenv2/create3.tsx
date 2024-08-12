@@ -31,11 +31,9 @@ import {
   pack,
   TokenMetadata,
 } from '@solana/spl-token-metadata';
+import { useWallet } from '@solana/wallet-adapter-react';
 import {
-  useConnection,
-  useWallet,
-} from '@solana/wallet-adapter-react';
-import {
+  Connection,
   Keypair,
   PublicKey,
   SystemProgram,
@@ -62,7 +60,8 @@ const CreateToken: FC = () => {
   const [txSig, setTxSig] = useState("");
   const [mintAddress, setMintAddress] = useState("");
   const { publicKey, sendTransaction } = useWallet();
-  const { connection } = useConnection();
+  // const { connection } = useConnection();
+  const connection = new Connection(process.env.NEXT_PUBLIC_RPC? process.env.NEXT_PUBLIC_RPC: '');
   const [tokenUri, setTokenUri] = useState("");
   const [tokenMintAddress, setTokenMintAddress] = useState("");
   const [isLoading, setIsLoading] = useState(false);
