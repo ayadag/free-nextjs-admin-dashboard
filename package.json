@@ -1,6 +1,6 @@
 {
-  "name": "free-nextjs-admin-dashboard",
-  "version": "1.3.1",
+  "name": "gluon-dex",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
