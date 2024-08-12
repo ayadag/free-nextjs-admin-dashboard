@@ -39,22 +39,12 @@ import tList from './tokenList2.json';
 // const Swap = ({tokenList}:{tokenList:[]}) => {
 const Swap4 = () => {
   const wallet = useWallet();
-  // const connection = useConnection();
-  // const connection = new Connection('https://mainnet.helius-rpc.com/?api-key=YOUR_API_KEY_HERE');
-  // const connection = new Connection('https://raydium-raydium-5ad5.mainnet.rpcpool.com/');
-  // if(!process.env.RPC) {return console.error('!process.env.RPC')}
-  // const connection = new Connection(process.env.RPC);
   const [messageApi, contextHolder] = message.useMessage();
 
   const [slippage, setSlippage] = useState(2.5);
-  // const [tokenOneAmount, setTokenOneAmount] = useState(null);
-  // const [tokenTwoAmount, setTokenTwoAmount] = useState(null);
   const [tokenOneAmount, setTokenOneAmount] = useState(0);
   const [tokenTwoAmount, setTokenTwoAmount] = useState(0);
 
-  // let [tokenList, setTokenList] = useState<any>();
-  // const [tokenOne, setTokenOne] = useState(tokenList[0]);
-  // const [tokenTwo, setTokenTwo] = useState(tokenList[1]);
   const [isOpen, setIsOpen] = useState(false);
   const [changeToken, setChangeToken] = useState(1);
   const [quoteResponse, setQuoteResponse] = useState(null);
@@ -67,9 +57,6 @@ const Swap4 = () => {
   let [query, setQuery] = useState<string>(''); //search query
   // let [tokenList, setTokenList] = useState<any>(); //10 token list
   let [tokenList, setTokenList] = useState<any>(tList); //token list
-  // let [tTokenList, setTTokenList] = useState<any>(); //Total token list
-  // if(!process.env.RPC) {return console.error('!process.env.RPC')}
-  // const connection = new Connection(process.env.RPC);
 
   useEffect(() => {
     async function getTokenList() {
@@ -107,119 +94,16 @@ const Swap4 = () => {
     }
   );
 
-  // const router = useRouter();
-  // if(router.query.from){
-  //   tokenList?.filter((token: any) =>
-  //     token.address.toLowerCase().includes(router.query.from)  //cheack token address
-  //     ).map((e: any, i: any) => {
-  //     return (
-  //     setTokenOne(i)
-  //     );
-  // })
-  // }
-
-  // if(router.query.to){
-  //   tokenList?.filter((token: any) =>
-  //     token.address.toLowerCase().includes(router.query.to)  //cheack token address
-  //     ).map((e: any, i: any) => {
-  //     return (
-  //     setTokenTwo(e)
-  //     );
-  // })
-  // }
-
   const searchParm = useSearchParams();
   const router = useRouter();
 
-  // if(searchParm.get('from')){
-  //   console.log( `searchParm.get('from'): `,searchParm.get('from'))
-  //   tokenList?.filter((token: any) =>
-  //     token.address.toLowerCase().includes(searchParm.get('from'))  //cheack token address
-  //     ).map((e: any, i: any) => {
-  //     return (
-  //     setTokenOne(i)
-  //     );
-  // })
-  // }
-
-  //Change swap asset
-  // useEffect(() => {
-  //   if(searchParm.get('from')){
-  //     console.log(`searchParm.get('from'): `,searchParm.get('from'))
-  //     for (let index = 0; index < tokenList.length; index++) {
-  //       if(tokenList[index].address == searchParm.get('from')){
-  //         setTokenOne(tokenList[index]);
-  //         console.log('tokenOne: ',tokenOne)
-  //       }
-  //     }
-  //   }
-  //   if(searchParm.get('to')){
-  //     console.log(`searchParm.get('to'): `,searchParm.get('to'))
-  //     for (let index = 0; index < tokenList.length; index++) {
-  //       if(tokenList[index].address == searchParm.get('to')){
-  //         setTokenTwo(tokenList[index]);
-  //         console.log('tokenTwo: ',tokenTwo)
-  //       }
-  //     }
-  //   }
-  // },[])
-
-  // const path = usePathname();
-
-  //Token list that contain the search resalut
-  // let tokenListSearch = [undefined];
-
-  // const [tokenOnePriceR, setTokenOnePriceR] = useState<Price | null>(null);
-  // const [tokenTwoPriceR, setTokenTwoPriceR] = useState<Price | null>(null);
-
-  // type Price = {
-  //   [tokenOne.address]:{
-  //     id: string;
-  //     mintSymbol: string;
-  //     vsToken: string;
-  //     vsTokenSymbol: string;
-  //     price: string;
-  //   }
-  // }
-  // const [tokenOnePriceR, setTokenOnePriceR] = useState<Price | null>(null);
-  // const [tokenTwoPriceR, setTokenTwoPriceR] = useState<Price | null>(null);
-
   //The function that handle token search input value
-
   function handleTokenListSearch(e: any) {
     if (e.target.value != '') {
       setQuery(e.target.value.toLowerCase());
     } else {
       setQuery(e.target.value);
     }
-    // tokenList?.map((t: any) => {
-    //   if (e.target.value == t.ticker){
-    //     tokenListSearch = [];
-    //     tokenListSearch.push(t)
-    //     // setIsOpen(false)
-    //     // setIsOpen(true)
-    //     let querySelector = document.querySelector('#swap_tokenChoice__eJ9R9')
-    //     console.log('querySelector: ',querySelector)
-    //   }
-    //   else if (e.target.value == t.address){
-    //     tokenListSearch = [];
-    //     tokenListSearch.push(t)
-    //     // setIsOpen(false)
-    //     // setIsOpen(true)
-    //   }
-    //   else if (e.target.value == '') {
-    //     tokenListSearch = undefined
-    //     // setIsOpen(false)
-    //     // setIsOpen(true)
-    //     console.log('nothing to search')
-    //   }
-    //   // else {
-    //   //   tokenListSearch = []
-    //   // }
-    //   console.log('tokenListSearch: ',tokenListSearch)
-
-    //   console.log('tokenList: ',tokenList)
-    // })
   }
 
   function handleSlippageChange(e: any) {
@@ -228,20 +112,7 @@ const Swap4 = () => {
 
   function changeAmount(e: any) {
     setTokenOneAmount(e.target.value);
-    // if(e.target.value && prices){
-    //   setTokenTwoAmount((e.target.value * prices.ratio).toFixed(2))
-    // }else{
-    // //   setTokenTwoAmount(null);
-    // setTokenTwoAmount(0);
-    // }
   }
-
-  ////////////ayad///////////
-  // const handleFromValueChange = (
-  //     event: React.ChangeEvent<HTMLInputElement>
-  //     ) => {
-  //     setTokenOneAmount(Number(event.target.value));
-  // };
 
   const debounce = <T extends unknown[]>(
     func: (...args: T) => void,
@@ -271,12 +142,6 @@ const Swap4 = () => {
       console.error('Invalid fromAmount value:', currentAmount);
       return;
     }
-
-    // const quote = await (
-    //   await fetch(
-    //     `https://quote-api.jup.ag/v6/quote?inputMint=${tokenOne.address}&outputMint=${tokenTwo.address}&amount=${currentAmount * Math.pow(10, tokenOne.decimals)}&slippage=${slippage}`
-    //   )
-    // ).json();
 
     let quote;
     try {
@@ -384,39 +249,11 @@ const Swap4 = () => {
 
       setTokenOnePrice(tokenOneD.price);
       setTokenTwoPrice(tokenTwoD.price);
-      // console.log('tokenOneD: ',tokenOneD);
-      // console.log('tokenOneD.price: ',tokenOneD.price);
-
-      // console.log('tOnePrice.data: ',tOnePrice.data);
-      // console.log('tTwoPrice: ',tTwoPrice);
-
-      // console.log('tokenOnePriceR: ',tokenOnePriceR);
-      // console.log('tokenTwoPriceR: ',tokenTwoPriceR);
-
-      // if(tokenOnePriceR && tokenTwoPriceR) {
-      //   console.log('tokenOnePriceR.price): ',tokenOnePriceR.price);
-      //   console.log('tokenTwoPriceR: ',tokenTwoPriceR);
-      // }
-
-      // setTokenOnePrice(tOnePrice.data.price)
-      // setTokenTwoPrice(tTwoPrice.price)
     } else {
       setTokenOnePrice(0)
       setTokenTwoPrice(0)
     }
   }
-
-
-  // function switchTokens() {
-  //     // setPrices(null);
-  //     setTokenOneAmount(0);
-  //     setTokenTwoAmount(0);
-  //     const one = tokenOne;
-  //     const two = tokenTwo;
-  //     setTokenOne(two);
-  //     setTokenTwo(one);
-  //     // fetchPrices(two.address, one.address);
-  // }
 
   function switchParams() {
     setTokenOneAmount(0);
@@ -432,36 +269,6 @@ const Swap4 = () => {
     setChangeToken(asset);
     setIsOpen(true);
   }
-
-  // function modifyToken(i: any){
-  //     // setPrices(null);
-  //     setTokenOneAmount(0);
-  //     setTokenTwoAmount(0);
-  //     if (changeToken === 1) {
-  //         /////ayad/////
-  //         if(tokenTwoN == i){
-  //             setTokenTwo(tokenOne);
-  //             // tokenTwoN = tokenOneN;
-  //             setTokenTwoN(tokenOneN);
-  //         }
-
-  //         setTokenOne(tokenList[i]);
-  //         setTokenOneN(i);
-  //     //   fetchPrices(tokenList[i].address, tokenTwo.address)
-  //     } else {
-  //         ////ayad//////
-  //         if(tokenOneN == i) {
-  //             setTokenOne(tokenTwo);
-  //             //tokenOneN = tokenTwoN;
-  //             setTokenOneN(tokenTwoN);
-  //         }
-
-  //         setTokenTwo(tokenList[i]);
-  //         setTokenTwoN(i);
-  //     //  fetchPrices(tokenOne.address, tokenList[i].address)
-  //     }
-  //     setIsOpen(false);
-  // }
 
   function modifyUrlParam(i: any) {
     // let from = searchParm.get('from');
@@ -584,14 +391,6 @@ const Swap4 = () => {
     <>
       {/* <Breadcrumb pageName="Swap" /> */}
       <div className='flex flex-wrap justify-center text-center'>
-        {/* <div className="flex flex-wrap justify-center text-center rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"> */}
-        {/* <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"> */}
-
-        {/* <div className={styles.App}> */}
-
-        {/* <div className="text-center"> */}
-        {/* <div className="w-full xl:w-2/3"> */}
-        {/* <div className="flex justify-center mt-10 w-full md:w-9/12 xl:w-2/3"> */}
         <div className="flex justify-center mt-10 w-full">
 
           <div className="grid grid-cols-1 gap-0 sm:grid-cols-2">
@@ -634,62 +433,6 @@ const Swap4 = () => {
                     />
                   </div>
 
-                  {/* {tokenList?.map((e: any, i: any) => {
-                          return (
-                          <div
-                              className={styles.tokenChoice}
-                              key={i}
-                              onClick={() => modifyToken(i)}
-                          >
-                              <img src={e.img} alt={e.ticker} className={styles.tokenLogo} />
-                              <div className={styles.tokenChoiceNames}>
-                                  <div className={styles.tokenName}>{e.name}</div>
-                                  <div className={styles.tokenTicker}>{e.ticker}</div>
-                              </div>
-                          </div>
-                          );
-                      })} */}
-
-                  {/* {
-                      query==''?tokenList?.map((e: any, i: any) => {
-                          return (
-                          <div
-                              className={styles.tokenChoice}
-                              key={i}
-                              onClick={() => modifyToken(i)}
-                          >
-                              <img src={e.logoURI} alt={e.symbol} className={styles.tokenLogo} />
-                              <div className={styles.tokenChoiceNames}>
-                                  <div className={styles.tokenName}>{e.name}</div>
-                                  <div className={styles.tokenTicker}>{e.symbol}</div>
-                              </div>
-                          </div>
-                          );
-                      })
-                      :
-                      tTokenList?.filter((token: any) => 
-                      token.name.toLowerCase().includes(query) || //cheack token name
-                      token.symbol.toLowerCase().includes(query) || //cheack token simbol
-                      token.address.toLowerCase().includes(query)  //cheack token address
-                      ).map((e: any, i: any) => {
-                      // ).map((e: any, i:number , t =[tTokenList[0].address, tTokenList[1].address]) => {
-                          return (
-                          <div
-                              className={styles.tokenChoice}
-                              key={i}
-                              // key={tTokenList.address}
-                              onClick={() => modifyToken(i)}
-                          >
-                              <img src={e.logoURI} alt={e.symbol} className={styles.tokenLogo} />
-                              <div className={styles.tokenChoiceNames}>
-                                  <div className={styles.tokenName}>{e.name}</div>
-                                  <div className={styles.tokenTicker}>{e.symbol}</div>
-                              </div>
-                          </div>
-                          );
-                      })
-                      } */}
-
                   {
                     tokenList?.filter((token: any) =>
                       token.name.toLowerCase().includes(query) || //cheack token name
@@ -715,10 +458,7 @@ const Swap4 = () => {
 
                 </div>
               </Modal>
-              {/* <div className={styles.tradeBox}> */}
-              {/* <div className="w-full rounded-lg p-4 bg-slate-950 xl:w-2/3"> */}
-              {/* <div className="w-full rounded-lg p-4 bg-slate-900 xl:w-2/3"> */}
-              {/* <div className="w-full rounded-lg p-4 bg-slate-900"> */}
+
               <div className="w-full rounded-lg p-4 dark:border-strokedark dark:bg-boxdark">{/* dark:border-strokedark dark:bg-boxdark */}
                 {/* <div className="w-full rounded-lg p-4 bg-gray-2 dark:bg-meta-4 xl:w-2/3">// bg-gray-2 dark:bg-meta-4 */}
                 <div className={styles.tradeBoxHeader}>
@@ -773,8 +513,6 @@ const Swap4 = () => {
                     <h3>{tokenTwoPrice} USDC</h3>
                   </div>
                 </div>
-                {/* <div className={styles.swapButton} disabled={!tokenOneAmount || !isConnected} onClick={fetchDexSwap}>Swap</div> */}
-                {/* <button className={styles.swapButton} disabled={!tokenOneAmount || tokenOneAmount==0 || !wallet.publicKey} onClick={signAndSendTransaction}>{!wallet.publicKey ? "Connect wallet" : "Swap"}</button> */}
                 <div className="mb-5">
                   <input
                     type="submit"
@@ -790,40 +528,14 @@ const Swap4 = () => {
               {/* iFrame */}
 
             </div>
-            {/* <div className="flex flex-col gap-0">
-              <div className="flex">
-                <iframe
-                  width="100%"
-                  height="400"
-                  src="https://birdeye.so/tv-widget/DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263?chain=solana&viewMode=pair&chartInterval=1D&chartType=CANDLE&chartTimezone=Asia%2FSingapore&chartLeftToolbar=show&theme=dark"
-                  frameBorder="0"
-                  allowFullScreen
-                ></iframe>
-              </div>
-            </div> */}
           </div>
 
           {/* </div> */}
 
         </div>
-        {/* </div> */}
-
-        {/* </div> */}
-
-        {/* </div> */}
       </div>
     </>
   )
 }
 
-//server side function
-// export const getServerSideProps = async () => {
-//   const query = await fetch('https://token.jup.ag/strict');
-//   const response:[] = await query.json();
-//   return {
-//     props:{
-//       tokenList: response.slice(0, 10) //take the first ten items
-//     }
-//   }
-// }
 export default Swap4;
