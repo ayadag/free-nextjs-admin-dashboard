@@ -39,15 +39,6 @@ import Error from '../../alert/error';
 import { Successful } from '../../alert/successful';
 import { TxDetail } from './getTxDetails';
 
-// import styles from './swap.module.css';
-// import tList from './tokenList2.json';
-// import { getTokensList } from './walletTokens';
-
-// export const metadata: Metadata = {
-//   title: "Next.js SignIn Page | TailAdmin - Next.js Dashboard Template",
-//   description: "This is Next.js Signin Page TailAdmin Dashboard Template",
-// };
-
 const WithdrawC: React.FC = () => {
     const wallet = useWallet();
     const { publicKey, signAllTransactions, sendTransaction } = useWallet();
@@ -182,11 +173,6 @@ const WithdrawC: React.FC = () => {
 
     //Show Error message
     const showErrorMessage = () => {
-        // window.scrollTo({
-        //   top:0, //scroll to the top of page
-        //   behavior: 'smooth'
-        // })
-        // router.push(`/tokenv1/create`)
         setError(true) //show Error message
         // window.scrollTo(0,0) //scroll to x=0 y=0
         // router.push(`/tokenv1/create`)
@@ -194,15 +180,6 @@ const WithdrawC: React.FC = () => {
             setError(false); //hide Error message after 10s
         }, 10000);
     };
-
-    //Handle txId changes
-    // useEffect(() => {
-    //     // try {
-    //     if (!txId) { return console.log('!txId') }
-    //     //    get();
-    //     setTimeout(get, 500) //call get function after 0.5 second
-    //     // } catch (err) {console.log(err)}
-    // }, [txId])
 
     //Handle txDetails changes
     useEffect(() => {
@@ -216,15 +193,6 @@ const WithdrawC: React.FC = () => {
             showErrorMessage(); //show error message for 10 seccond
         }
     }, [txDetails])
-
-
-
-    //Get transaction details
-    // async function get() {
-    //     const txD = await getTransaction(connection, txId)
-    //     if (!txD) { return console.log('!txD') }
-    //     setTxDetails(txD)
-    // }
 
     //Start withdraw action
     async function withdrawf(event: any) {
@@ -291,24 +259,6 @@ const WithdrawC: React.FC = () => {
             // new Uint8Array(withheld)
             new Uint8Array(bs58.decode(withheld))
         );
-
-        // const withdrawTokensSig = await withdrawWithheldTokensFromAccounts(
-        //     connection, // connection to use
-        //     owner, // payer of the transaction fee
-        //     new PublicKey(mint), // the token mint
-        //     // recipientKeypair.publicKey, // the destination account
-        //     new PublicKey(ata),  // the destination account
-        //     withdrawWithheldAuthority, // the withdraw withheld token authority
-        //     [], // signing accounts
-        //     accountsToWithdrawFrom, // source accounts from which to withdraw withheld fees
-        //     undefined, // options for confirming the transaction
-        //     TOKEN_2022_PROGRAM_ID // SPL token program id
-        // );
-
-        // console.log(
-        //     'Bag secured, check it:',
-        //     `https://solana.fm/tx/${withdrawTokensSig}?cluster=devnet-solana`
-        // );
 
         const instruction = createWithdrawWithheldTokensFromAccountsInstruction(
             new PublicKey(mint), // the token mint
@@ -452,12 +402,6 @@ const WithdrawC: React.FC = () => {
                                         </Link> */}
                                     </p>
                                 </div>}
-                                {/* <div>
-                                    <p>{mint}</p>
-                                    <p>{tokenOwner}</p>
-                                    <p>{ata}</p>
-                                    <p>{withheld}</p>
-                                </div> */}
                             </form>
                         </div>
                     </div>
@@ -468,10 +412,3 @@ const WithdrawC: React.FC = () => {
 };
 
 export default WithdrawC;
-
-
-
-/*
-accountsToWithdrawFrom: "94aKctbsWoHiwcJZvKuU2oiuosmppNobyVjjkHfRduRv"
-Transaction Signature 2vPiJkV1GoCxSi5jCK7cczYuG6gmQfpJGw1UGShEbLR7sBkEDocBdXjwfSdMXcdiV3HqnuntGkU5ThCXaC7SeuV2
- */
