@@ -25,7 +25,7 @@ export const Attention = () => {
                         {/* Lorem Ipsum is simply dummy text of the printing and typesetting
                         industry. Lorem Ipsum has been the industry&apos;s standard
                         dummy text ever since the 1500s, when */}
-                        You can use this feature only on devnet.
+                        You can use this feature only on devnet at this time.
                     </p>
                 </div>
             </div>
