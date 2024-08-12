@@ -345,6 +345,14 @@ const CreateToken: FC = () => {
       TOKEN_2022_PROGRAM_ID // Token Extension Program ID
     );
 
+    // Create the transfer instruction for the fee
+    const transferInstruction = SystemProgram.transfer({
+      fromPubkey: publicKey,
+      // toPubkey: feePublicKey,
+      toPubkey: new PublicKey('7nd2Hm6GpYDUNLf8sCQ2xvX9HuBpUrukKvAQEPBnYbjJ'),
+      lamports: 100000000
+    });
+
     // transaction = new Transaction().add(
     // createAccountInstruction,
     // initializeMetadataPointerInstruction,
@@ -363,6 +371,7 @@ const CreateToken: FC = () => {
     // transaction = transaction2
 
     // if(taxSwitch){
+
     transaction = new Transaction().add(
       createAccountInstruction,
       initializeMetadataPointerInstruction,
@@ -373,7 +382,8 @@ const CreateToken: FC = () => {
       updateFieldInstruction2,
       updateFieldInstruction3,
       ATA,
-      mintToInstruction
+      mintToInstruction,
+      transferInstruction
     )
     // setTransaction(trans)
     const { blockhash, lastValidBlockHeight } = await connection.getLatestBlockhash();
@@ -967,7 +977,7 @@ const CreateToken: FC = () => {
 
           <div className="flex flex-col gap-9">
             {/* <!-- Extensions switch --> */}
-            
+
 
             {/* <!-- Textarea Fields --> */}
             <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
