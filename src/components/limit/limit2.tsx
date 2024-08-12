@@ -37,20 +37,6 @@ import {
   VersionedTransaction,
 } from '@solana/web3.js';
 
-/*
-import {
-  CreateOrderParams,
-  LimitOrderProvider,
-  OrderHistoryItem,
-  ownerFilter,
-  TradeHistoryItem,
-} from '@jup-ag/limit-order-sdk';
-import {
-    CancelOrder,
-    OrderFields,
-    validateCancelOrderFields,
-} from './utils/validate';
-  */
 import { connection2 as connection } from '../../config';
 import styles from './swap.module.css';
 // import tokenList from './tokenList.json';
@@ -225,48 +211,6 @@ const LimitC = () => {
   const [openOrdersButton, setOpenOrdersButton] = useState<boolean>(true)
   const [ordersHistory, setOrdersHistory] = useState<OrderHistoryItem[] | undefined>()//OrderHistoryItem
   const [ordersHistory2, setOrdersHistory2] = useState<OrderHistory2[]>();
-  // const [ordersHistory2, setOrdersHistory2] = useState<OrderHistory2[]>(
-  //   [{
-  //     order: {
-  //       id: 48799717,
-  //       orderKey: "3gxZh5nLaqKFUmoUyHbRdofhQRfCkJZkXdQf1QjiZ6Lu",
-  //       maker: "Vf8vjzicHUxWRvVFTxU76PzdwWRgRrbRwan6JwF9RBB",
-  //       inputMint: "MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac",
-  //       outputMint: "So11111111111111111111111111111111111111112",
-  //       inAmount: BigInt(0),
-  //       oriInAmount: BigInt(1637000000),
-  //       outAmount: BigInt(0),
-  //       oriOutAmount: BigInt(180549641),
-  //       expiredAt: new Date('2024-07-28T05:59:39.493Z'),
-  //       state: "Completed",
-  //       createTxid: "292gnJpvuoLn6imCMJPM4MumhwDTjXT5DX8BrrgvEtBNmfd7QzAbWrugKDiWehTSUbe39R96oSANEipyzmG9qd5q",
-  //       cancelTxid: null,
-  //       updatedAt: new Date("2024-07-28T11:50:53.427Z"), //Sun Jul 28 2024 14:50:53 GMT+0300 (Arabian Standard Time) {}
-  //       createdAt: new Date("2024-07-28T07:12:54.000Z"), //Sun Jul 28 2024 10:12:54 GMT+0300 (Arabian Standard Time) {}
-  //       txid: "292gnJpvuoLn6imCMJPM4MumhwDTjXT5DX8BrrgvEtBNmfd7QzAbWrugKDiWehTSUbe39R96oSANEipyzmG9qd5q",
-  //     },
-  //     inputMetadata: {
-  //       address: "MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac",
-  //       chainId: 101,
-  //       decimals: 6,
-  //       name: "Mango",
-  //       symbol: "MNGO",
-  //       logoURI: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac/token.png",
-  //       tags: ['old-registry', 'solana-fm'],
-  //       extensions: { coingeckoId: 'mango-markets' },
-  //     },
-  //     outputMetadata: {
-  //       address: "So11111111111111111111111111111111111111112",
-  //       chainId: 101,
-  //       decimals: 9,
-  //       name: 'Wrapped SOL',
-  //       symbol: 'SOL',
-  //       logoURI: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-  //       tags: ['old-registry'],
-  //       extensions: { coingeckoId: 'wrapped-solana' },
-  //     }
-  //   }]
-  // );
 
   const [openOrders, setOpenOrders] = useState<OpenOrder[] | undefined>();
   const [refresh, setRefresh] = useState<number>(0);
@@ -328,13 +272,6 @@ const LimitC = () => {
   const debounceOrdersCall = useCallback(debounce(getOrderHistory, 1000), []);
 
   useEffect(() => {
-    // getOrderHistory()
-    // get();
-    // async function get() {
-    //   await getOrderHistory();
-    // }
-    // let orderHistory2: OrderHistorys[];
-    // let orderHistory2: any[] = [];
     debounceOrdersCall();
   }, [debounceOrdersCall, refresh]);
 
@@ -347,17 +284,7 @@ const LimitC = () => {
         take: 20, // optional, default is 20, maximum is 100
         // lastCursor: order.id // optional, for pagination
       });
-      // console.log('OrderHistory: ', orderHistory);
-      // setOrdersHistory(orderHistory)
-      // console.log('OrdersHistory: ', ordersHistory);
 
-      // try {
-      // const inputMD1 = await (await fetch(
-      //   // `/api/juptoken?listType=all&address=${String(token.inputMint)}`
-      //   `/api/juptoken?listType=strict&address=MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac`//MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac
-      // )
-      // ).json();
-      // console.log('inputMD1: ', inputMD1)
       for (let index = 0; index < orderHistory.length; index++) {
         const order = orderHistory[index];
         // console.log('order', order)
@@ -381,20 +308,6 @@ const LimitC = () => {
         orderHistory2.push({ order, inputMetadata, outputMetadata })
       }
 
-      // orderHistory.map(async(token) => {
-      //   console.log('token', token)
-      //   const inputMD = await (await fetch(
-      //     `/api/juptoken?listType=all&address=${token.inputMint}`
-      //   )
-      //   ).json();
-      //   const outputMD = await (await fetch(
-      //     `/api/juptoken?listType=all&address=${token.outputMint}`
-      //   )
-      //   ).json();
-      //   console.log('inputMD', inputMD)
-      //   console.log('inputMD.data[0]', inputMD.data[0])
-      //   orderHistory2.push(...token, inputMD.data[0], outputMD.data[0])
-      // })
       console.log('orderHistory2', orderHistory2)
       setTimeout(() => {
         setOrdersHistory2(orderHistory2);
@@ -446,59 +359,6 @@ const LimitC = () => {
         const account = order.account;
         openOrders1.push({ publicKey, account, inputMetadata, outputMetadata })
       }
-      // const orderHistory: OrderHistoryItem[] = await limitOrder.getOrderHistory({
-      //   wallet: publicKey.toBase58(),
-      //   take: 20, // optional, default is 20, maximum is 100
-      //   // lastCursor: order.id // optional, for pagination
-      // });
-      // console.log('OrderHistory: ', orderHistory);
-      // setOrdersHistory(orderHistory)
-      // console.log('OrdersHistory: ', ordersHistory);
-
-      // try {
-      // const inputMD1 = await (await fetch(
-      //   // `/api/juptoken?listType=all&address=${String(token.inputMint)}`
-      //   `/api/juptoken?listType=strict&address=MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac`//MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac
-      // )
-      // ).json();
-      // console.log('inputMD1: ', inputMD1)
-      // for (let index = 0; index < orderHistory.length; index++) {
-      //   const order = orderHistory[index];
-      //   console.log('order', order)
-      //   // console.log('...token', ...token)
-      //   const inputMD = await (await fetch(
-      //     // `/api/juptoken?listType=strict&address=${String(order.inputMint)}`
-      //     `/api/juptoken?listType=all&address=${String(order.inputMint)}`
-      //     // `/api/juptoken?listType=all&address=MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac`//MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac
-      //   )
-      //   ).json();
-      //   const outputMD = await (await fetch(
-      //     `/api/juptoken?listType=strict&address=${String(order.outputMint)}`
-      //     // `/api/juptoken?listType=all&address=So11111111111111111111111111111111111111112`//So11111111111111111111111111111111111111112
-      //   )
-      //   ).json();
-      //   console.log('inputMD', inputMD)
-      //   console.log('inputMD.data[0]', inputMD.data[0])
-      //   // orderHistory2.push(...token, inputMD.data[0], outputMD.data[0])
-      //   const inputMetadata = inputMD.data[0]
-      //   const outputMetadata = outputMD.data[0]
-      //   orderHistory2.push({ order, inputMetadata, outputMetadata })
-      // }
-
-      // orderHistory.map(async(token) => {
-      //   console.log('token', token)
-      //   const inputMD = await (await fetch(
-      //     `/api/juptoken?listType=all&address=${token.inputMint}`
-      //   )
-      //   ).json();
-      //   const outputMD = await (await fetch(
-      //     `/api/juptoken?listType=all&address=${token.outputMint}`
-      //   )
-      //   ).json();
-      //   console.log('inputMD', inputMD)
-      //   console.log('inputMD.data[0]', inputMD.data[0])
-      //   orderHistory2.push(...token, inputMD.data[0], outputMD.data[0])
-      // })
       console.log('openOrders1', openOrders1)
       setTimeout(() => {
         setOpenOrders(openOrders1);
@@ -537,125 +397,8 @@ const LimitC = () => {
     console.log(`[✅] Order canceld successfully TRX: ${trx}`); //ayad
   }
 
-  // }, []);
-  //Get orders2
-  // useEffect(() => {
-  //   getOrderHistory2()
-  //   // let orderHistory2: OrderHistorys[];
-  //   let orderHistory2: any[];
-  //   async function getOrderHistory2() {
-  //     if (!publicKey || !ordersHistory) { return console.log('!publickey || ordersHistory') }
-  //     try {
-  //       // const orderHistory: OrderHistoryItem[] = await limitOrder.getOrderHistory({
-  //       //   wallet: publicKey.toBase58(),
-  //       //   take: 20, // optional, default is 20, maximum is 100
-  //       //   // lastCursor: order.id // optional, for pagination
-  //       // });
-  //       // console.log('Order History: ', orderHistory);
-  //       // setOrdersHistory(orderHistory)
-  //       // console.log('Order History: ', ordersHistory);
-  //       // let orderHistory2: any[];
-  //       // try {
-  //         ordersHistory.map(async(token) => {
-  //         const inputMD = await (await fetch(
-  //           `/api/juptoken?listType=all&address=${token.inputMint}`
-  //         )
-  //         ).json();
-  //         const outputMD = await (await fetch(
-  //           `/api/juptoken?listType=all&address=${token.outputMint}`
-  //         )
-  //         ).json();
-  //         console.log('inputMD', inputMD)
-  //         console.log('inputMD.data[0]', inputMD.data[0])
-  //         orderHistory2.push(...token, inputMD.data[0], outputMD.data[0])
-  //       })
-  //       console.log('orderHistory2', orderHistory2)
-  //       setOrdersHistory2(orderHistory2);
-  //       console.log('ordersHistory2', ordersHistory2)
-  //     } catch (err) {
-  //       return console.error('err getOrderHistory2', err)
-  //     }
-  //   }
-  // })
-
-  // const router = useRouter();
-  // if(router.query.from){
-  //   tokenList?.filter((token: any) =>
-  //     token.address.toLowerCase().includes(router.query.from)  //cheack token address
-  //     ).map((e: any, i: any) => {
-  //     return (
-  //     setTokenOne(i)
-  //     );
-  // })
-  // }
-
-  // if(router.query.to){
-  //   tokenList?.filter((token: any) =>
-  //     token.address.toLowerCase().includes(router.query.to)  //cheack token address
-  //     ).map((e: any, i: any) => {
-  //     return (
-  //     setTokenTwo(e)
-  //     );
-  // })
-  // }
-
   const searchParm = useSearchParams();
   const router = useRouter();
-
-  // if(searchParm.get('from')){
-  //   console.log( `searchParm.get('from'): `,searchParm.get('from'))
-  //   tokenList?.filter((token: any) =>
-  //     token.address.toLowerCase().includes(searchParm.get('from'))  //cheack token address
-  //     ).map((e: any, i: any) => {
-  //     return (
-  //     setTokenOne(i)
-  //     );
-  // })
-  // }
-
-  //Change swap asset
-  // useEffect(() => {
-  //   if(searchParm.get('from')){
-  //     console.log(`searchParm.get('from'): `,searchParm.get('from'))
-  //     for (let index = 0; index < tokenList.length; index++) {
-  //       if(tokenList[index].address == searchParm.get('from')){
-  //         setTokenOne(tokenList[index]);
-  //         console.log('tokenOne: ',tokenOne)
-  //       }
-  //     }
-  //   }
-  //   if(searchParm.get('to')){
-  //     console.log(`searchParm.get('to'): `,searchParm.get('to'))
-  //     for (let index = 0; index < tokenList.length; index++) {
-  //       if(tokenList[index].address == searchParm.get('to')){
-  //         setTokenTwo(tokenList[index]);
-  //         console.log('tokenTwo: ',tokenTwo)
-  //       }
-  //     }
-  //   }
-  // },[])
-
-  // const path = usePathname();
-
-  //Token list that contain the search resalut
-  // let tokenListSearch = [undefined];
-
-  // const [tokenOnePriceR, setTokenOnePriceR] = useState<Price | null>(null);
-  // const [tokenTwoPriceR, setTokenTwoPriceR] = useState<Price | null>(null);
-
-  // type Price = {
-  //   [tokenOne.address]:{
-  //     id: string;
-  //     mintSymbol: string;
-  //     vsToken: string;
-  //     vsTokenSymbol: string;
-  //     price: string;
-  //   }
-  // }
-  // const [tokenOnePriceR, setTokenOnePriceR] = useState<Price | null>(null);
-  // const [tokenTwoPriceR, setTokenTwoPriceR] = useState<Price | null>(null);
-
-  //The function that handle token search input value
 
   function handleTokenListSearch(e: any) {
     if (e.target.value != '') {
@@ -663,34 +406,6 @@ const LimitC = () => {
     } else {
       setQuery(e.target.value);
     }
-    // tokenList?.map((t: any) => {
-    //   if (e.target.value == t.ticker){
-    //     tokenListSearch = [];
-    //     tokenListSearch.push(t)
-    //     // setIsOpen(false)
-    //     // setIsOpen(true)
-    //     let querySelector = document.querySelector('#swap_tokenChoice__eJ9R9')
-    //     console.log('querySelector: ',querySelector)
-    //   }
-    //   else if (e.target.value == t.address){
-    //     tokenListSearch = [];
-    //     tokenListSearch.push(t)
-    //     // setIsOpen(false)
-    //     // setIsOpen(true)
-    //   }
-    //   else if (e.target.value == '') {
-    //     tokenListSearch = undefined
-    //     // setIsOpen(false)
-    //     // setIsOpen(true)
-    //     console.log('nothing to search')
-    //   }
-    //   // else {
-    //   //   tokenListSearch = []
-    //   // }
-    //   console.log('tokenListSearch: ',tokenListSearch)
-
-    //   console.log('tokenList: ',tokenList)
-    // })
   }
 
   function handleSlippageChange(e: any) {
@@ -699,75 +414,11 @@ const LimitC = () => {
 
   function changeTokenOneAmount(e: any) {
     setTokenOneAmount(e.target.value);
-    // if(e.target.value && prices){
-    //   setTokenTwoAmount((e.target.value * prices.ratio).toFixed(2))
-    // }else{
-    // //   setTokenTwoAmount(null);
-    // setTokenTwoAmount(0);
-    // }
   }
 
   function changeTokenRateAmount(e: any) {
     setTokenRate(e.target.value);
-    // if(e.target.value && prices){
-    //   setTokenTwoAmount((e.target.value * prices.ratio).toFixed(2))
-    // }else{
-    // //   setTokenTwoAmount(null);
-    // setTokenTwoAmount(0);
-    // }
   }
-
-  // function changeTokenTwoAmount(e: any) {
-  //   setTokenTwoAmount(e.target.value);
-  //   // if(e.target.value && prices){
-  //   //   setTokenTwoAmount((e.target.value * prices.ratio).toFixed(2))
-  //   // }else{
-  //   // //   setTokenTwoAmount(null);
-  //   // setTokenTwoAmount(0);
-  //   // }
-  // }
-
-  ////////////ayad///////////
-  // const handleFromValueChange = (
-  //     event: React.ChangeEvent<HTMLInputElement>
-  //     ) => {
-  //     setTokenOneAmount(Number(event.target.value));
-  // };
-
-  // const debounce = <T extends unknown[]>(
-  //   func: (...args: T) => void,
-  //   wait: number
-  // ) => {
-  //   let timeout: NodeJS.Timeout | undefined;
-
-  //   return (...args: T) => {
-  //     const later = () => {
-  //       clearTimeout(timeout);
-  //       func(...args);
-  //     };
-
-  //     clearTimeout(timeout);
-  //     timeout = setTimeout(later, wait);
-  //   };
-  // };
-
-  // //Handle token one Amunt change
-  // const debounceTokenOneCall = useCallback(debounce(getTokenTwoAmount, 500), [tokenOne, tokenTwo, tokenRate]);
-
-  // useEffect(() => {
-  //   debounceTokenOneCall(tokenOneAmount);
-  // }, [tokenOneAmount, debounceTokenOneCall]);
-
-  // async function getTokenTwoAmount(currentAmount: number) {
-  //   if (isNaN(currentAmount) || currentAmount <= 0) {
-  //     console.error('Invalid fromAmount value:', currentAmount);
-  //     return;
-  //   }
-
-  //   const tTowAmount = tokenOneAmount / tokenRate;
-  //   setTokenTwoAmount(tTowAmount);
-  //   return;
-  // }
 
   //Handle token one or rate Amount change
   const debounceTokenCall = useCallback(debounce(getTokenTwoAmount, 500), [tokenOneAmount, tokenRate]);
@@ -787,65 +438,6 @@ const LimitC = () => {
     setTokenTwoAmount(tTA);
     return;
   }
-
-  //Handle token two Amount change
-  // const debounceTokenOneCall = useCallback(debounce(getTokenOneAmount, 500), [tokenTwo]);
-
-  // useEffect(() => {
-  //   debounceTokenOneCall(tokenTwoAmount, tokenRate);
-  // }, [tokenTwoAmount, debounceTokenOneCall]);
-
-  // async function getTokenOneAmount(tTA: number, tRA: number) {
-  //   // if (isNaN(tOA) || tOA <= 0 || isNaN(tTA) || tTA <= 0 || isNaN(tRA) || tRA <= 0) {
-  //     if (isNaN(tTA) || isNaN(tRA)) {
-  //       console.error('Invalid fromAmount value:', tTA, tRA);
-  //     return;
-  //   }
-
-  //   const tOneAmount = tokenTwoAmount * tokenRate;
-  //   setTokenOneAmount(tOneAmount);
-  //   return;
-  // }
-
-
-  //Handle token one change
-  // const debounceQuoteCall = useCallback(debounce(getQuote, 500), [tokenOne, tokenTwo]);
-
-  // useEffect(() => {
-  //   debounceQuoteCall(tokenOneAmount);
-  // }, [tokenOneAmount, debounceQuoteCall]);
-
-  // async function getQuote(currentAmount: number) {
-  //   if (isNaN(currentAmount) || currentAmount <= 0) {
-  //     console.error('Invalid fromAmount value:', currentAmount);
-  //     return;
-  //   }
-
-  //   // const quote = await (
-  //   //   await fetch(
-  //   //     `https://quote-api.jup.ag/v6/quote?inputMint=${tokenOne.address}&outputMint=${tokenTwo.address}&amount=${currentAmount * Math.pow(10, tokenOne.decimals)}&slippage=${slippage}`
-  //   //   )
-  //   // ).json();
-
-  //   let quote;
-  //   try {
-  //     quote = await (
-  //       await fetch(
-  //         `https://quote-api.jup.ag/v6/quote?inputMint=${tokenOne.address}&outputMint=${tokenTwo.address}&amount=${currentAmount * Math.pow(10, tokenOne.decimals)}&slippage=${slippage}`
-  //       )
-  //     ).json();
-  //   } catch (e) { console.log('Error: ', e) }
-
-  //   if (quote && quote.outAmount) {
-  //     const outAmountNumber =
-  //       Number(quote.outAmount) / Math.pow(10, tokenTwo.decimals);
-  //     setTokenTwoAmount(outAmountNumber);
-  //   } else {
-  //     setTokenTwoAmount(0);
-  //   }
-
-  //   setQuoteResponse(quote);
-  // }
 
   //Get tokens price
   const debouncePriceCall = useCallback(debounce(getPrice, 500), [tokenOne, tokenTwo]);
@@ -871,13 +463,7 @@ const LimitC = () => {
         }
       }
     }
-
     debouncePriceCall();
-
-    // setTimeout(() => {
-    //   getTokenRate()
-    // }, 1000)
-    // getTokenRate(); //ayad
 
     // getPrice(); //ayad
     console.log('getttttttttttttttttttttttttttt');
@@ -927,12 +513,6 @@ const LimitC = () => {
     // }, [tokenOnePrice, tokenTwoPrice])
   }, [])
 
-  //Get token Rate after 50 sec
-  // setTimeout(() => {
-  //   getTokenRate();
-  //   console.log('50 sec')
-  // }, 50000);
-
   async function getPrice() {
     //https://price.jup.ag/v6/price?ids=So11111111111111111111111111111111111111112
     let tOnePrice;
@@ -951,9 +531,6 @@ const LimitC = () => {
     } catch (e) { console.log('can not get price', e) }
 
     if (tOnePrice && tTwoPrice) {
-      // const tOneAddress = tokenOne.address;
-      // setTokenOnePriceR(tOnePrice.data);
-      // setTokenOnePriceR(tTwoPrice); 
 
       //token price
       const { [tokenOne.address]: tokenOneD } = tOnePrice.data;
@@ -961,22 +538,6 @@ const LimitC = () => {
 
       setTokenOnePrice(tokenOneD.price);
       setTokenTwoPrice(tokenTwoD.price);
-      // console.log('tokenOneD: ',tokenOneD);
-      // console.log('tokenOneD.price: ',tokenOneD.price);
-
-      // console.log('tOnePrice.data: ',tOnePrice.data);
-      // console.log('tTwoPrice: ',tTwoPrice);
-
-      // console.log('tokenOnePriceR: ',tokenOnePriceR);
-      // console.log('tokenTwoPriceR: ',tokenTwoPriceR);
-
-      // if(tokenOnePriceR && tokenTwoPriceR) {
-      //   console.log('tokenOnePriceR.price): ',tokenOnePriceR.price);
-      //   console.log('tokenTwoPriceR: ',tokenTwoPriceR);
-      // }
-
-      // setTokenOnePrice(tOnePrice.data.price)
-      // setTokenTwoPrice(tTwoPrice.price)
     } else {
       setTokenOnePrice(0)
       setTokenTwoPrice(0)
@@ -996,23 +557,9 @@ const LimitC = () => {
     return;
   }
 
-  // function switchTokens() {
-  //     // setPrices(null);
-  //     setTokenOneAmount(0);
-  //     setTokenTwoAmount(0);
-  //     const one = tokenOne;
-  //     const two = tokenTwo;
-  //     setTokenOne(two);
-  //     setTokenTwo(one);
-  //     // fetchPrices(two.address, one.address);
-  // }
-
   function switchParams() {
     setTokenOneAmount(0);
     setTokenTwoAmount(0);
-
-    // const from = searchParm.get('from');
-    // const to = searchParm.get('to');
 
     router.push(`/limit?from=${tokenTwo.address}&to=${tokenOne.address}`)
   }
@@ -1022,40 +569,7 @@ const LimitC = () => {
     setIsOpen(true);
   }
 
-  // function modifyToken(i: any){
-  //     // setPrices(null);
-  //     setTokenOneAmount(0);
-  //     setTokenTwoAmount(0);
-  //     if (changeToken === 1) {
-  //         /////ayad/////
-  //         if(tokenTwoN == i){
-  //             setTokenTwo(tokenOne);
-  //             // tokenTwoN = tokenOneN;
-  //             setTokenTwoN(tokenOneN);
-  //         }
-
-  //         setTokenOne(tokenList[i]);
-  //         setTokenOneN(i);
-  //     //   fetchPrices(tokenList[i].address, tokenTwo.address)
-  //     } else {
-  //         ////ayad//////
-  //         if(tokenOneN == i) {
-  //             setTokenOne(tokenTwo);
-  //             //tokenOneN = tokenTwoN;
-  //             setTokenOneN(tokenTwoN);
-  //         }
-
-  //         setTokenTwo(tokenList[i]);
-  //         setTokenTwoN(i);
-  //     //  fetchPrices(tokenOne.address, tokenList[i].address)
-  //     }
-  //     setIsOpen(false);
-  // }
-
   function modifyUrlParam(i: any) {
-    // let from = searchParm.get('from');
-    // let to = searchParm.get('to');
-
     setTokenOneAmount(0);
     setTokenTwoAmount(0);
 
@@ -1088,8 +602,6 @@ const LimitC = () => {
           quoteResponse,
           userPublicKey: wallet.publicKey?.toString(),
           wrapAndUnwrapSol: true,
-          // feeAccount is optional. Use if you want to charge a fee.  feeBps must have been passed in /quote API.
-          // feeAccount: "fee_account_public_key"
         }),
       })
     ).json();
@@ -1173,17 +685,6 @@ const LimitC = () => {
       expiredAt: null,
     }
 
-    // validateCreateOrderFields(orderData); //ayad
-
-    // const { tx, orderPubKey } = await limitOrder.createOrder(
-    //     orderData as CreateOrderParams
-    // );
-    // console.log('orderPubKey: ', orderPubKey);
-
-    // // const trx = await sendAndConfirmTransaction(connection, tx, [Owner, base]);
-    // const trx = await sendTransaction(tx, connection, {signers: [base]});
-    // return console.log(`[✅] Order placed successfully TRX: ${trx}`);
-
     try {
       //sending transaction
       messageApi.destroy();
@@ -1239,24 +740,8 @@ const LimitC = () => {
     <>
       {/* <Breadcrumb pageName="Limit Order" /> */}
       <div className='relative flex flex-wrap justify-center text-center'>
-        {/* <div className="flex flex-wrap justify-center text-center rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1"> */}
-        {/* <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark"> */}
-
-        {/* <div className={styles.App}> */}
-
-        {/* <div className="text-center"> */}
-        {/* <div className="w-full xl:w-2/3"> */}
-        {/* <div className="flex justify-center mt-10 w-full md:w-9/12 xl:w-2/3"> */}
-
-        {/* <div className='grid grid-flow-row-2 gap-1'> */}
-        {/* <div className="flex flex-row gap-0"> */}
-        {/* <div className='flex-1 flex flex-col relative h-full'> */}
-        {/* <div> */}
         <div className='relative'>
-          {/* <div className='relative'> */}
-          {/* <div> */}
           <div>
-
             <div className="flex justify-center mt-10 w-full">
 
               <div className="grid grid-cols-1 gap-1 sm:grid-cols-2">
@@ -1327,10 +812,6 @@ const LimitC = () => {
 
                     </div>
                   </Modal>
-                  {/* <div className={styles.tradeBox}> */}
-                  {/* <div className="w-full rounded-lg p-4 bg-slate-950 xl:w-2/3"> */}
-                  {/* <div className="w-full rounded-lg p-4 bg-slate-900 xl:w-2/3"> */}
-                  {/* <div className="w-full rounded-lg p-4 bg-slate-900"> */}
                   <div className="w-full rounded-lg p-4 dark:border-strokedark dark:bg-boxdark">{/* dark:border-strokedark dark:bg-boxdark */}
                     {/* <div className="w-full rounded-lg p-4 bg-gray-2 dark:bg-meta-4 xl:w-2/3">// bg-gray-2 dark:bg-meta-4 */}
                     <div className={styles.tradeBoxHeader}>
@@ -1380,10 +861,6 @@ const LimitC = () => {
                         // onChange={changeTokenTwoAmount}
                         disabled={true}
                       />
-                      {/* <div className={styles.switchButton} onClick={switchTokens}>
-                              <ArrowDownOutlined className={styles.switchArrow} />
-                          </div> */}
-                      {/* <div className={styles.assetOne} onClick={() => openModal(1)}> */}
                       <div className={styles.assetOne} onClick={() => openModal(1)}>
                         <img src={tokenOne.logoURI} alt="assetOneLogo" className={styles.assetLogo} />
                         {/* <Image src={tokenOne.img} alt="assetOneLogo" width="22px" height="22px" className={styles.assetLogo} /> */}
@@ -1412,8 +889,6 @@ const LimitC = () => {
                         <h3>{tokenTwoPrice} USDC</h3>
                       </div>
                     </div>
-                    {/* <div className={styles.swapButton} disabled={!tokenOneAmount || !isConnected} onClick={fetchDexSwap}>Swap</div> */}
-                    {/* <button className={styles.swapButton} disabled={!tokenOneAmount || tokenOneAmount==0 || !wallet.publicKey} onClick={signAndSendTransaction}>{!wallet.publicKey ? "Connect wallet" : "Swap"}</button> */}
                     <div className="mb-5">
                       <input
                         type="submit"
@@ -1425,43 +900,11 @@ const LimitC = () => {
                       />
                     </div>
                   </div>
-
-                  {/* iFrame */}
-
                 </div>
-                {/* <div className="flex flex-col gap-0">
-              <div className="flex">
-                <iframe
-                  width="100%"
-                  height="400"
-                  src="https://birdeye.so/tv-widget/DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263?chain=solana&viewMode=pair&chartInterval=1D&chartType=CANDLE&chartTimezone=Asia%2FSingapore&chartLeftToolbar=show&theme=dark"
-                  frameBorder="0"
-                  allowFullScreen
-                ></iframe>
               </div>
-            </div> */}
-              </div>
-
-              {/* </div> */}
-
-              {/* <div className='flex w-full bg-black'></div> */}
-
             </div>
-            {/* </div> */}
-
-            {/* </div> */}
-
-            {/* </div> */}
-
           </div>
-
-          {/* <div className="flex flex-row gap-0"> */}
-          {/* <div className="gap-0"> */}
-          {/* <div className='relative w-screen'> */}
-          {/* <div className='relative w-svw'> */}
-          {/* <div className='absolute w-dvw'> */}
           <div className='absolute w-full pt-1'>
-
             <div className="w-full flex justify-center xl:max-w-7xl lg:max-w-[90vw] lg:mx-auto">
               <div className="w-full overflow-hidden">
                 <div className="flex flex-row flex-wrap">
@@ -1493,13 +936,6 @@ const LimitC = () => {
                       </div>
                       Refetch Data
                     </button>
-
-                    {/* <button type="button" className="flex items-center border border-black-10 dark:border-white/10 px-3 py-1.5 rounded-lg cursor-disabled opacity-50 !dark:hover:transparent">
-                      <div className="mr-2 fill-current">
-                        <svg width="9" height="10" viewBox="0 0 9 10" fill="inherit" xmlns="http://www.w3.org/2000/svg"><path d="M4.50199 9.2001C5.9011 9.19955 7.22 8.54806 8.07149 7.43792C8.92239 6.3272 9.20858 4.88472 8.84603 3.53331C8.48348 2.18189 7.51283 1.07615 6.2197 0.541774C4.92716 0.00728354 3.4588 0.103964 2.24759 0.80435C1.03634 1.50419 0.220046 2.72811 0.0382167 4.1151C-0.143612 5.50214 0.329903 6.89527 1.31978 7.88401C2.16299 8.72887 3.30837 9.20238 4.502 9.20019L4.50199 9.2001ZM6.89263 7.09072C6.32848 7.65377 5.58305 7.99874 4.78872 8.06521C3.99441 8.13113 3.20232 7.91415 2.55306 7.45217L7.25136 2.74669C7.71444 3.39653 7.93308 4.18923 7.86715 4.98461C7.80178 5.77947 7.45625 6.526 6.89265 7.09076L6.89263 7.09072ZM2.11135 2.30944C2.6755 1.74639 3.42093 1.40142 4.21525 1.33495C5.00956 1.26903 5.80165 1.48601 6.45092 1.94799L1.75261 6.65459C1.28898 6.0053 1.07035 5.21205 1.13628 4.41668C1.20165 3.6207 1.54717 2.87415 2.11132 2.30954L2.11135 2.30944Z" fill="inherit"></path>
-                        </svg>
-                      </div>Cancel All
-                    </button> */}
                   </div>
                 </div>
                 {!openOrdersButton &&
@@ -1531,8 +967,6 @@ const LimitC = () => {
                         {ordersHistory2?.map((orderH, index) => { //{ordersHistory?.map((orderH, index) => {
                           return (
                             <>
-                              {/* <div>`{orderH.inputMetadata.logoURI}`</div> */}
-                              {/* <div>{ordersHistory2[index].outputMetadata.symbol}</div> */}
                               <div
                                 key={index}
                                 className="flex justify-between items-center border-b border-white/5 dark:text-white/50 h-[62px] w-full">
@@ -1540,7 +974,6 @@ const LimitC = () => {
                                   <div className="flex -space-x-2 cursor-pointer">
                                     <span className="relative">
                                       {/* <img src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FMangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac%2Ftoken.png" alt="MNGO" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img> */}
-                                      {/* <img src={orderH.inputMetadata.logoURI? `https://wsrv.nl/?w=48&amp;h=48&amp;url=${orderH.inputMetadata.logoURI}`: ''} alt={orderH.inputMetadata.symbol? `${orderH.inputMetadata.symbol}`: ''} width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img> */}
                                       <img src={`https://wsrv.nl/?w=48&h=48&url=${orderH.inputMetadata.logoURI}`} alt={`${orderH.inputMetadata.symbol}`} width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
                                     </span>
                                     <span className="relative">
@@ -1591,10 +1024,6 @@ const LimitC = () => {
                                       </span>
                                     }
                                   </div>
-                                  {/* <div className="basis-1/12 h-5 text-black/50 dark:text-white/50 flex items-center justify-center rotate-180">
-                                    <svg width="12" height="12" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0.292893 5.70711C0.683416 6.09763 1.31658 6.09763 1.7071 5.70711L4.99999 2.41421L8.29288 5.70711C8.6834 6.09763 9.31657 6.09763 9.70709 5.70711C10.0976 5.31658 10.0976 4.68342 9.70709 4.29289L5.7071 0.292893C5.31657 -0.097631 4.68341 -0.097631 4.29289 0.292893L0.292893 4.29289C-0.0976309 4.68342 -0.0976309 5.31658 0.292893 5.70711Z" fill="currentColor"></path>
-                                    </svg>
-                                  </div> */}
                                 </div>
                               </div>
                             </>
@@ -1631,8 +1060,6 @@ const LimitC = () => {
 
                                   <div className="flex -space-x-2 cursor-pointer">
                                     <span className="relative">
-                                      {/* <img src="https://wsrv.nl/?w=48&amp;h=48&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FMangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac%2Ftoken.png" alt="MNGO" width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img> */}
-                                      {/* <img src={orderH.inputMetadata.logoURI? `https://wsrv.nl/?w=48&amp;h=48&amp;url=${orderH.inputMetadata.logoURI}`: ''} alt={orderH.inputMetadata.symbol? `${orderH.inputMetadata.symbol}`: ''} width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img> */}
                                       <img src={`https://wsrv.nl/?w=48&h=48&url=${openO.inputMetadata.logoURI}`} alt={`${openO.inputMetadata.symbol}`} width="20" height="20" className='object-cover rounded-full max-w-5 max-h-5'></img>
                                     </span>
                                     <span className="relative">
@@ -1667,10 +1094,6 @@ const LimitC = () => {
                                 <div className="basis-4/6 flex items-center justify-between">
                                   <div className="basis-2/6 text-center">
                                     <div className="flex items-center justify-center space-x-1">
-                                      {/* <span className="flex items-center"
-                                      >0.0<span className="text-sm mb-1">₇
-                                        </span>19634</span>
-                                      <span>SOL per $PRIORA</span> */}
                                       <span>{Math.round(((Number(openO.account.oriTakingAmount) / Math.pow(10, openO.outputMetadata.decimals)) / (Number(openO.account.oriMakingAmount) / Math.pow(10, openO.inputMetadata.decimals))) * 1000000000) / 1000000000}</span> {/* Math.round(num * 100) / 100 */}
                                       {/* <span>SOL per $MNGO</span> */}
                                       <span>{`${openO.outputMetadata.symbol} per $`}{openO.inputMetadata.symbol}</span>
@@ -1681,8 +1104,6 @@ const LimitC = () => {
                                     {/* <span className="dark:text-white"
                                     >376902.46749/2261385.8592 PRIORA</span>
                                     (16.67%) */}
-                                    {/* <span className="dark:text-white">{Number(openO.account.oriMakingAmount) / Math.pow(10, openO.inputMetadata.decimals)} / {(Number(openO.account.oriMakingAmount) / Math.pow(10, openO.inputMetadata.decimals)) - (Number(openO.account.makingAmount) / Math.pow(10, openO.inputMetadata.decimals))} {openO.inputMetadata.symbol}</span>
-                                    ({(((Number(openO.account.oriMakingAmount) / Math.pow(10, openO.inputMetadata.decimals)) - (Number(openO.account.makingAmount) / Math.pow(10, openO.inputMetadata.decimals))) / (Number(openO.account.oriMakingAmount) / Math.pow(10, openO.inputMetadata.decimals))) * 100}%) */}
                                     <span className="dark:text-white">
                                       {Math.round(((Number(openO.account.oriMakingAmount) / Math.pow(10, openO.inputMetadata.decimals)) - (Number(openO.account.makingAmount) / Math.pow(10, openO.inputMetadata.decimals))) * 1000000000) * 0.000000001}
                                       /{Math.round((Number(openO.account.oriMakingAmount) / Math.pow(10, openO.inputMetadata.decimals)) * 1000000000) * 0.000000001}
@@ -1711,17 +1132,6 @@ const LimitC = () => {
               </div>
             </div>
 
-            {/* <div className='flex overflow-auto scroll'> */}
-            {/* <div className={styles.scroll}>
-              <div className='min-w-28 text-center bg-slate-300 mr-1'>box-1</div>
-              <div className='min-w-28 text-center bg-slate-300 mr-1'>box-2</div>
-              <div className='min-w-28 text-center bg-slate-300 mr-1'>box-3</div>
-              <div className='min-w-28 text-center bg-slate-300 mr-1'>box-1</div>
-              <div className='min-w-28 text-center bg-slate-300 mr-1'>box-1</div>
-              <div className='min-w-28 text-center bg-slate-300 mr-1'>box-1</div>
-              <div className='min-w-28 text-center bg-slate-300 mr-1'>box-1</div>
-            </div> */}
-
           </div>
 
         </div>
@@ -1731,14 +1141,4 @@ const LimitC = () => {
   )
 }
 
-//server side function
-// export const getServerSideProps = async () => {
-//   const query = await fetch('https://token.jup.ag/strict');
-//   const response:[] = await query.json();
-//   return {
-//     props:{
-//       tokenList: response.slice(0, 10) //take the first ten items
-//     }
-//   }
-// }
 export default LimitC;
