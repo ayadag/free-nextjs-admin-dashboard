@@ -63,7 +63,8 @@ const PoolsC:FC = () => {
     const [pool, setPool] = useState<PoolLogoURI | undefined>()
     // const [poolL, setPoolL] = useState<PoolLogoURI[]>(poolsL3.data)
     const [poolL, setPoolL] = useState<any>(poolsL3.data)
-    let [poolLToShow, setPoolLToShow] = useState<any>(poolsL3.data)
+    // let [poolLToShow, setPoolLToShow] = useState<any>(poolsL3.data)
+    let [poolLToShow, setPoolLToShow] = useState<any | undefined>()
     let [poolLShearch, setPoolLSearch] = useState<any>(poolsL3.data)
 
     // const [poolL, setPoolL] = useState<PoolLogoURI[]>([])
