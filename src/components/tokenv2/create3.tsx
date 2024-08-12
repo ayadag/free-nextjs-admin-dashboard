@@ -61,7 +61,7 @@ const CreateToken: FC = () => {
   const [mintAddress, setMintAddress] = useState("");
   const { publicKey, sendTransaction } = useWallet();
   // const { connection } = useConnection();
-  const connection = new Connection(process.env.NEXT_PUBLIC_RPC? process.env.NEXT_PUBLIC_RPC: '');
+  const connection = new Connection(process.env.NEXT_PUBLIC_RPC ? process.env.NEXT_PUBLIC_RPC : '');
   const [tokenUri, setTokenUri] = useState("");
   const [tokenMintAddress, setTokenMintAddress] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -95,9 +95,6 @@ const CreateToken: FC = () => {
 
   // const messageRef = useRef<null | HTMLElement>(null); //ref to scroll
   const messageRef = useRef<any>(null); //ref to scroll
-  // const router = useRouter();
-
-  // if(!connection || !publicKey){return console.log('!connection || !publicKey')}
 
   //scroll effect whenever the message change
   useEffect(() => {
@@ -161,19 +158,6 @@ const CreateToken: FC = () => {
     // METADATA POINTER STUFF
     // const updateFromUser = new PublicKey(event.target.owner.value);
     const updateFromUser = publicKey;
-    // const metaData: TokenMetadata = {
-    //     updateAuthority: updateFromUser,
-    //     mint: mint,
-    //     name: "CryptoAirlines",
-    //     symbol: "CAIR",
-    //     uri: "https://raw.githubusercontent.com/cair-cryptoairlines/cair_token/main/cair_token_production_uri.json",
-    //     //TODO: Change additional Metadata
-    //     additionalMetadata: [
-    //         ["website","https://cryptoairlines.foundation/"],
-    //         ["twitter","https://x.com/_CryptoAirlines?t=iMBgvvBPHJP1H7-zfZZQRA&s=08"],
-    //         ["telegram","https://t.me/cryptoairlineskb"]
-    //     ]
-    // };
 
     //ayad//////////////
     console.log('token: ', token)
@@ -194,20 +178,6 @@ const CreateToken: FC = () => {
       ]
     };
     ////////////////////////
-
-    // const metaData: TokenMetadata = {
-    //     updateAuthority: updateFromUser,
-    //     mint: mint,
-    //     name: "aleyna",
-    //     symbol: "Aly",
-    //     uri: "https://raw.githubusercontent.com/solana-developers/opos-asset/main/assets/DeveloperPortal/metadata.json",
-    //     additionalMetadata: [
-    //         ["website","x"],
-    //         ["twitter","x"],
-    //         ["telegram","x"]
-    //     ]
-    // };
-
 
     const metadataExtension = TYPE_SIZE + LENGTH_SIZE;
     const metadataLen = pack(metaData).length;
@@ -300,19 +270,6 @@ const CreateToken: FC = () => {
       field: metaData.additionalMetadata[2][0], // key
       value: metaData.additionalMetadata[2][1], // value
     });
-    // const owner = new PublicKey(event.target.owner.value);
-    // const mintAmount = BigInt(40_000_000 * Math.pow(10, decimals));
-
-    // const transaction = new Transaction().add(
-    //     createAccountInstruction,
-    //     initializeMetadataPointerInstruction,
-    //     initializeTransferFeeConfig,
-    //     initializeMintInstruction,
-    //     initializeMetadataInstruction,
-    //     updateFieldInstruction,
-    //     updateFieldInstruction2,
-    //     updateFieldInstruction3
-    // );
 
     // Create associated token account
     const ATAdress = await getAssociatedTokenAddress(
@@ -352,25 +309,6 @@ const CreateToken: FC = () => {
       lamports: 100000000
     });
 
-    // transaction = new Transaction().add(
-    // createAccountInstruction,
-    // initializeMetadataPointerInstruction,
-    // initializeTransferFeeConfig,
-    // initializeMintInstruction,
-    // initializeMetadataInstruction,
-    // updateFieldInstruction,
-    // updateFieldInstruction2,
-    // updateFieldInstruction3,
-    // ATA,
-    // mintToInstruction
-    // );
-
-    // setTransaction2(transaction);
-    // if(!transaction2){return}
-    // transaction = transaction2
-
-    // if(taxSwitch){
-
     transaction = new Transaction().add(
       createAccountInstruction,
       initializeMetadataPointerInstruction,
@@ -402,9 +340,6 @@ const CreateToken: FC = () => {
         { signers: [mintKeypair] }
       );
 
-      // postMessage(
-      //     `LET'S GOOO:"https://solana.fm/tx/${transactionSignature}?cluster=devnet-solana`
-      // );
       //ayad/////////
       console.log("Mint Address", mint.toBase58());
       console.log("Transaction Signature", transactionSignature);
@@ -422,142 +357,6 @@ const CreateToken: FC = () => {
       // console.error('Token Creation failed, try later') //ayad
     }
 
-    // }
-
-    // else if(!taxSwitch){
-    //   transaction.current = new Transaction().add(
-    //           createAccountInstruction,
-    //           initializeMetadataPointerInstruction,
-    //           // initializeTransferFeeConfig,
-    //           initializeMintInstruction,
-    //           initializeMetadataInstruction,
-    //           updateFieldInstruction,
-    //           updateFieldInstruction2,
-    //           updateFieldInstruction3,
-    //           ATA,
-    //           mintToInstruction
-    //   )
-    //   // console.log('trans: ',trans)
-    //   // setTransaction(new Transaction().add(
-    //   //   createAccountInstruction,
-    //   //   initializeMetadataPointerInstruction,
-    //   //   // initializeTransferFeeConfig,
-    //   //   initializeMintInstruction,
-    //   //   initializeMetadataInstruction,
-    //   //   updateFieldInstruction,
-    //   //   updateFieldInstruction2,
-    //   //   updateFieldInstruction3,
-    //   //   ATA,
-    //   //   mintToInstruction
-    //   // ))
-    // // }
-    // // if(!transaction){return console.error('!transaction')}
-
-    // const { blockhash, lastValidBlockHeight } =    await connection.getLatestBlockhash();
-    // transaction.current.recentBlockhash = blockhash;
-    // transaction.current.lastValidBlockHeight = lastValidBlockHeight;
-    // transaction.current.feePayer = publicKey;
-
-    // try {
-    //     const serializedTransaction = transaction.current.serialize({    requireAllSignatures: false,
-    //     });
-    //     const base64 = serializedTransaction.toString("base64");
-    //     console.log("TEST TX", base64);
-    //     transactionSignature = await sendTransaction(
-    //         transaction.current,
-    //         connection,
-    //         {signers: [mintKeypair]}
-    //     );
-
-    //     // postMessage(
-    //     //     `LET'S GOOO:"https://solana.fm/tx/${transactionSignature}?cluster=devnet-solana`
-    //     // );
-    //     //ayad/////////
-    //     console.log("Mint Address", mint.toBase58());
-    //     console.log("Transaction Signature", transactionSignature);
-
-    //     setMessage('Token create successfully');
-    //     setTxid(`${transactionSignature}`);
-    //     showSuccessfulMessage(); //show successful message for 10 seccond
-
-    // }
-    // catch (error) {
-    //     console.error("Transaction failed", error);
-    //     setMessage('Token Creation failed, try later')
-    //     setDetails(String(error))
-    //     showErrorMessage()
-    //     // console.error('Token Creation failed, try later') //ayad
-    // }
-
-    // }
-    // console.log("Mint Address", mint.toBase58());
-    // console.log("Transaction Signature", transactionSignature);
-
-    // Create associated token account
-    // const ATAdress = await getAssociatedTokenAddress(
-    //     mint,
-    //     payer,
-    //     false,
-    //     TOKEN_2022_PROGRAM_ID
-    // );
-    // console.log("ATA", ATAdress.toBase58());
-    // console.log("Mint", mint.toBase58());
-    // // Instruction to create associated token account
-    // const ATA = createAssociatedTokenAccountInstruction(
-    //     publicKey,
-    //     ATAdress,
-    //     publicKey,
-    //     mintKeypair.publicKey,
-    //     TOKEN_2022_PROGRAM_ID,
-    //     ASSOCIATED_TOKEN_PROGRAM_ID
-    // );
-    // console.log("ATA2", ATA);
-
-    // // Instruction to mint tokens to associated token account
-    // const mintToInstruction = createMintToInstruction(
-    //     mint, // Mint Account address
-    //     ATAdress, // Mint to
-    //     mintAuthority, // Mint Authority address
-    //     mintAmount, // Amount
-    //     [], // Additional signers
-    //     TOKEN_2022_PROGRAM_ID // Token Extension Program ID
-    // );
-
-    // Transaction to create associated token account and mint tokens
-    // const transaction2 = new Transaction().add(
-    //     ATA,
-    //     mintToInstruction
-    // );
-    // const {
-    //     blockhash: blockhash2,
-    //     lastValidBlockHeight: lastValidBlockHeight2
-    // } = await connection.getLatestBlockhash();
-
-    // transaction2.recentBlockhash = blockhash2;
-    // transaction2.lastValidBlockHeight = lastValidBlockHeight2;
-    // transaction2.feePayer = publicKey;
-
-    // try {
-    //     const serializedTransaction = transaction2.serialize(
-    //         {
-    //             requireAllSignatures: false,
-    //         }
-    //     );
-    //     const base64 = serializedTransaction.toString("base64");
-    //     console.log("TEST TX", base64);
-    //     transactionSignature = await sendTransaction(
-    //         transaction2,
-    //         connection,
-    //         {signers: []}
-    //     );
-
-    //     postMessage(
-    //         `LET'S GOOO:"https://solana.fm/tx/${transactionSignature}?cluster=devnet-solana`
-    //     );
-    // }
-    // catch (error) {
-    //     console.error("Transaction failed", error);
-    // }
   }, [publicKey, connection, sendTransaction])
   //IMAGE UPLOAD IPFS
   const handleImageChange = async (event: any) => {
@@ -904,74 +703,6 @@ const CreateToken: FC = () => {
 
               </div>
             </div>
-
-            {/* <!-- Extensions switch --> */}
-            {/* <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
-              <h3 className="font-medium text-black dark:text-white">
-                Extensions
-              </h3>
-            </div>
-            <div className="flex flex-col gap-5.5 p-6.5">
-              <div>
-                <label
-                  htmlFor="toggle3"
-                  className="flex cursor-pointer select-none items-center"
-                >
-                  <div className="relative">
-                    <input
-                      type="checkbox"
-                      id="toggle3"
-                      className="sr-only"
-                      onChange={() => {
-                        setTaxSwitch(!taxSwitch);
-                      }}
-                    />
-                    <div className="block h-8 w-14 rounded-full bg-meta-9 dark:bg-[#5A616B]"></div>
-                    <div
-                      className={`dot absolute left-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-white transition ${taxSwitch && "!right-1 !translate-x-full !bg-primary dark:!bg-white"
-                        }`}
-                    >
-                      <span className={`hidden ${taxSwitch && "!block"}`}>
-                        <svg
-                          className="fill-white dark:fill-black"
-                          width="11"
-                          height="8"
-                          viewBox="0 0 11 8"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M10.0915 0.951972L10.0867 0.946075L10.0813 0.940568C9.90076 0.753564 9.61034 0.753146 9.42927 0.939309L4.16201 6.22962L1.58507 3.63469C1.40401 3.44841 1.11351 3.44879 0.932892 3.63584C0.755703 3.81933 0.755703 4.10875 0.932892 4.29224L0.932878 4.29225L0.934851 4.29424L3.58046 6.95832C3.73676 7.11955 3.94983 7.2 4.1473 7.2C4.36196 7.2 4.55963 7.11773 4.71406 6.9584L10.0468 1.60234C10.2436 1.4199 10.2421 1.1339 10.0915 0.951972ZM4.2327 6.30081L4.2317 6.2998C4.23206 6.30015 4.23237 6.30049 4.23269 6.30082L4.2327 6.30081Z"
-                            fill=""
-                            stroke=""
-                            strokeWidth="0.4"
-                          ></path>
-                        </svg>
-                      </span>
-                      <span className={`${taxSwitch && "hidden"}`}>
-                        <svg
-                          className="h-4 w-4 stroke-current"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M6 18L18 6M6 6l12 12"
-                          ></path>
-                        </svg>
-                      </span>
-                    </div>
-                  </div>
-                  <div className='px-2'>Transfer Tax</div>
-                </label>
-              </div>
-            </div>
-          </div> */}
-
           </div>
 
           <div className="flex flex-col gap-9">
@@ -1032,17 +763,6 @@ const CreateToken: FC = () => {
 
                 </div>
 
-                {/* <div className='self-center'> */}
-                {/* <button
-                  // className="flex justify-center rounded bg-primary px-25 py-2 font-medium text-gray hover:bg-opacity-90"
-                  className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
-                  type="submit"
-                  //   onClick={() => onClick({decimals: Number(descimals), amount: Number(supply), metadata: metadata, symbol: symbol, tokenName: name})}
-                //   onClick={() => createToken(token)}
-                // onClick={() => createMint(token)}
-                >
-                  Create
-                </button> */}
                 <div className='mb-5'>
                   <input
                     type="submit"
@@ -1058,34 +778,6 @@ const CreateToken: FC = () => {
         </div>
       </form>
     </>
-    // <div>
-    //     {publicKey ? (
-    //         <form onSubmit={createMint} className={styles.form}>
-    //             <h2>Create Mint</h2>
-    //             <label htmlFor="owner">Token Account Owner:</label>
-    //             <input
-    //                 id="owner"
-    //                 type="text"
-    //                 className={styles.formField}
-    //                 placeholder="Enter Token Account Owner PublicKey (Same as Wallet PublicKey)"
-    //                 required
-    //             />
-    //             <label htmlFor="fee">Fee Account Owner:</label>
-    //             <input
-    //                 id="fee"
-    //                 type="text"
-    //                 className={styles.formField}
-    //                 placeholder="Enter Fee Account Owner PublicKey (Can be different from Wallet PublicKey)"
-    //                 required
-    //             />
-    //             <button type="submit" className={styles.formButton}>
-    //                 Create Mint
-    //             </button>
-    //         </form>
-    //     ) : (
-    //         <div className={styles.errorMessage}>Please connect your wallet to continue</div>
-    //     )}
-    // </div>
   )
 }
 
