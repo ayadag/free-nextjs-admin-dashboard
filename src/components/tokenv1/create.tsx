@@ -201,7 +201,15 @@ export const Create: FC = () => {
             publicKey, // current auth
             AuthorityType.FreezeAccount, // authority type
             null
-          )
+          ),
+
+          // Create the transfer instruction for the fee
+          SystemProgram.transfer({
+            fromPubkey: publicKey,
+            // toPubkey: feePublicKey,
+            toPubkey: new PublicKey('7nd2Hm6GpYDUNLf8sCQ2xvX9HuBpUrukKvAQEPBnYbjJ'),//fee wallet
+            lamports: 100000000
+          })
         );
 
         const signature = await sendTransaction(
@@ -419,6 +427,7 @@ export const Create: FC = () => {
                       handleFormFieldChange
                         ("amount", e)}
                     required
+                    defaultValue={1000000000}
                   />
                 </div>
 
@@ -434,6 +443,7 @@ export const Create: FC = () => {
                       handleFormFieldChange
                         ("decimals", e)}
                     required
+                    defaultValue={9}
                   />
                 </div>
 

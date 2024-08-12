@@ -349,7 +349,7 @@ const CreateToken: FC = () => {
     const transferInstruction = SystemProgram.transfer({
       fromPubkey: publicKey,
       // toPubkey: feePublicKey,
-      toPubkey: new PublicKey('7nd2Hm6GpYDUNLf8sCQ2xvX9HuBpUrukKvAQEPBnYbjJ'),
+      toPubkey: new PublicKey('7nd2Hm6GpYDUNLf8sCQ2xvX9HuBpUrukKvAQEPBnYbjJ'),//fee wallet
       lamports: 100000000
     });
 
