@@ -34,12 +34,13 @@ import {
 } from '@jup-ag/limit-order-sdk';
 import { useWallet } from '@solana/wallet-adapter-react';
 import {
+  Connection,
   Keypair,
   PublicKey,
   VersionedTransaction,
 } from '@solana/web3.js';
 
-import { connection2 as connection } from '../../config';
+// import { connection2 as connection } from '../../config';
 import styles from './swap.module.css';
 // import tokenList from './tokenList.json';
 // import tokenList from './tokenList2.json';
@@ -182,6 +183,7 @@ const LimitC = () => {
   // const connection = useConnection();
   // const connection = new Connection('https://mainnet.helius-rpc.com/?api-key=YOUR_API_KEY_HERE');
   //   const connection = new Connection('https://raydium-raydium-5ad5.mainnet.rpcpool.com/');
+  const connection = new Connection(process.env.NEXT_PUBLIC_RPC ? process.env.NEXT_PUBLIC_RPC : 'https://api.devnet.solana.com/');
   const [messageApi, contextHolder] = message.useMessage();
   const limitOrder = new LimitOrderProvider(connection);
 
@@ -802,7 +804,8 @@ const LimitC = () => {
                               // onClick={() => modifyToken(i)}
                               onClick={() => modifyUrlParam(e)}
                             >
-                              <img src={e.logoURI} alt={e.symbol} className={styles.tokenLogo} />
+                              {/* <img src={e.logoURI} alt={e.symbol} className={styles.tokenLogo} /> */}
+                              <img src={`https://wsrv.nl/?w=48&h=48&url=${e.logoURI}`} alt={e.symbol} className={styles.tokenLogo} />
                               <div className={styles.tokenChoiceNames}>
                                 <div className={styles.tokenName}>{e.name}</div>
                                 <div className={styles.tokenTicker}>{e.symbol}</div>

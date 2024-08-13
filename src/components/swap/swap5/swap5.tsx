@@ -448,7 +448,8 @@ const Swap4 = () => {
                           // onClick={() => modifyToken(i)}
                           onClick={() => modifyUrlParam(e)}
                         >
-                          <img src={e.logoURI} alt={e.symbol} className={styles.tokenLogo} />
+                          {/* <img src={e.logoURI} alt={e.symbol} className={styles.tokenLogo} /> */}
+                          <img src={`https://wsrv.nl/?w=48&h=48&url=${e.logoURI}`} alt={e.symbol} className={styles.tokenLogo} />
                           <div className={styles.tokenChoiceNames}>
                             <div className={styles.tokenName}>{e.name}</div>
                             <div className={styles.tokenTicker}>{e.symbol}</div>
