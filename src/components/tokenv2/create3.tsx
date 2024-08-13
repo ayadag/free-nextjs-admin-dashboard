@@ -61,7 +61,7 @@ const CreateToken: FC = () => {
   const [mintAddress, setMintAddress] = useState("");
   const { publicKey, sendTransaction } = useWallet();
   // const { connection } = useConnection();
-  const connection = new Connection(process.env.NEXT_PUBLIC_RPC ? process.env.NEXT_PUBLIC_RPC : '');
+  const connection = new Connection(process.env.NEXT_PUBLIC_RPC ? process.env.NEXT_PUBLIC_RPC : 'https://api.devnet.solana.com/');
   const [tokenUri, setTokenUri] = useState("");
   const [tokenMintAddress, setTokenMintAddress] = useState("");
   const [isLoading, setIsLoading] = useState(false);

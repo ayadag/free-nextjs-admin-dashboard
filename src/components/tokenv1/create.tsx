@@ -48,7 +48,7 @@ type Token = {
 }
 export const Create: FC = () => {
   // const { connection } = useConnection();
-  const connection = new Connection(process.env.NEXT_PUBLIC_RPC ? process.env.NEXT_PUBLIC_RPC : '');
+  const connection = new Connection(process.env.NEXT_PUBLIC_RPC ? process.env.NEXT_PUBLIC_RPC : 'https://api.devnet.solana.com/');
   const { publicKey, sendTransaction } = useWallet();
   // const { networkConfiguration } = useNetworkConfiguration();
 

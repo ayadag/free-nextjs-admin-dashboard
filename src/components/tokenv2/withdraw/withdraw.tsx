@@ -24,11 +24,9 @@ import {
 //   useConnection,
 //   useWallet,
 // } from '@solana/wallet-adapter-react';
+import { useWallet } from '@solana/wallet-adapter-react';
 import {
-  useConnection,
-  useWallet,
-} from '@solana/wallet-adapter-react';
-import {
+  Connection,
   Keypair,
   PublicKey,
   Transaction,
@@ -45,7 +43,9 @@ const WithdrawC: React.FC = () => {
 
     // const connection = new Connection('https://mainnet.helius-rpc.com/?api-key=YOUR_API_KEY_HERE');
     // const connection = new Connection('https://api.devnet.solana.com/');
-    const { connection } = useConnection()
+    // const { connection } = useConnection()
+    const connection = new Connection(process.env.NEXT_PUBLIC_RPC ? process.env.NEXT_PUBLIC_RPC : '');
+
     const [messageApi, contextHolder] = Message.useMessage();
 
     const [slippage, setSlippage] = useState(2.5);
