@@ -1,4 +1,6 @@
 "use client";
+import 'dotenv/config';
+
 import {
   FC,
   useCallback,
