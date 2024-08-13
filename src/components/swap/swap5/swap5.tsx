@@ -395,17 +395,18 @@ const Swap4 = () => {
       <div className='flex flex-wrap justify-center text-center'>
         <div className="flex justify-center mt-10 w-full">
 
-          <div className="grid grid-cols-1 gap-0 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-1 sm:grid-cols-2">
             {/* <div className="grid grid-cols-1 gap-0 sm:grid-cols-2 xl:grid-cols-3"> */}
 
             <div className="flex flex-col gap-0">
               {/* <div className="flex flex-col gap-0 xl:grid-cols-2"> */}
               {/* <div className="flex"> */}
-              <div className="">
+              <div className="flex h-70 sm:h-100">
                 <iframe
                   className='rounded-xl'
                   width="100%"
-                  height="404"
+                  // height="404"
+                  height="100%"
                   // src="https://birdeye.so/tv-widget/DezXAZ8z7PnrnRJjz3wXBoRgixCa6xjnB7YaB1pPB263?chain=solana&viewMode=pair&chartInterval=1D&chartType=CANDLE&chartTimezone=Asia%2FSingapore&chartLeftToolbar=show&theme=dark"
                   src={`https://birdeye.so/tv-widget/${tokenTwo.address}?chain=solana&viewMode=pair&chartInterval=1D&chartType=CANDLE&chartTimezone=Asia%2FSingapore&chartLeftToolbar=show&theme=dark`}
                   frameBorder="0"
@@ -522,7 +523,7 @@ const Swap4 = () => {
                     value={!wallet.publicKey ? "Connect wallet" : "Swap"}
                     disabled={!tokenOneAmount || tokenOneAmount == 0 || !wallet.publicKey}
                     onClick={signAndSendTransaction}
-                    className="w-full mt-7 text-xl font-bold cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90 
+                    className="w-full mt-6 text-xl font-bold cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90 
                                         disabled:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50 disabled:border-y-green-950"
                   />
                 </div>
