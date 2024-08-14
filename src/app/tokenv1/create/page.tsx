@@ -15,7 +15,7 @@ import { Create as CreateToken } from '../../../components/tokenv1/create';
 //zzll
 export const metadata: Metadata = {
   title: "Create spl token | Gluon",
-  description: "This is Gluon Admin Dashboard",
+  description: "Create spl token on Solana blockchain with Gluon dex.",
   icons: {
     icon: '/images/logo/Gluon4.png', // /public path
   },

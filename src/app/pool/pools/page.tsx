@@ -5,8 +5,8 @@ import DefaultLayout from '@/components/Layouts/DefaultLayout';
 import PoolsC from '@/components/pool/pools3';
 
 export const metadata: Metadata = {
-  title: "Pools | Gluon",
-  description: "This is Gluon Admin Dashboard",
+  title: "Pools List | Gluon",
+  description: "Pools list on Gluon dex program on Solana blockchain.",
   icons: {
     icon: '/images/logo/Gluon4.png', // /public path
   },
