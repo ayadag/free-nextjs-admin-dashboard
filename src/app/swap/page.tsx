@@ -7,9 +7,9 @@ import Swap4 from '@/components/swap/swap5/swap5';
 export const metadata: Metadata = {
   title: "Swap | Gluon",
   description: "Swap tokens on Solana blockchain with Gluon dex.",
-  icons: {
-    icon: '/images/logo/Gluon4.png', // /public path
-  },
+  // icons: {
+  //   icon: '/images/logo/Gluon4.png', // /public path
+  // },
 }
 
 const Limit = () => {

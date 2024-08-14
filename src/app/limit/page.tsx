@@ -7,9 +7,9 @@ import LimitC from '@/components/limit/limit2';
 export const metadata: Metadata = {
   title: "Limit order | Gluon",
   description: "Place limit order on Solana blockchain with Gluon dex.",
-  icons: {
-    icon: '/images/logo/Gluon4.png', // /public path
-  },
+  // icons: {
+  //   icon: '/images/logo/Gluon4.png', // /public path
+  // },
 }
 
 const Limit = () => {

@@ -7,9 +7,9 @@ import CreatePool from '@/components/pool/create/createPool';
 export const metadata: Metadata = {
   title: "Create Pool | Gluon",
   description: "Create pool on Solana blockchain with Gluon dex.",
-  icons: {
-    icon: '/images/logo/Gluon4.png', // /public path
-  },
+  // icons: {
+  //   icon: '/images/logo/Gluon4.png', // /public path
+  // },
 }
 
 const CreatePoolP = () => {

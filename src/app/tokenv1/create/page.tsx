@@ -16,9 +16,9 @@ import { Create as CreateToken } from '../../../components/tokenv1/create';
 export const metadata: Metadata = {
   title: "Create spl token | Gluon",
   description: "Create spl token on Solana blockchain with Gluon dex.",
-  icons: {
-    icon: '/images/logo/Gluon4.png', // /public path
-  },
+  // icons: {
+  //   icon: '/images/logo/Gluon4.png', // /public path
+  // },
 }
 
 export default function Token() {

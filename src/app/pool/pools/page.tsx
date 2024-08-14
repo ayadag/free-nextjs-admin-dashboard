@@ -7,9 +7,9 @@ import PoolsC from '@/components/pool/pools3';
 export const metadata: Metadata = {
   title: "Pools List | Gluon",
   description: "Pools list on Gluon dex program on Solana blockchain.",
-  icons: {
-    icon: '/images/logo/Gluon4.png', // /public path
-  },
+  // icons: {
+  //   icon: '/images/logo/Gluon4.png', // /public path
+  // },
 }
 
 const Pools = () => {
