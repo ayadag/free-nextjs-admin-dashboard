@@ -57,7 +57,10 @@ type Token = {
   image: string,
   description: string,
   fee: number,
-  maxFee: number
+  maxFee: number,
+  website: string,
+  twitter: string,
+  telegram: string,
 }
 
 const CreateToken: FC = () => {
@@ -81,6 +84,10 @@ const CreateToken: FC = () => {
     description: "",
     fee: 0,
     maxFee: 0,
+    website: 'x',
+    twitter: 'x',
+    telegram: 'x',
+    
   });
   const [successful, setSuccessful] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('Token create successfully');
@@ -178,12 +185,15 @@ const CreateToken: FC = () => {
       uri: `${metadataUrl}`,
       // uri: 'https://gluondex.com/api/metadata',
       additionalMetadata: [
-        ["website", "x"],
-        ["twitter", "x"],
-        ["telegram", "x"]
+        // ["website", "x"],
+        // ["twitter", "x"],
+        // ["telegram", "x"]
         // ["website", "https://gluondex.com/"],
         // ["twitter", "https://x.com/gluondex"],
         // ["telegram", "https://t.me/gluondex"]
+        ["website", `${token.website}`],
+        ["twitter", `${token.twitter}`],
+        ["telegram", `${token.telegram}`]
       ]
     };
     ////////////////////////
@@ -604,6 +614,54 @@ const CreateToken: FC = () => {
                         ("decimals", e)}
                     defaultValue={9}
                     required
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                    Website
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="x"
+                    className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    onChange={(e) =>
+                      handleFormFieldChange
+                        ("website", e)}
+                    defaultValue={'x'}
+                    // required
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                  Twitter
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="x"
+                    className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    onChange={(e) =>
+                      handleFormFieldChange
+                        ("twitter", e)}
+                    defaultValue={'x'}
+                    // required
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                  Telegram
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="x"
+                    className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    onChange={(e) =>
+                      handleFormFieldChange
+                        ("telegram", e)}
+                    defaultValue={'x'}
+                    // required
                   />
                 </div>
 
