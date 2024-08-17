@@ -188,7 +188,7 @@ const CreateToken: FC = () => {
         // ["website", "x"],
         // ["twitter", "x"],
         // ["telegram", "x"]
-        // ["website", "https://gluondex.com/"],
+        // ["website", "https://gluondex.com"],
         // ["twitter", "https://x.com/gluondex"],
         // ["telegram", "https://t.me/gluondex"]
         ["website", `${token.website}`],
