@@ -51,6 +51,7 @@ type Token = {
 export const Create: FC = () => {
   // const { connection } = useConnection();
   const connection = new Connection(process.env.NEXT_PUBLIC_RPC ? process.env.NEXT_PUBLIC_RPC : 'https://api.devnet.solana.com/');
+  // const connection = new Connection('https://api.devnet.solana.com/');
   const { publicKey, sendTransaction } = useWallet();
   // const { networkConfiguration } = useNetworkConfiguration();
 
@@ -196,11 +197,20 @@ export const Create: FC = () => {
           createMetadataInstruction,
 
           //ayad//////////////////
+          //solana revoke freeze authority
           createSetAuthorityInstruction(
             mintKeypair.publicKey, // mint acocunt || token account
             // tokenATA,
             publicKey, // current auth
             AuthorityType.FreezeAccount, // authority type
+            null
+          ),
+          //solana revoke mint authority
+          createSetAuthorityInstruction(
+            mintKeypair.publicKey, // mint acocunt || token account
+            // tokenATA,
+            publicKey, // current auth
+            AuthorityType.MintTokens, // authority type
             null
           ),
 

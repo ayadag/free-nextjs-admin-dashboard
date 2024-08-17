@@ -15,11 +15,13 @@ import Image from 'next/image';
 // import DefaultLayout from '@/components/Layouts/DefaultLayout';
 import {
   ASSOCIATED_TOKEN_PROGRAM_ID,
+  AuthorityType,
   createAssociatedTokenAccountInstruction,
   createInitializeMetadataPointerInstruction,
   createInitializeMintInstruction,
   createInitializeTransferFeeConfigInstruction,
   createMintToInstruction,
+  createSetAuthorityInstruction,
   createUpdateFieldInstruction,
   ExtensionType,
   getAssociatedTokenAddress,
@@ -64,6 +66,7 @@ const CreateToken: FC = () => {
   const { publicKey, sendTransaction } = useWallet();
   // const { connection } = useConnection();
   const connection = new Connection(process.env.NEXT_PUBLIC_RPC ? process.env.NEXT_PUBLIC_RPC : 'https://api.devnet.solana.com/');
+  // const connection = new Connection('https://api.devnet.solana.com/');
   const [tokenUri, setTokenUri] = useState("");
   const [tokenMintAddress, setTokenMintAddress] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -303,6 +306,40 @@ const CreateToken: FC = () => {
       TOKEN_2022_PROGRAM_ID // Token Extension Program ID
     );
 
+    //solana revoke freeze authority
+    // const revokeFreezeAuthorityInstruction = createSetAuthorityInstruction(
+    //   mintKeypair.publicKey, // mint acocunt || token account
+    //   // tokenATA,
+    //   publicKey, // current auth
+    //   AuthorityType.FreezeAccount, // authority type
+    //   null,
+    // );
+
+    //solana revoke mint authority
+    const revokeMintAuthorityInstruction = createSetAuthorityInstruction(
+      mintKeypair.publicKey, // mint acocunt || token account
+      // tokenATA,
+      publicKey, // current auth
+      AuthorityType.MintTokens, // authority type
+      null,
+      [publicKey],
+      TOKEN_2022_PROGRAM_ID,
+    );
+
+    // const freezMint = await setAuthority(
+    //   connection,
+    //   keyPair,
+    //   mintkeyPair.publicKey,
+    //   keyPair.publicKey,
+    //   AuthorityType.MintTokens,
+    //   null,
+    //   [keyPair],
+    //   {
+    //     commitment: "confirmed",
+    //   },
+    //   TOKEN_2022_PROGRAM_ID
+    // );
+
     // Create the transfer instruction for the fee
     const transferInstruction = SystemProgram.transfer({
       fromPubkey: publicKey,
@@ -322,6 +359,8 @@ const CreateToken: FC = () => {
       updateFieldInstruction3,
       ATA,
       mintToInstruction,
+      // revokeFreezeAuthorityInstruction,
+      revokeMintAuthorityInstruction,
       transferInstruction
     )
     // setTransaction(trans)
