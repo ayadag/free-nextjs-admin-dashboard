@@ -176,10 +176,14 @@ const CreateToken: FC = () => {
       name: token.name,
       symbol: token.symbol,
       uri: `${metadataUrl}`,
+      // uri: 'https://gluondex.com/api/metadata',
       additionalMetadata: [
         ["website", "x"],
         ["twitter", "x"],
         ["telegram", "x"]
+        // ["website", "https://gluondex.com/"],
+        // ["twitter", "https://x.com/gluondex"],
+        // ["telegram", "https://t.me/gluondex"]
       ]
     };
     ////////////////////////

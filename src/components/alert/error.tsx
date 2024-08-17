@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { grtExplorerUrl } from '@/utils/explorer';
 
 function Error (message:string, details?:string, txId?:string) {
-    const endPoint = 'https://api.devnet.solana.com'; //devnet case
+    // const endPoint = 'https://api.devnet.solana.com'; //devnet case
+    const endPoint = 'https://api.mainnet-beta.solana.com'; //devnet case
     let url;
     txId? url = grtExplorerUrl(endPoint, txId) :url = 'https://explorer.solana.com/'
     // url = grtExplorerUrl(endPoint, txId) : 'https://explorer.solana.com/'

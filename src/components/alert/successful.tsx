@@ -3,7 +3,8 @@ import Link from 'next/link';
 import { grtExplorerUrl } from '@/utils/explorer';
 
 export const Successful = (message: string, txid: string) => {
-    const endPoint = 'https://api.devnet.solana.com'; //devnet case
+    // const endPoint = 'https://api.devnet.solana.com'; //devnet case
+    const endPoint = 'https://api.mainnet-beta.solana.com'; //devnet case
     const url = grtExplorerUrl(endPoint, txid)
     return (
         <>
