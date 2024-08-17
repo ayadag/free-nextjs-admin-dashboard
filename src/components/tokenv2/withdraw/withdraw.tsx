@@ -96,30 +96,6 @@ const WithdrawC: React.FC = () => {
     // const txVersion = TxVersion.V0 // or TxVersion.LEGACY
     // let raydium: Raydium | undefined
 
-    const [tokenOne, setTokenOne] = useState(
-        {
-            "symbol": "SOL",
-            "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
-            "name": "Wrapped SOL",
-            "address": "So11111111111111111111111111111111111111112",
-            "decimals": 9,
-            "uri": "",
-            "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
-        }
-    );
-    const [tokenTwo, setTokenTwo] = useState(
-        {
-            "symbol": "USDC",
-            "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
-            "name": "USD Coin /sol",
-            "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-            "decimals": 6,
-            "uri": "",
-            "programId": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
-        }
-    );
-
-
     //ayad/////////////////////////////////////////////////////////////
     // const [mint, setMint] = useState<string | undefined>('');
     const [mint, setMint] = useState<string | undefined>(undefined);
@@ -389,7 +365,7 @@ const WithdrawC: React.FC = () => {
                                 <div className="mb-5">
                                     <input
                                         type="submit"
-                                        value="Crete Pool"
+                                        value="Withdraw"
                                         className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
                                     />
                                 </div>
