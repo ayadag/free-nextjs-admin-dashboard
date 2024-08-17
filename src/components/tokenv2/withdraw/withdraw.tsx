@@ -87,7 +87,7 @@ const WithdrawC: React.FC = () => {
     const [message, setMessage] = useState<string>('Pool created successfully');
     const [details, setDetails] = useState<string>(''); //Error message details
     const [poolId, setPoolId] = useState<string | undefined>(undefined)
-    const [showPoolId, setShowPoolId] = useState<boolean>(false)
+    // const [showPoolId, setShowPoolId] = useState<boolean>(false)
 
     // let getTokensL = new getTokensList; //get wallet token list
 
@@ -141,7 +141,7 @@ const WithdrawC: React.FC = () => {
         //   behavior: 'smooth'
         // })
         setSuccessful(true) //show successful message
-        setShowPoolId(true) //show pool id
+        // setShowPoolId(true) //show pool id
         // messageRef.current?.scrollIntoView({ behavior: 'smooth' });
         setTimeout(() => {
             setSuccessful(false); //hide successful message after 10s
@@ -369,16 +369,6 @@ const WithdrawC: React.FC = () => {
                                         className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
                                     />
                                 </div>
-
-                                {showPoolId && <div className="mt-6 text-center">
-                                    {/* <p className='text-white'>Created Pool Id:</p> */}
-                                    <p className='text-white'>
-                                        {`Created pool id: ${poolId}`}
-                                        {/* <Link href="/auth/signup" className="text-primary">
-                                            Sign Up
-                                        </Link> */}
-                                    </p>
-                                </div>}
                             </form>
                         </div>
                     </div>
