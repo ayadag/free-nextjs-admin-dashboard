@@ -26,8 +26,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
       const data = {
         "name":"Gluon",
         "symbol":"GLN",
-        "description":
-        "GLN is the official governance token for Gluon. website: https://gluondex.com twitter: https://twitter.com/gluondex telegram: https://t.me/gluondex",
+        "description": "GLN is the official governance token for Gluon. website: https://gluondex.com twitter: https://twitter.com/gluondex telegram: https://t.me/gluondex",
         "image":"https://gluondex.com/images/logo/gluon-logo.png",
         "website": "https://gluondex.com",
         "twitter": "https://twitter.com/gluondex",
