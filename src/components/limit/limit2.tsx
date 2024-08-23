@@ -247,11 +247,11 @@ const LimitC = () => {
   );
   const [tokenTwo, setTokenTwo] = useState(
     {
-      "symbol": "USDC",
-      "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
-      "name": "USD Coin /sol",
-      "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-      "decimals": 6
+      "symbol": "GLN",
+      "logoURI": "https://gluondex.com/images/logo/gluonlogo.png",
+      "name": "Gluon",
+      "address": "FTFK4rntM1DLfDEDydnjUNfL9VQ5PkUFdsN6ZwNm2pDF",
+      "decimals": 9
     }
   );
 

@@ -79,19 +79,19 @@ const Swap4 = () => {
 
   const [tokenOne, setTokenOne] = useState(
     {
-      "symbol": "USDC",
-      "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png",
-      "name": "USD Coin /sol",
-      "address": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-      "decimals": 6
-    }
-  );
-  const [tokenTwo, setTokenTwo] = useState(
-    {
       "symbol": "SOL",
       "logoURI": "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/So11111111111111111111111111111111111111112/logo.png",
       "name": "Wrapped SOL",
       "address": "So11111111111111111111111111111111111111112",
+      "decimals": 9
+    }
+  );
+  const [tokenTwo, setTokenTwo] = useState(
+    {
+      "symbol": "GLN",
+      "logoURI": "https://gluondex.com/images/logo/gluonlogo.png",
+      "name": "Gluon",
+      "address": "FTFK4rntM1DLfDEDydnjUNfL9VQ5PkUFdsN6ZwNm2pDF",
       "decimals": 9
     }
   );
